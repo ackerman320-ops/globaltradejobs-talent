@@ -692,7 +692,7 @@ async function loadCandidates() {
 
   document.getElementById('grid').innerHTML = '<div class="loading"><div class="spinner"></div>Loading candidates...</div>';
 
-  let url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,years_experience,current_title,job_function,seniority_level,open_to_work,customs_expertise,trade_specialties,certifications,software_tools,languages,is_blurred,is_featured,full_name,contact_email&is_active=eq.true&order=is_featured.desc,created_at.desc&limit=100`;
+  let url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,years_experience,current_title,job_function,seniority_level,open_to_work,customs_expertise,trade_specialties,certifications,software_tools,languages,is_blurred,is_featured,full_name,contact_email,linkedin_url,resume_url&is_active=eq.true&order=is_featured.desc,created_at.desc&limit=100`;
 
   if (fn) url += `&job_function=eq.${encodeURIComponent(fn)}`;
   if (region) url += `&location_region=eq.${encodeURIComponent(region)}`;
@@ -766,7 +766,8 @@ function renderCards(candidates) {
       </div>
       ${!isBlurred ? `
       <div class="card-footer">
-        <button class="btn-sm btn-sm-teal" onclick="openModal()">View profile</button>
+        ${c.linkedin_url ? `<a href="${c.linkedin_url}" target="_blank" class="btn-sm btn-sm-outline" style="text-align:center;text-decoration:none;">LinkedIn</a>` : ''}
+        ${c.resume_url ? `<a href="${c.resume_url}" target="_blank" class="btn-sm btn-sm-teal" style="text-align:center;text-decoration:none;">Download Resume</a>` : `<button class="btn-sm btn-sm-teal" onclick="openModal()">View profile</button>`}
         <button class="btn-sm btn-sm-outline" onclick="openModal()">Contact</button>
       </div>` : ''}
     </div>`;
