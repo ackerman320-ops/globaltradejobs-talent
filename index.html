@@ -651,11 +651,7 @@ function formatCerts(arr) {
   return arr.slice(0,2).map(t => `<span class="tag cert">${t}</span>`).join('');
 }
 
-function statusDot(open) {
-  if (open === true) return '<span class="dot dot-green"></span>Open to work';
-  if (open === false) return '<span class="dot dot-gray"></span>Not looking';
-  return '<span class="dot dot-amber"></span>Passively looking';
-}
+
 
 async function loadCandidates() {
   const q = document.getElementById('search').value.trim();
@@ -738,14 +734,14 @@ function renderCards(candidates) {
       <div class="card-body ${isBlurred ? 'blur-content' : ''}">
         <div class="tags">${skills}${certs}</div>
         <div class="card-meta">
-          <span class="status">${statusDot(c.open_to_work)}</span>
+          <span></span>
           <span>${c.years_experience ? c.years_experience + ' yrs exp.' : ''}</span>
         </div>
       </div>
       ${!isBlurred ? `
       <div class="card-footer">
         ${c.linkedin_url ? `<a href="${c.linkedin_url}" target="_blank" class="btn-sm btn-sm-outline" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;">LinkedIn</a>` : ''}
-        ${c.resume_url ? `<button class="btn-sm btn-sm-teal" onclick="openModal()">Download Resume</button>` : `<button class="btn-sm btn-sm-teal" onclick="openModal()">View profile</button>`}
+        <button class="btn-sm btn-sm-teal" onclick="openModal()">Download Resume</button>
         <button class="btn-sm btn-sm-outline" onclick="openModal()">Contact</button>
       </div>` : ''}
     </div>`;
