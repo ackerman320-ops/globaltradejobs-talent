@@ -670,15 +670,11 @@ async function loadCandidates() {
 
   if (location) {
     const stateMap = {'alabama':'AL','alaska':'AK','arizona':'AZ','arkansas':'AR','california':'CA','colorado':'CO','connecticut':'CT','delaware':'DE','florida':'FL','georgia':'GA','hawaii':'HI','idaho':'ID','illinois':'IL','indiana':'IN','iowa':'IA','kansas':'KS','kentucky':'KY','louisiana':'LA','maine':'ME','maryland':'MD','massachusetts':'MA','michigan':'MI','minnesota':'MN','mississippi':'MS','missouri':'MO','montana':'MT','nebraska':'NE','nevada':'NV','new hampshire':'NH','new jersey':'NJ','new mexico':'NM','new york':'NY','north carolina':'NC','north dakota':'ND','ohio':'OH','oklahoma':'OK','oregon':'OR','pennsylvania':'PA','rhode island':'RI','south carolina':'SC','south dakota':'SD','tennessee':'TN','texas':'TX','utah':'UT','vermont':'VT','virginia':'VA','washington':'WA','west virginia':'WV','wisconsin':'WI','wyoming':'WY'};
-    const countryMap = {'poland':'Europe','uk':'Europe','united kingdom':'Europe','england':'Europe','germany':'Europe','france':'Europe','netherlands':'Europe','spain':'Europe','italy':'Europe','australia':'Asia Pacific','india':'Asia Pacific','singapore':'Asia Pacific','china':'Asia Pacific','japan':'Asia Pacific','canada':'Canada','mexico':'Latin America & Caribbean','brazil':'Latin America & Caribbean','nigeria':'Middle East & Africa','kenya':'Middle East & Africa','ghana':'Middle East & Africa','south africa':'Middle East & Africa','uae':'Middle East & Africa','philippines':'Asia Pacific'};
     const stateAbbr = stateMap[location.toLowerCase()];
-    const countryRegion = countryMap[location.toLowerCase()];
     if (stateAbbr) {
       url += `&location_state=eq.${stateAbbr}`;
-    } else if (countryRegion) {
-      url += `&or=(location_city.ilike.*${encodeURIComponent(location)}*,location_region.eq.${encodeURIComponent(countryRegion)})`;
     } else {
-      url += `&or=(location_city.ilike.*${encodeURIComponent(location)}*,location_state.ilike.*${encodeURIComponent(location)}*,location_region.ilike.*${encodeURIComponent(location)}*,location_country.ilike.*${encodeURIComponent(location)}*)`;
+      url += `&or=(location_city.ilike.*${encodeURIComponent(location)}*,location_country.ilike.*${encodeURIComponent(location)}*)`;
     }
   }
   if (q) {
