@@ -692,7 +692,7 @@ async function loadCandidates() {
 
   document.getElementById('grid').innerHTML = '<div class="loading"><div class="spinner"></div>Loading candidates...</div>';
 
-  let url = `${SUPABASE_URL}/rest/v1/public_candidates?select=*&order=is_featured.desc,created_at.desc&limit=100`;
+  let url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,years_experience,current_title,job_function,seniority_level,open_to_work,customs_expertise,trade_specialties,certifications,software_tools,languages,is_blurred,is_featured,full_name,contact_email&is_active=eq.true&order=is_featured.desc,created_at.desc&limit=100`;
 
   if (fn) url += `&job_function=eq.${encodeURIComponent(fn)}`;
   if (region) url += `&location_region=eq.${encodeURIComponent(region)}`;
