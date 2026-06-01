@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Talent Bank — Global Trade Jobs</title>
+<title>The Global Trade Talent Network — GlobalTradeJobs</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -549,7 +549,7 @@
     <a href="https://globaltradejobs.com" class="logo">GlobalTrade<span>Jobs</span></a>
     <nav>
       <a href="https://globaltradejobs.com/jobs">Jobs</a>
-      <a href="#" class="active">Talent Bank</a>
+      <a href="#" class="active">Talent Network</a>
       <a href="#" onclick="openModal(); return false;" class="btn btn-teal" style="padding:7px 16px;font-size:13px;">Post a resume</a>
     </nav>
   </div>
@@ -558,23 +558,11 @@
 <div class="hero">
   <div class="hero-inner">
     <div>
-      <h1>Customs &amp; Trade<br><span>Talent Bank</span></h1>
-      <p>Browse pre-vetted professionals in customs brokerage, trade compliance, import/export, and logistics. Register free to unlock full profiles and contact candidates directly.</p>
+      <h1>The Global Trade<br><span>Talent Network</span></h1>
+      <p>Connect with top-tier professionals in customs and trade compliance. Whether you are seeking an experienced Licensed Customs Broker or a seasoned director to manage ITAR and strict Export Controls, our directory provides direct access to verified talent that keeps supply chains moving.</p>
+      <p style="margin-top:12px;font-size:14px;color:rgba(255,255,255,0.6);">Claim a <a href="https://globaltradejobs.com/candidate-pricing" target="_blank" style="color:var(--teal);text-decoration:underline;">Featured Profile</a> to prioritize your resume and grow your professional brand.</p>
     </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-num" id="total-count">—</span>
-        <span class="stat-lbl">Candidates</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">38</span>
-        <span class="stat-lbl">Job titles</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">50</span>
-        <span class="stat-lbl">US states</span>
-      </div>
-    </div>
+
   </div>
 </div>
 
@@ -699,7 +687,6 @@ async function loadCandidates() {
       return;
     }
 
-    document.getElementById('total-count').textContent = data.length + '+';
     document.getElementById('result-label').textContent = `Showing ${data.length} candidate${data.length !== 1 ? 's' : ''}`;
     renderCards(data);
   } catch(e) {
