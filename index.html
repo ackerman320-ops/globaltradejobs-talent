@@ -945,11 +945,10 @@ function renderCards(candidates) {
     const location = c.location_city && c.location_country && c.location_country !== 'United States' ? `${c.location_city}, ${c.location_country}` : c.location_city && c.location_state ? `${c.location_city}, ${c.location_state}` : (c.location_region || '');
     const titleLine = [c.current_title, location].filter(Boolean).join(' · ');
 
-    // Override is_blurred for the 15 random unblurred ones
-    if (!c.is_featured && unblurredIds.has(c.id)) {
-      c = {...c, is_blurred: false};
-    } else if (!c.is_featured) {
-      c = {...c, is_blurred: true};
+    // Frontend-only blur logic — ignore database value
+    // Featured = always shown, 15 random = shown, rest = blurred
+    if (!c.is_featured) {
+      c = {...c, is_blurred: !unblurredIds.has(c.id)};
     }
 
     if (c.is_featured) {
