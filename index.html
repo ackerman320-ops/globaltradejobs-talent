@@ -263,7 +263,8 @@ async function loadCandidates() {
   }
 
   if (q) {
-    url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,location_country,years_experience,current_title,work_preference,customs_expertise,trade_specialties,certifications,summary_blurb,is_featured,full_name,contact_email,linkedin_url,resume_url,seniority_level&is_active=eq.true&order=is_featured.desc&limit=1000&fts=search_vector.phfts.${encodeURIComponent(q)}`;
+    const qEnc = encodeURIComponent(q);
+    url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,location_country,years_experience,current_title,work_preference,customs_expertise,trade_specialties,certifications,summary_blurb,is_featured,full_name,contact_email,linkedin_url,resume_url,seniority_level&is_active=eq.true&order=is_featured.desc&limit=1000&or=(current_title.ilike.*${qEnc}*,certifications.cs.{${q}},customs_expertise.cs.{${q}},trade_specialties.cs.{${q}},summary_blurb.ilike.*${qEnc}*)`;
   }
 
   try {
