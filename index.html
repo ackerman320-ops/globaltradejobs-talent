@@ -1033,9 +1033,7 @@ function renderCards(candidates) {
         </div>
       </div>
       <div class="card-footer">
-        ${c.linkedin_url ? `<a href="${c.linkedin_url}" target="_blank" class="btn-sm btn-sm-outline" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;">LinkedIn</a>` : ''}
-        <button class="btn-sm btn-sm-teal" onclick="openModal()">Download Resume</button>
-        <button class="btn-sm btn-sm-outline" onclick="openModal()">Contact</button>
+        <button class="btn-sm btn-sm-teal" style="width:100%;" onclick="openModal()">Request Access</button>
       </div>
     </div>`;
   }).join('');
