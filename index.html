@@ -890,7 +890,7 @@ async function loadCandidates() {
   const location = document.getElementById('filter-location').value.trim();
   document.getElementById('grid').innerHTML = '<div class="loading"><div class="spinner"></div>Loading candidates...</div>';
 
-  let url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,location_country,years_experience,current_title,job_function,seniority_level,open_to_work,work_preference,customs_expertise,trade_specialties,certifications,software_tools,languages,summary_blurb,is_blurred,is_featured,full_name,contact_email,linkedin_url,resume_url&is_active=eq.true&order=is_featured.desc,created_at.desc&limit=100`;
+  let url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,location_country,years_experience,current_title,job_function,seniority_level,open_to_work,work_preference,customs_expertise,trade_specialties,certifications,software_tools,languages,summary_blurb,is_blurred,is_featured,full_name,contact_email,linkedin_url,resume_url&is_active=eq.true&order=is_featured.desc,created_at.desc&limit=1000`;
 
 
 
@@ -933,11 +933,24 @@ async function loadCandidates() {
 
 function renderCards(candidates) {
   const grid = document.getElementById('grid');
+
+  // Pick 15 random non-featured candidates to show unblurred this session
+  const nonFeatured = candidates.filter(c => !c.is_featured);
+  const shuffled = [...nonFeatured].sort(() => Math.random() - 0.5);
+  const unblurredIds = new Set(shuffled.slice(0, 15).map(c => c.id));
+
   grid.innerHTML = candidates.map(c => {
     const initials = c.initials || getInitials(c.full_name || 'XX');
     const av = avatarColor(c.id);
     const location = c.location_city && c.location_country && c.location_country !== 'United States' ? `${c.location_city}, ${c.location_country}` : c.location_city && c.location_state ? `${c.location_city}, ${c.location_state}` : (c.location_region || '');
     const titleLine = [c.current_title, location].filter(Boolean).join(' · ');
+
+    // Override is_blurred for the 15 random unblurred ones
+    if (!c.is_featured && unblurredIds.has(c.id)) {
+      c = {...c, is_blurred: false};
+    } else if (!c.is_featured) {
+      c = {...c, is_blurred: true};
+    }
 
     if (c.is_featured) {
       const allSkills = [...(c.customs_expertise||[]), ...(c.trade_specialties||[])];
