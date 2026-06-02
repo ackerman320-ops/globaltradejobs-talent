@@ -294,16 +294,9 @@ function renderCards(candidates) {
   const featured = candidates.filter(c => c.is_featured);
   const nonFeatured = candidates.filter(c => !c.is_featured);
 
-  // Shuffle non-featured randomly
-  const shuffled = [...nonFeatured].sort(() => Math.random() - 0.5);
-
-  // First 15 get shown with info, rest are blurred
-  const shown = shuffled.slice(0, 15);
-  const blurred = shuffled.slice(15);
-
-  // Combine: featured first, then 15 shown, then blurred
-  const ordered = [...featured, ...shown, ...blurred];
-  const shownIds = new Set(shown.map(c => c.id));
+  // All non-featured are blurred
+  const ordered = [...featured, ...nonFeatured];
+  const shownIds = new Set(); // empty — no non-featured shown
 
   grid.innerHTML = ordered.map(c => {
     const initials = c.initials || getInitials(c.full_name || '');
