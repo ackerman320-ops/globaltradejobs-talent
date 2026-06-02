@@ -536,6 +536,228 @@
   }
   .toast.show { display: block; }
 
+  /* FEATURED CARD - Premium showcase */
+  .card.featured-card {
+    border: 2px solid #0b3a61;
+    box-shadow: 0 4px 20px rgba(11,58,97,0.12);
+  }
+  .card.featured-card:hover {
+    box-shadow: 0 8px 32px rgba(11,58,97,0.2);
+    transform: translateY(-3px);
+  }
+  .featured-card .card-head {
+    background: linear-gradient(135deg, #0b3a61 0%, #1a5a8a 100%);
+    padding: 20px;
+  }
+  .featured-card .avatar {
+    width: 52px;
+    height: 52px;
+    font-size: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.15);
+    color: white;
+  }
+  .featured-card .card-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+  }
+  .featured-card .card-title {
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+  }
+  .featured-card .featured-pill {
+    background: rgba(126,200,227,0.3);
+    color: #7ec8e3;
+    border: 1px solid rgba(126,200,227,0.4);
+  }
+  .featured-card .card-body {
+    padding: 16px;
+  }
+  .featured-card .summary-text {
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .featured-card .tag {
+    background: #eaf6fb;
+    color: #0b3a61;
+    border-color: #c5e4f0;
+  }
+  .featured-card .tag.cert {
+    background: #0b3a61;
+    color: white;
+    border-color: #0b3a61;
+  }
+  .view-profile-btn {
+    width: 100%;
+    padding: 10px;
+    background: #0b3a61;
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background .15s;
+    margin-bottom: 8px;
+  }
+  .view-profile-btn:hover { background: #1a5a8a; }
+
+  /* PROFILE MODAL */
+  .profile-modal-bg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(11,58,97,0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(6px);
+  }
+  .profile-modal-bg.open { display: flex; }
+  .profile-modal {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+    animation: slideUp .25s ease;
+  }
+  .profile-modal-header {
+    background: linear-gradient(135deg, #0b3a61 0%, #1a5a8a 100%);
+    padding: 28px 28px 24px;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .profile-modal-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .profile-modal-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+  }
+  .profile-modal-title {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.4;
+  }
+  .profile-modal-close {
+    margin-left: auto;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background .15s;
+  }
+  .profile-modal-close:hover { background: rgba(255,255,255,0.25); }
+  .profile-modal-body { padding: 24px 28px; }
+  .profile-section { margin-bottom: 20px; }
+  .profile-section-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #0b3a61;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #eaf6fb;
+  }
+  .profile-bio {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+  .profile-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .profile-tag {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: var(--gray-100);
+    color: var(--gray-600);
+    border: 1px solid var(--gray-200);
+  }
+  .profile-tag.cert {
+    background: #0b3a61;
+    color: white;
+    border-color: #0b3a61;
+  }
+  .profile-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .profile-meta-item { }
+  .profile-meta-label {
+    font-size: 11px;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+  .profile-meta-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-800);
+  }
+  .profile-modal-footer {
+    padding: 16px 28px 24px;
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid var(--gray-100);
+  }
+  .profile-action-btn {
+    flex: 1;
+    padding: 11px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all .15s;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .profile-action-primary { background: #0b3a61; color: white; border: none; }
+  .profile-action-primary:hover { background: #1a5a8a; }
+  .profile-action-secondary { background: transparent; color: #0b3a61; border: 1.5px solid #0b3a61; }
+  .profile-action-secondary:hover { background: #eaf6fb; }
+
   @media (max-width: 600px) {
     .hero h1 { font-size: 26px; }
     .hero-stats { gap: 20px; }
@@ -619,6 +841,13 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- PROFILE MODAL -->
+<div class="profile-modal-bg" id="profile-modal-bg" onclick="if(event.target===this)closeProfileModal()">
+  <div class="profile-modal" id="profile-modal-content">
+    <!-- filled dynamically -->
+  </div>
+</div>
+
 <script>
 const SUPABASE_URL = 'https://iaboaiofsthntiglzpjs.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhYm9haW9mc3RobnRpZ2x6cGpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyNjU5NDQsImV4cCI6MjA5NTg0MTk0NH0.US1cDQuVorAGCtIrYgsyElriO5HCbGcU8UNdmONjWCM';
@@ -694,6 +923,7 @@ async function loadCandidates() {
     }
 
     document.getElementById('result-label').textContent = `Showing ${data.length} candidate${data.length !== 1 ? 's' : ''}`;
+    candidatesCache = data;
     renderCards(data);
   } catch(e) {
     document.getElementById('grid').innerHTML = '<div class="empty"><h3>Could not load candidates</h3><p>Please refresh and try again.</p></div>';
@@ -805,6 +1035,70 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// Profile modal
+let candidatesCache = [];
+
+function openProfileModal(id) {
+  const c = candidatesCache.find(x => x.id === id);
+  if (!c) return;
+  const initials = c.initials || getInitials(c.full_name || 'XX');
+  const av = avatarColor(c.id);
+  const location = c.location_city && c.location_country && c.location_country !== 'United States' ? `${c.location_city}, ${c.location_country}` : c.location_city && c.location_state ? `${c.location_city}, ${c.location_state}` : (c.location_region || '');
+  const allSkills = [...(c.customs_expertise||[]), ...(c.trade_specialties||[])];
+  const allCerts = (c.certifications||[]);
+
+  document.getElementById('profile-modal-content').innerHTML = `
+    <div class="profile-modal-header">
+      <div class="profile-modal-avatar ${av}">${initials}</div>
+      <div style="flex:1">
+        <div class="profile-modal-name">${c.full_name || initials}</div>
+        <div class="profile-modal-title">${c.current_title || ''}${location ? ' · ' + location : ''}</div>
+      </div>
+      <button class="profile-modal-close" onclick="closeProfileModal()">✕</button>
+    </div>
+    <div class="profile-modal-body">
+      ${c.summary_blurb ? `
+      <div class="profile-section">
+        <div class="profile-section-title">About</div>
+        <p class="profile-bio">${c.summary_blurb}</p>
+      </div>` : ''}
+      ${allCerts.length ? `
+      <div class="profile-section">
+        <div class="profile-section-title">Certifications & Licenses</div>
+        <div class="profile-tags">
+          ${allCerts.map(t => `<span class="profile-tag cert">${t}</span>`).join('')}
+        </div>
+      </div>` : ''}
+      ${allSkills.length ? `
+      <div class="profile-section">
+        <div class="profile-section-title">Areas of Expertise</div>
+        <div class="profile-tags">
+          ${allSkills.map(t => `<span class="profile-tag">${t}</span>`).join('')}
+        </div>
+      </div>` : ''}
+      <div class="profile-section">
+        <div class="profile-section-title">Details</div>
+        <div class="profile-meta-grid">
+          ${c.years_experience ? `<div class="profile-meta-item"><div class="profile-meta-label">Experience</div><div class="profile-meta-value">${c.years_experience}+ years</div></div>` : ''}
+          ${c.work_preference ? `<div class="profile-meta-item"><div class="profile-meta-label">Work preference</div><div class="profile-meta-value">${c.work_preference}</div></div>` : ''}
+          ${c.seniority_level ? `<div class="profile-meta-item"><div class="profile-meta-label">Level</div><div class="profile-meta-value">${c.seniority_level}</div></div>` : ''}
+          ${location ? `<div class="profile-meta-item"><div class="profile-meta-label">Location</div><div class="profile-meta-value">${location}</div></div>` : ''}
+        </div>
+      </div>
+    </div>
+    <div class="profile-modal-footer">
+      ${c.linkedin_url ? `<a href="${c.linkedin_url}" target="_blank" class="profile-action-btn profile-action-secondary">View LinkedIn</a>` : ''}
+      <button class="profile-action-btn profile-action-primary" onclick="closeProfileModal();openModal()">Download Resume</button>
+      <button class="profile-action-btn profile-action-secondary" onclick="closeProfileModal();openModal()">Contact</button>
+    </div>
+  `;
+  document.getElementById('profile-modal-bg').classList.add('open');
+}
+
+function closeProfileModal() {
+  document.getElementById('profile-modal-bg').classList.remove('open');
 }
 
 // Init
