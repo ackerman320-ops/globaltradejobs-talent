@@ -968,7 +968,7 @@ function renderCards(candidates) {
           <button class="view-profile-btn" onclick="openProfileModal('${c.id}')">View Full Profile</button>
           <div style="display:flex;gap:8px;">
             ${c.linkedin_url ? `<a href="${c.linkedin_url}" target="_blank" class="btn-sm btn-sm-outline" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;flex:1;">LinkedIn</a>` : ''}
-            <button class="btn-sm btn-sm-outline" onclick="openModal()" style="flex:1;">Contact</button>
+            ${c.contact_email ? `<a href="mailto:${c.contact_email}" class="btn-sm btn-sm-outline" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;flex:1;">Email</a>` : `<button class="btn-sm btn-sm-outline" onclick="openModal()" style="flex:1;">Contact</button>`}
           </div>
         </div>
       </div>`;
@@ -986,7 +986,7 @@ function renderCards(candidates) {
         <div class="lock-icon">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
-        <p>Register free to unlock<br>full profile &amp; contact info</p>
+        <p>Get access to connect<br>with this candidate</p>
         <button class="unlock-btn" onclick="openModal()">Unlock profile</button>
       </div>` : ''}
       <div class="card-head ${isBlurred ? 'blur-content' : ''}">
@@ -1128,7 +1128,7 @@ function openProfileModal(id) {
     <div class="profile-modal-footer">
       ${c.linkedin_url ? `<a href="${c.linkedin_url}" target="_blank" class="profile-action-btn profile-action-secondary">View LinkedIn</a>` : ''}
       <button class="profile-action-btn profile-action-primary" onclick="closeProfileModal();openModal()">Download Resume</button>
-      <button class="profile-action-btn profile-action-secondary" onclick="closeProfileModal();openModal()">Contact</button>
+      ${c.contact_email ? `<a href="mailto:${c.contact_email}" class="profile-action-btn profile-action-secondary" style="text-decoration:none;">Email</a>` : `<button class="profile-action-btn profile-action-secondary" onclick="closeProfileModal();openModal()">Contact</button>`}
     </div>
   `;
   document.getElementById('profile-modal-bg').classList.add('open');
