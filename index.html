@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Global Trade Talent Network — GlobalTradeJobs</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init("sV5OjXurSarNki2bK");</script>
 <style>
   :root {
     --teal: #7ec8e3;
@@ -20,753 +22,139 @@
     --white: #ffffff;
     --radius: 12px;
     --radius-sm: 8px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--gray-50);
-    color: var(--gray-800);
-    min-height: 100vh;
-  }
+  body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); min-height: 100vh; }
 
   /* HEADER */
-  header {
-    background: var(--white);
-    border-bottom: 1px solid var(--gray-200);
-    padding: 0 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
-  }
-  .logo {
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
-    color: var(--teal);
-    text-decoration: none;
-  }
-  .logo span { color: var(--navy); }
+  header { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 0 2rem; position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
   nav { display: flex; gap: 24px; align-items: center; }
-  nav a {
-    font-size: 14px;
-    color: var(--gray-600);
-    text-decoration: none;
-    font-weight: 400;
-    transition: color .15s;
-  }
+  nav a { font-size: 14px; color: var(--gray-600); text-decoration: none; font-weight: 400; transition: color .15s; }
   nav a:hover { color: var(--teal); }
   nav a.active { color: var(--teal); font-weight: 500; }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all .15s;
-    text-decoration: none;
-    border: none;
-  }
+  .btn { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; transition: all .15s; text-decoration: none; border: none; }
   .btn-teal { background: var(--teal); color: white; }
   .btn-teal:hover { background: var(--teal-dark); }
-  .btn-outline { background: transparent; color: var(--teal); border: 1.5px solid var(--teal); }
-  .btn-outline:hover { background: var(--teal-light); }
 
   /* HERO */
-  .hero {
-    background: var(--white);
-    color: var(--navy);
-    padding: 48px 2rem;
-    border-bottom: 1px solid var(--gray-200);
-  }
-  .hero-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .hero h1 {
-    font-family: 'Inter', sans-serif;
-    font-size: 36px;
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 10px;
-    color: #0b3a61;
-  }
-  .hero h1 span { color: #0b3a61; }
-  .hero p {
-    font-size: 15px;
-    color: var(--gray-600);
-    max-width: 480px;
-    line-height: 1.6;
-  }
-  .hero-stats {
-    display: flex;
-    gap: 32px;
-    flex-shrink: 0;
-  }
-  .stat { text-align: center; }
-  .stat-num {
-    font-family: 'Inter', sans-serif;
-    font-size: 32px;
-    color: var(--teal);
-    display: block;
-  }
-  .stat-lbl {
-    font-size: 12px;
-    color: var(--gray-600);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+  .hero { background: var(--white); color: var(--navy); padding: 48px 2rem; border-bottom: 1px solid var(--gray-200); }
+  .hero-inner { max-width: 1200px; margin: 0 auto; }
+  .hero h1 { font-size: 36px; font-weight: 800; line-height: 1.2; margin-bottom: 10px; color: #0b3a61; }
+  .hero p { font-size: 15px; color: var(--gray-600); max-width: 680px; line-height: 1.6; }
 
-  /* SEARCH BAR */
-  .search-section {
-    background: var(--white);
-    border-bottom: 1px solid var(--gray-200);
-    padding: 16px 2rem;
-    position: sticky;
-    top: 60px;
-    z-index: 90;
-    box-shadow: var(--shadow);
-  }
-  .search-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .search-wrap {
-    position: relative;
-    flex: 1;
-    min-width: 200px;
-  }
-  .search-wrap svg {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gray-400);
-    pointer-events: none;
-  }
-  .search-wrap input {
-    width: 100%;
-    height: 40px;
-    padding: 0 12px 0 38px;
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    background: var(--gray-50);
-    color: var(--gray-800);
-    transition: border-color .15s;
-  }
-  .search-wrap input:focus {
-    outline: none;
-    border-color: var(--teal);
-    background: white;
-  }
-  select {
-    height: 40px;
-    padding: 0 12px;
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    background: var(--gray-50);
-    color: var(--gray-600);
-    cursor: pointer;
-    transition: border-color .15s;
-  }
-  select:focus { outline: none; border-color: var(--teal); }
-  .result-count {
-    font-size: 13px;
-    color: var(--gray-600);
-    white-space: nowrap;
-    margin-left: auto;
-  }
+  /* SEARCH */
+  .search-section { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 16px 2rem; position: sticky; top: 60px; z-index: 90; box-shadow: var(--shadow); }
+  .search-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .search-wrap { position: relative; flex: 1; min-width: 200px; }
+  .search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--gray-400); pointer-events: none; }
+  .search-wrap input { width: 100%; height: 40px; padding: 0 12px 0 38px; border: 1.5px solid var(--gray-200); border-radius: var(--radius-sm); font-size: 14px; font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); transition: border-color .15s; }
+  .search-wrap input:focus { outline: none; border-color: var(--teal); background: white; }
+  .result-count { font-size: 13px; color: var(--gray-600); white-space: nowrap; margin-left: auto; }
 
   /* MAIN */
-  main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 28px 2rem 60px;
-  }
+  main { max-width: 1200px; margin: 0 auto; padding: 28px 2rem 60px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
 
-  /* GRID */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
-  }
-
-  /* CANDIDATE CARD */
-  .card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: box-shadow .2s, transform .2s;
-    position: relative;
-  }
-  .card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-  }
-  .card-head {
-    padding: 16px;
-    border-bottom: 1px solid var(--gray-100);
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 600;
-    flex-shrink: 0;
-    letter-spacing: 0.02em;
-  }
+  /* CARD */
+  .card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; transition: box-shadow .2s, transform .2s; }
+  .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .card-head { padding: 16px; border-bottom: 1px solid var(--gray-100); display: flex; gap: 12px; align-items: flex-start; }
+  .avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; }
   .av-1 { background: #e6fafa; color: #089a9a; }
   .av-2 { background: #e8f4fd; color: #1a6fa8; }
   .av-3 { background: #f0ebfe; color: #6b48d4; }
   .av-4 { background: #fef3e2; color: #c47a1a; }
   .av-5 { background: #fde8ea; color: #c0303e; }
-  .card-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--gray-800);
-    line-height: 1.3;
-  }
-  .card-title {
-    font-size: 12px;
-    color: var(--gray-600);
-    margin-top: 3px;
-    line-height: 1.4;
-  }
-  .featured-pill {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 100px;
-    background: var(--teal-light);
-    color: var(--teal-dark);
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
+  .card-name { font-size: 14px; font-weight: 600; color: var(--gray-800); line-height: 1.3; }
+  .card-title { font-size: 12px; color: var(--gray-600); margin-top: 3px; line-height: 1.4; }
   .card-body { padding: 14px 16px; }
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-bottom: 12px;
-  }
-  .tag {
-    font-size: 11px;
-    padding: 3px 8px;
-    border-radius: 100px;
-    background: var(--gray-100);
-    color: var(--gray-600);
-    border: 1px solid var(--gray-200);
-  }
-  .tag.cert {
-    background: var(--teal-light);
-    color: var(--teal-dark);
-    border-color: #b2e8e8;
-  }
-  .card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: var(--gray-600);
-  }
-  .status {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-  }
-  .dot-green { background: #2ecc71; }
-  .dot-amber { background: #f39c12; }
-  .dot-gray { background: var(--gray-400); }
-  .card-footer {
-    padding: 10px 16px;
-    border-top: 1px solid var(--gray-100);
-    display: flex;
-    gap: 8px;
-  }
-  .btn-sm {
-    flex: 1;
-    padding: 7px 12px;
-    border-radius: var(--radius-sm);
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    transition: all .15s;
-    font-family: 'Inter', sans-serif;
-  }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+  .tag { font-size: 11px; padding: 3px 8px; border-radius: 100px; background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200); }
+  .tag.cert { background: var(--teal-light); color: var(--teal-dark); border-color: #b2e8e8; }
+  .card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--gray-600); }
+  .card-footer { padding: 10px 16px; border-top: 1px solid var(--gray-100); display: flex; gap: 8px; }
+  .btn-sm { flex: 1; padding: 7px 12px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; cursor: pointer; border: none; transition: all .15s; font-family: 'Inter', sans-serif; }
   .btn-sm-teal { background: var(--teal); color: white; }
   .btn-sm-teal:hover { background: var(--teal-dark); }
-  .btn-sm-outline {
-    background: transparent;
-    color: var(--gray-600);
-    border: 1px solid var(--gray-200);
-  }
+  .btn-sm-outline { background: transparent; color: var(--gray-600); border: 1px solid var(--gray-200); }
   .btn-sm-outline:hover { background: var(--gray-100); }
 
-  /* BLURRED CARD */
-  .blurred .blur-content { filter: blur(5px); pointer-events: none; user-select: none; }
-  .blur-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: rgba(255,255,255,0.15);
-    border-radius: var(--radius);
-    z-index: 2;
-    backdrop-filter: blur(1px);
-  }
-  .lock-icon {
-    width: 36px;
-    height: 36px;
-    background: var(--white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-md);
-    color: var(--teal);
-  }
-  .blur-overlay p {
-    font-size: 12px;
-    color: var(--gray-800);
-    text-align: center;
-    line-height: 1.5;
-    font-weight: 500;
-    background: rgba(255,255,255,0.9);
-    padding: 4px 10px;
-    border-radius: 6px;
-  }
-  .unlock-btn {
-    padding: 8px 20px;
-    background: var(--teal);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: background .15s;
-    box-shadow: var(--shadow);
-  }
-  .unlock-btn:hover { background: var(--teal-dark); }
-
-  /* LOADING */
-  .loading {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--gray-600);
-    font-size: 14px;
-  }
-  .spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid var(--gray-200);
-    border-top-color: var(--teal);
-    border-radius: 50%;
-    animation: spin .8s linear infinite;
-    margin: 0 auto 12px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .empty {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--gray-600);
-  }
-  .empty h3 { font-size: 18px; margin-bottom: 8px; color: var(--gray-800); }
-  .empty p { font-size: 14px; }
-
-  /* MODAL */
-  .modal-bg {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(15,35,51,0.6);
-    z-index: 999;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    backdrop-filter: blur(4px);
-  }
-  .modal-bg.open { display: flex; }
-  .modal {
-    background: white;
-    border-radius: var(--radius);
-    padding: 32px;
-    width: 100%;
-    max-width: 420px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-    animation: slideUp .2s ease;
-  }
-  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-  .modal-logo {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    color: var(--teal);
-    margin-bottom: 20px;
-  }
-  .modal h3 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: var(--navy);
-  }
-  .modal p {
-    font-size: 13px;
-    color: var(--gray-600);
-    margin-bottom: 22px;
-    line-height: 1.6;
-  }
-  .form-group { margin-bottom: 14px; }
-  .form-group label {
-    display: block;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--gray-600);
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .form-group input {
-    width: 100%;
-    height: 40px;
-    padding: 0 12px;
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    color: var(--gray-800);
-    transition: border-color .15s;
-  }
-  .form-group input:focus { outline: none; border-color: var(--teal); }
-  .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
-  .modal-cancel {
-    flex: 0;
-    padding: 10px 18px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--gray-200);
-    background: transparent;
-    color: var(--gray-600);
-    font-size: 13px;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-  }
-  .modal-submit {
-    flex: 1;
-    padding: 10px;
-    border-radius: var(--radius-sm);
-    border: none;
-    background: var(--teal);
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: background .15s;
-  }
-  .modal-submit:hover { background: var(--teal-dark); }
-  .modal-note {
-    font-size: 11px;
-    color: var(--gray-400);
-    text-align: center;
-    margin-top: 14px;
-  }
-
-  /* TOAST */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: var(--navy);
-    color: white;
-    padding: 12px 20px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    z-index: 9999;
-    display: none;
-    animation: slideUp .2s ease;
-    box-shadow: var(--shadow-md);
-  }
-  .toast.show { display: block; }
-
-  /* FEATURED CARD - Premium showcase */
-  .card.featured-card {
-    border: 2px solid #0b3a61;
-    box-shadow: 0 4px 20px rgba(11,58,97,0.12);
-  }
-  .card.featured-card:hover {
-    box-shadow: 0 8px 32px rgba(11,58,97,0.2);
-    transform: translateY(-3px);
-  }
-  .featured-card .card-head {
-    background: linear-gradient(135deg, #0b3a61 0%, #1a5a8a 100%);
-    padding: 20px;
-  }
-  .featured-card .avatar {
-    width: 52px;
-    height: 52px;
-    font-size: 16px;
-    border: 2px solid rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.15);
-    color: white;
-  }
-  .featured-card .card-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: white;
-  }
-  .featured-card .card-title {
-    color: rgba(255,255,255,0.8);
-    font-size: 12px;
-  }
-  .featured-card .featured-pill {
-    background: rgba(126,200,227,0.3);
-    color: #7ec8e3;
-    border: 1px solid rgba(126,200,227,0.4);
-  }
-  .featured-card .card-body {
-    padding: 16px;
-  }
-  .featured-card .summary-text {
-    font-size: 12px;
-    color: var(--gray-600);
-    line-height: 1.6;
-    margin-bottom: 12px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .featured-card .tag {
-    background: #eaf6fb;
-    color: #0b3a61;
-    border-color: #c5e4f0;
-  }
-  .featured-card .tag.cert {
-    background: #0b3a61;
-    color: white;
-    border-color: #0b3a61;
-  }
-  .view-profile-btn {
-    width: 100%;
-    padding: 10px;
-    background: #0b3a61;
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: background .15s;
-    margin-bottom: 8px;
-  }
+  /* FEATURED CARD */
+  .card.featured-card { border: 2px solid #0b3a61; box-shadow: 0 4px 20px rgba(11,58,97,0.12); }
+  .card.featured-card:hover { box-shadow: 0 8px 32px rgba(11,58,97,0.2); transform: translateY(-3px); }
+  .featured-card .card-head { background: linear-gradient(135deg, #0b3a61 0%, #1a5a8a 100%); padding: 20px; }
+  .featured-card .avatar { width: 52px; height: 52px; font-size: 16px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.15); color: white; }
+  .featured-card .card-name { font-size: 16px; font-weight: 700; color: white; }
+  .featured-card .card-title { color: rgba(255,255,255,0.8); font-size: 12px; }
+  .featured-pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 100px; background: rgba(126,200,227,0.3); color: #7ec8e3; border: 1px solid rgba(126,200,227,0.4); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .featured-card .card-body { padding: 16px; }
+  .featured-card .summary-text { font-size: 12px; color: var(--gray-600); line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .featured-card .tag { background: #eaf6fb; color: #0b3a61; border-color: #c5e4f0; }
+  .featured-card .tag.cert { background: #0b3a61; color: white; border-color: #0b3a61; }
+  .view-profile-btn { width: 100%; padding: 10px; background: #0b3a61; color: white; border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s; margin-bottom: 8px; }
   .view-profile-btn:hover { background: #1a5a8a; }
 
+  /* LOADING / EMPTY */
+  .loading { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray-600); font-size: 14px; }
+  .spinner { width: 32px; height: 32px; border: 3px solid var(--gray-200); border-top-color: var(--teal); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .empty { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray-600); }
+  .empty h3 { font-size: 18px; margin-bottom: 8px; color: var(--gray-800); }
+
+  /* MODAL */
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(15,35,51,0.6); z-index: 999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+  .modal-bg.open { display: flex; }
+  .modal { background: white; border-radius: var(--radius); padding: 32px; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: slideUp .2s ease; }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-logo { margin-bottom: 20px; }
+  .modal h3 { font-size: 20px; font-weight: 600; margin-bottom: 6px; color: var(--navy); }
+  .modal p { font-size: 13px; color: var(--gray-600); margin-bottom: 22px; line-height: 1.6; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 12px; font-weight: 500; color: var(--gray-600); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .form-group input { width: 100%; height: 40px; padding: 0 12px; border: 1.5px solid var(--gray-200); border-radius: var(--radius-sm); font-size: 14px; font-family: 'Inter', sans-serif; color: var(--gray-800); transition: border-color .15s; }
+  .form-group input:focus { outline: none; border-color: var(--teal); }
+  .modal-submit { width: 100%; padding: 14px; border-radius: var(--radius-sm); border: none; background: var(--teal); color: white; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s; margin-top: 20px; }
+  .modal-submit:hover { background: var(--teal-dark); }
+
   /* PROFILE MODAL */
-  .profile-modal-bg {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(11,58,97,0.7);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    backdrop-filter: blur(6px);
-  }
+  .profile-modal-bg { display: none; position: fixed; inset: 0; background: rgba(11,58,97,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(6px); }
   .profile-modal-bg.open { display: flex; }
-  .profile-modal {
-    background: white;
-    border-radius: 16px;
-    width: 100%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
-    animation: slideUp .25s ease;
-  }
-  .profile-modal-header {
-    background: linear-gradient(135deg, #0b3a61 0%, #1a5a8a 100%);
-    padding: 28px 28px 24px;
-    border-radius: 16px 16px 0 0;
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-  }
-  .profile-modal-avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    border: 2px solid rgba(255,255,255,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: 700;
-    color: white;
-    flex-shrink: 0;
-  }
-  .profile-modal-name {
-    font-size: 20px;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 4px;
-  }
-  .profile-modal-title {
-    font-size: 13px;
-    color: rgba(255,255,255,0.8);
-    line-height: 1.4;
-  }
-  .profile-modal-close {
-    margin-left: auto;
-    background: rgba(255,255,255,0.15);
-    border: none;
-    color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: background .15s;
-  }
+  .profile-modal { background: white; border-radius: 16px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.25); animation: slideUp .25s ease; }
+  .profile-modal-header { background: linear-gradient(135deg, #0b3a61 0%, #1a5a8a 100%); padding: 28px; border-radius: 16px 16px 0 0; display: flex; gap: 16px; align-items: flex-start; }
+  .profile-modal-avatar { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: white; flex-shrink: 0; }
+  .profile-modal-name { font-size: 20px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .profile-modal-title { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.4; }
+  .profile-modal-close { margin-left: auto; background: rgba(255,255,255,0.15); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .profile-modal-close:hover { background: rgba(255,255,255,0.25); }
   .profile-modal-body { padding: 24px 28px; }
   .profile-section { margin-bottom: 20px; }
-  .profile-section-title {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #0b3a61;
-    margin-bottom: 8px;
-    padding-bottom: 6px;
-    border-bottom: 2px solid #eaf6fb;
-  }
-  .profile-bio {
-    font-size: 13px;
-    color: var(--gray-600);
-    line-height: 1.7;
-  }
+  .profile-section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #0b3a61; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 2px solid #eaf6fb; }
+  .profile-bio { font-size: 13px; color: var(--gray-600); line-height: 1.7; }
   .profile-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .profile-tag {
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 100px;
-    background: var(--gray-100);
-    color: var(--gray-600);
-    border: 1px solid var(--gray-200);
-  }
-  .profile-tag.cert {
-    background: #0b3a61;
-    color: white;
-    border-color: #0b3a61;
-  }
-  .profile-meta-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  .profile-meta-item { }
-  .profile-meta-label {
-    font-size: 11px;
-    color: var(--gray-400);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 2px;
-  }
-  .profile-meta-value {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--gray-800);
-  }
-  .profile-modal-footer {
-    padding: 16px 28px 24px;
-    display: flex;
-    gap: 10px;
-    border-top: 1px solid var(--gray-100);
-  }
-  .profile-action-btn {
-    flex: 1;
-    padding: 11px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: all .15s;
-    text-align: center;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  .profile-tag { font-size: 11px; padding: 4px 10px; border-radius: 100px; background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200); }
+  .profile-tag.cert { background: #0b3a61; color: white; border-color: #0b3a61; }
+  .profile-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .profile-meta-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+  .profile-meta-value { font-size: 13px; font-weight: 500; color: var(--gray-800); }
+  .profile-modal-footer { padding: 16px 28px 24px; display: flex; gap: 10px; border-top: 1px solid var(--gray-100); }
+  .profile-action-btn { flex: 1; padding: 11px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all .15s; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; }
   .profile-action-primary { background: #0b3a61; color: white; border: none; }
   .profile-action-primary:hover { background: #1a5a8a; }
   .profile-action-secondary { background: transparent; color: #0b3a61; border: 1.5px solid #0b3a61; }
   .profile-action-secondary:hover { background: #eaf6fb; }
 
+  /* TOAST */
+  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--navy); color: white; padding: 12px 20px; border-radius: var(--radius-sm); font-size: 13px; z-index: 9999; display: none; box-shadow: var(--shadow-md); }
+  .toast.show { display: block; }
+
   @media (max-width: 600px) {
     .hero h1 { font-size: 26px; }
-    .hero-stats { gap: 20px; }
     .search-inner { gap: 8px; }
-    select { font-size: 12px; padding: 0 8px; }
   }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>emailjs.init("sV5OjXurSarNki2bK");</script>
 </head>
 <body>
 
@@ -783,12 +171,9 @@
 
 <div class="hero">
   <div class="hero-inner">
-    <div>
-      <h1>The Global Trade<br><span>Talent Network</span></h1>
-      <p>Connect with top-tier professionals in customs and trade compliance. Whether you are seeking an experienced Licensed Customs Broker or a seasoned director to manage ITAR and strict Export Controls, our directory provides direct access to verified talent that keeps supply chains moving.</p>
-      <p style="margin-top:12px;font-size:14px;color:var(--gray-600);">Claim a <a href="https://globaltradejobs.com/candidate-pricing" target="_blank" style="color:var(--teal);text-decoration:underline;">Featured Profile</a> to prioritize your resume and grow your professional brand.</p>
-    </div>
-
+    <h1>The Global Trade<br>Talent Network</h1>
+    <p>Connect with top-tier professionals in customs and trade compliance. Whether you are seeking an experienced Licensed Customs Broker or a seasoned director to manage ITAR and strict Export Controls, our directory provides direct access to verified talent that keeps supply chains moving.</p>
+    <p style="margin-top:12px;font-size:14px;color:var(--gray-600);">Claim a <a href="https://globaltradejobs.com/candidate-pricing" target="_blank" style="color:var(--teal);text-decoration:underline;">Featured Profile</a> to prioritize your resume and grow your professional brand.</p>
   </div>
 </div>
 
@@ -808,19 +193,15 @@
 
 <main>
   <div class="grid" id="grid">
-    <div class="loading">
-      <div class="spinner"></div>
-      Loading candidates...
-    </div>
+    <div class="loading"><div class="spinner"></div>Loading candidates...</div>
   </div>
 </main>
 
-<!-- EMPLOYER REGISTER MODAL -->
 <div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-logo"><img src="Close up logo.png" alt="GlobalTradeJobs" style="height:32px;width:auto;"></div>
     <h3>Access candidate resumes</h3>
-    <p>Register as an employer to request resume access. Once approved you'll receive the candidate's resume directly. No resume is shared without your approval.</p>
+    <p>Register as an employer to request resume access. Once approved you'll receive the candidate's resume directly.</p>
     <div class="form-group">
       <label>Company name</label>
       <input type="text" id="company-name" placeholder="ABC Customs Brokerage">
@@ -833,28 +214,22 @@
       <label>Your name</label>
       <input type="text" id="contact-name" placeholder="Jane Smith">
     </div>
-    <div class="modal-btns">
-      <button class="modal-submit" style="width:100%;padding:14px;" onclick="submitEmployer()">Request Access</button>
-    </div>
-
+    <button class="modal-submit" onclick="submitEmployer()">Request Access</button>
   </div>
+</div>
+
+<div class="profile-modal-bg" id="profile-modal-bg" onclick="if(event.target===this)closeProfileModal()">
+  <div class="profile-modal" id="profile-modal-content"></div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<!-- PROFILE MODAL -->
-<div class="profile-modal-bg" id="profile-modal-bg" onclick="if(event.target===this)closeProfileModal()">
-  <div class="profile-modal" id="profile-modal-content">
-    <!-- filled dynamically -->
-  </div>
-</div>
-
 <script>
 const SUPABASE_URL = 'https://iaboaiofsthntiglzpjs.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhYm9haW9mc3RobnRpZ2x6cGpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyNjU5NDQsImV4cCI6MjA5NTg0MTk0NH0.US1cDQuVorAGCtIrYgsyElriO5HCbGcU8UNdmONjWCM';
-
 const AVATAR_COLORS = ['av-1','av-2','av-3','av-4','av-5'];
 let searchTimer = null;
+let candidatesCache = [];
 
 function debounceSearch() {
   clearTimeout(searchTimer);
@@ -862,7 +237,7 @@ function debounceSearch() {
 }
 
 function getInitials(name) {
-  if (!name) return '??';
+  if (!name) return '?';
   return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2);
 }
 
@@ -871,28 +246,12 @@ function avatarColor(id) {
   return AVATAR_COLORS[n % AVATAR_COLORS.length];
 }
 
-function formatTags(arr) {
-  if (!arr || !arr.length) return '';
-  return arr.slice(0,3).map(t => `<span class="tag">${t}</span>`).join('');
-}
-
-function formatCerts(arr) {
-  if (!arr || !arr.length) return '';
-  return arr.slice(0,2).map(t => `<span class="tag cert">${t}</span>`).join('');
-}
-
-
-
 async function loadCandidates() {
   const q = document.getElementById('search').value.trim();
-
-
   const location = document.getElementById('filter-location').value.trim();
   document.getElementById('grid').innerHTML = '<div class="loading"><div class="spinner"></div>Loading candidates...</div>';
 
-  let url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,location_country,years_experience,current_title,job_function,seniority_level,open_to_work,work_preference,customs_expertise,trade_specialties,certifications,software_tools,languages,summary_blurb,is_blurred,is_featured,full_name,contact_email,linkedin_url,resume_url&is_active=eq.true&order=is_featured.desc,created_at.desc&limit=1000`;
-
-
+  let url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,location_country,years_experience,current_title,work_preference,customs_expertise,trade_specialties,certifications,summary_blurb,is_featured,full_name,contact_email,linkedin_url,resume_url,seniority_level&is_active=eq.true&order=is_featured.desc,created_at.desc&limit=1000`;
 
   if (location) {
     const stateMap = {'alabama':'AL','alaska':'AK','arizona':'AZ','arkansas':'AR','california':'CA','colorado':'CO','connecticut':'CT','delaware':'DE','florida':'FL','georgia':'GA','hawaii':'HI','idaho':'ID','illinois':'IL','indiana':'IN','iowa':'IA','kansas':'KS','kentucky':'KY','louisiana':'LA','maine':'ME','maryland':'MD','massachusetts':'MA','michigan':'MI','minnesota':'MN','mississippi':'MS','missouri':'MO','montana':'MT','nebraska':'NE','nevada':'NV','new hampshire':'NH','new jersey':'NJ','new mexico':'NM','new york':'NY','north carolina':'NC','north dakota':'ND','ohio':'OH','oklahoma':'OK','oregon':'OR','pennsylvania':'PA','rhode island':'RI','south carolina':'SC','south dakota':'SD','tennessee':'TN','texas':'TX','utah':'UT','vermont':'VT','virginia':'VA','washington':'WA','west virginia':'WV','wisconsin':'WI','wyoming':'WY'};
@@ -903,22 +262,19 @@ async function loadCandidates() {
       url += `&or=(location_city.ilike.*${encodeURIComponent(location)}*,location_country.ilike.*${encodeURIComponent(location)}*)`;
     }
   }
+
   if (q) {
-    url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,years_experience,current_title,job_function,seniority_level,open_to_work,customs_expertise,trade_specialties,certifications,software_tools,is_blurred,is_featured,full_name,contact_email&is_active=eq.true&order=is_featured.desc,created_at.desc&limit=100&fts=search_vector.phfts.${encodeURIComponent(q)}`;
+    url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,location_country,years_experience,current_title,work_preference,customs_expertise,trade_specialties,certifications,summary_blurb,is_featured,full_name,contact_email,linkedin_url,resume_url,seniority_level&is_active=eq.true&order=is_featured.desc&limit=1000&fts=search_vector.phfts.${encodeURIComponent(q)}`;
   }
 
   try {
     const res = await fetch(url, {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json'
-      }
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' }
     });
     const data = await res.json();
 
     if (!Array.isArray(data) || data.length === 0) {
-      document.getElementById('grid').innerHTML = '<div class="empty"><h3>No candidates found</h3><p>Try adjusting your search or filters.</p></div>';
+      document.getElementById('grid').innerHTML = '<div class="empty"><h3>No candidates found</h3><p>Try adjusting your search.</p></div>';
       document.getElementById('result-label').textContent = '0 results';
       return;
     }
@@ -934,23 +290,38 @@ async function loadCandidates() {
 function renderCards(candidates) {
   const grid = document.getElementById('grid');
 
-  // Pick 15 random non-featured candidates to show per page load
+  // Separate featured and non-featured
+  const featured = candidates.filter(c => c.is_featured);
   const nonFeatured = candidates.filter(c => !c.is_featured);
+
+  // Shuffle non-featured randomly
   const shuffled = [...nonFeatured].sort(() => Math.random() - 0.5);
-  const visibleIds = new Set(shuffled.slice(0, 15).map(c => c.id));
 
-  grid.innerHTML = candidates.map(c => {
-    const initials = c.initials || getInitials(c.full_name || 'XX');
+  // First 15 get shown with info, rest are blurred
+  const shown = shuffled.slice(0, 15);
+  const blurred = shuffled.slice(15);
+
+  // Combine: featured first, then 15 shown, then blurred
+  const ordered = [...featured, ...shown, ...blurred];
+  const shownIds = new Set(shown.map(c => c.id));
+
+  grid.innerHTML = ordered.map(c => {
+    const initials = c.initials || getInitials(c.full_name || '');
     const av = avatarColor(c.id);
-    const location = c.location_city && c.location_country && c.location_country !== 'United States' ? `${c.location_city}, ${c.location_country}` : c.location_city && c.location_state ? `${c.location_city}, ${c.location_state}` : (c.location_region || '');
-    const titleLine = [c.current_title, location].filter(Boolean).join(' · ');
+    const loc = c.location_city && c.location_country && c.location_country !== 'United States'
+      ? `${c.location_city}, ${c.location_country}`
+      : c.location_city && c.location_state
+      ? `${c.location_city}, ${c.location_state}`
+      : (c.location_region || '');
+    const titleLine = [c.current_title, loc].filter(Boolean).join(' · ');
+    const allSkills = [...(c.customs_expertise||[]), ...(c.trade_specialties||[])];
+    const allCerts = (c.certifications||[]);
+    const certTags = allCerts.map(t => `<span class="tag cert">${t}</span>`).join('');
+    const skillTags = allSkills.map(t => `<span class="tag">${t}</span>`).join('');
+    const expStr = c.years_experience ? c.years_experience + ' yrs exp.' : '';
 
-    // Featured cards always show fully
-    // Non-featured: only 15 random ones show info, rest are blurred
-
+    // FEATURED CARD
     if (c.is_featured) {
-      const allSkills = [...(c.customs_expertise||[]), ...(c.trade_specialties||[])];
-      const allCerts = (c.certifications||[]);
       const bio = c.summary_blurb || '';
       return `
       <div class="card featured-card" id="card-${c.id}">
@@ -964,10 +335,7 @@ function renderCards(candidates) {
         </div>
         <div class="card-body">
           ${bio ? `<p class="summary-text">${bio}</p>` : ''}
-          <div class="tags">
-            ${allCerts.map(t => `<span class="tag cert">${t}</span>`).join('')}
-            ${allSkills.slice(0,4).map(t => `<span class="tag">${t}</span>`).join('')}
-          </div>
+          <div class="tags">${certTags}${skillTags}</div>
           <div class="card-meta" style="margin-top:10px;">
             <span style="font-size:11px;color:var(--gray-400)">${c.work_preference||''}</span>
             <span>${c.years_experience ? c.years_experience + '+ yrs exp.' : ''}</span>
@@ -983,27 +351,22 @@ function renderCards(candidates) {
       </div>`;
     }
 
-    const isVisible = visibleIds.has(c.id);
-    const allSkills = [...(c.customs_expertise||[]), ...(c.trade_specialties||[])];
-    const allCerts = (c.certifications||[]);
-    const skillTags = allSkills.map(t => `<span class="tag">${t}</span>`).join('');
-    const certTags = allCerts.map(t => `<span class="tag cert">${t}</span>`).join('');
-
-    if (!isVisible) {
+    // SHOWN NON-FEATURED (15 random - no name, but shows info)
+    if (shownIds.has(c.id)) {
       return `
       <div class="card" id="card-${c.id}">
         <div class="card-head">
-          <div class="avatar ${av}" style="background:var(--gray-200);color:var(--gray-400);">?</div>
+          <div class="avatar ${av}">${initials}</div>
           <div>
-            <div class="card-name" style="color:var(--gray-400);font-style:italic;">Candidate Profile</div>
-            <div class="card-title">${titleLine}</div>
+            <div class="card-name" style="font-size:13px;">${c.current_title || 'Trade Professional'}</div>
+            <div class="card-title">${loc}</div>
           </div>
         </div>
         <div class="card-body">
           <div class="tags">${certTags}${skillTags}</div>
           <div class="card-meta">
             <span></span>
-            <span>${c.years_experience ? c.years_experience + ' yrs exp.' : ''}</span>
+            <span>${expStr}</span>
           </div>
         </div>
         <div class="card-footer">
@@ -1012,21 +375,21 @@ function renderCards(candidates) {
       </div>`;
     }
 
-    // Visible non-featured card - show info but no name
+    // BLURRED (everyone else)
     return `
     <div class="card" id="card-${c.id}">
       <div class="card-head">
-        <div class="avatar ${av}">${initials}</div>
+        <div class="avatar" style="background:var(--gray-200);color:var(--gray-400);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;">?</div>
         <div>
-          <div class="card-title" style="font-size:13px;font-weight:600;color:var(--gray-800);">${c.current_title || 'Trade Professional'}</div>
-          <div class="card-title">${location}</div>
+          <div class="card-name" style="color:var(--gray-400);font-style:italic;font-size:13px;">Candidate Profile</div>
+          <div class="card-title">${titleLine}</div>
         </div>
       </div>
       <div class="card-body">
         <div class="tags">${certTags}${skillTags}</div>
         <div class="card-meta">
           <span></span>
-          <span>${c.years_experience ? c.years_experience + ' yrs exp.' : ''}</span>
+          <span>${expStr}</span>
         </div>
       </div>
       <div class="card-footer">
@@ -1036,56 +399,31 @@ function renderCards(candidates) {
   }).join('');
 }
 
-function openModal() {
-  document.getElementById('modal-bg').classList.add('open');
-}
-function closeModal() {
-  document.getElementById('modal-bg').classList.remove('open');
-}
+function openModal() { document.getElementById('modal-bg').classList.add('open'); }
+function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
 
 async function submitEmployer() {
   const company = document.getElementById('company-name').value.trim();
   const email = document.getElementById('employer-email').value.trim();
   const name = document.getElementById('contact-name').value.trim();
-
-  if (!company || !email) {
-    showToast('Please fill in your company name and email.');
-    return;
-  }
-
+  if (!company || !email) { showToast('Please fill in your company name and email.'); return; }
   const btn = document.querySelector('.modal-submit');
   btn.textContent = 'Submitting...';
   btn.disabled = true;
-
   try {
-    // 1. Save to Supabase
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/employers`, {
+    await fetch(`${SUPABASE_URL}/rest/v1/employers`, {
       method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
       body: JSON.stringify({ company_name: company, email, contact_name: name, access_tier: 'none' })
     });
-
-    // 2. Send email notification via EmailJS
-    await emailjs.send('service_yonnt6o', 'template_hm29i4n', {
-      company: company,
-      name: name,
-      email: email
-    });
-
+    await emailjs.send('service_yonnt6o', 'template_hm29i4n', { company, name, email });
     closeModal();
     closeProfileModal();
-    showToast('✓ Request submitted! We\'ll be in touch shortly.');
-
+    showToast("✓ Request submitted! We'll be in touch shortly.");
   } catch(e) {
     console.error(e);
     showToast('Connection error. Please try again.');
   }
-
   btn.textContent = 'Request Access';
   btn.disabled = false;
 }
@@ -1097,15 +435,16 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// Profile modal
-let candidatesCache = [];
-
 function openProfileModal(id) {
   const c = candidatesCache.find(x => x.id === id);
   if (!c) return;
-  const initials = c.initials || getInitials(c.full_name || 'XX');
+  const initials = c.initials || getInitials(c.full_name || '');
   const av = avatarColor(c.id);
-  const location = c.location_city && c.location_country && c.location_country !== 'United States' ? `${c.location_city}, ${c.location_country}` : c.location_city && c.location_state ? `${c.location_city}, ${c.location_state}` : (c.location_region || '');
+  const loc = c.location_city && c.location_country && c.location_country !== 'United States'
+    ? `${c.location_city}, ${c.location_country}`
+    : c.location_city && c.location_state
+    ? `${c.location_city}, ${c.location_state}`
+    : (c.location_region || '');
   const allSkills = [...(c.customs_expertise||[]), ...(c.trade_specialties||[])];
   const allCerts = (c.certifications||[]);
 
@@ -1114,54 +453,35 @@ function openProfileModal(id) {
       <div class="profile-modal-avatar ${av}">${initials}</div>
       <div style="flex:1">
         <div class="profile-modal-name">${c.full_name || initials}</div>
-        <div class="profile-modal-title">${c.current_title || ''}${location ? ' · ' + location : ''}</div>
+        <div class="profile-modal-title">${c.current_title || ''}${loc ? ' · ' + loc : ''}</div>
       </div>
       <button class="profile-modal-close" onclick="closeProfileModal()">✕</button>
     </div>
     <div class="profile-modal-body">
-      ${c.summary_blurb ? `
-      <div class="profile-section">
-        <div class="profile-section-title">About</div>
-        <p class="profile-bio">${c.summary_blurb}</p>
-      </div>` : ''}
-      ${allCerts.length ? `
-      <div class="profile-section">
-        <div class="profile-section-title">Certifications & Licenses</div>
-        <div class="profile-tags">
-          ${allCerts.map(t => `<span class="profile-tag cert">${t}</span>`).join('')}
-        </div>
-      </div>` : ''}
-      ${allSkills.length ? `
-      <div class="profile-section">
-        <div class="profile-section-title">Areas of Expertise</div>
-        <div class="profile-tags">
-          ${allSkills.map(t => `<span class="profile-tag">${t}</span>`).join('')}
-        </div>
-      </div>` : ''}
+      ${c.summary_blurb ? `<div class="profile-section"><div class="profile-section-title">About</div><p class="profile-bio">${c.summary_blurb}</p></div>` : ''}
+      ${allCerts.length ? `<div class="profile-section"><div class="profile-section-title">Certifications & Licenses</div><div class="profile-tags">${allCerts.map(t => `<span class="profile-tag cert">${t}</span>`).join('')}</div></div>` : ''}
+      ${allSkills.length ? `<div class="profile-section"><div class="profile-section-title">Areas of Expertise</div><div class="profile-tags">${allSkills.map(t => `<span class="profile-tag">${t}</span>`).join('')}</div></div>` : ''}
       <div class="profile-section">
         <div class="profile-section-title">Details</div>
         <div class="profile-meta-grid">
-          ${c.years_experience ? `<div class="profile-meta-item"><div class="profile-meta-label">Experience</div><div class="profile-meta-value">${c.years_experience}+ years</div></div>` : ''}
-          ${c.work_preference ? `<div class="profile-meta-item"><div class="profile-meta-label">Work preference</div><div class="profile-meta-value">${c.work_preference}</div></div>` : ''}
-          ${c.seniority_level ? `<div class="profile-meta-item"><div class="profile-meta-label">Level</div><div class="profile-meta-value">${c.seniority_level}</div></div>` : ''}
-          ${location ? `<div class="profile-meta-item"><div class="profile-meta-label">Location</div><div class="profile-meta-value">${location}</div></div>` : ''}
+          ${c.years_experience ? `<div><div class="profile-meta-label">Experience</div><div class="profile-meta-value">${c.years_experience}+ years</div></div>` : ''}
+          ${c.work_preference ? `<div><div class="profile-meta-label">Work preference</div><div class="profile-meta-value">${c.work_preference}</div></div>` : ''}
+          ${c.seniority_level ? `<div><div class="profile-meta-label">Level</div><div class="profile-meta-value">${c.seniority_level}</div></div>` : ''}
+          ${loc ? `<div><div class="profile-meta-label">Location</div><div class="profile-meta-value">${loc}</div></div>` : ''}
         </div>
       </div>
     </div>
     <div class="profile-modal-footer">
       ${c.linkedin_url ? `<a href="${c.linkedin_url}" target="_blank" class="profile-action-btn profile-action-secondary">View LinkedIn</a>` : ''}
       <button class="profile-action-btn profile-action-primary" onclick="closeProfileModal();openModal()">Download Resume</button>
-      ${c.contact_email ? `<a href="mailto:${c.contact_email}" class="profile-action-btn profile-action-secondary" style="text-decoration:none;">Email</a>` : `<button class="profile-action-btn profile-action-secondary" onclick="closeProfileModal();openModal()">Contact</button>`}
+      ${c.contact_email ? `<a href="mailto:${c.contact_email}" class="profile-action-btn profile-action-secondary" style="text-decoration:none;">Email</a>` : ''}
     </div>
   `;
   document.getElementById('profile-modal-bg').classList.add('open');
 }
 
-function closeProfileModal() {
-  document.getElementById('profile-modal-bg').classList.remove('open');
-}
+function closeProfileModal() { document.getElementById('profile-modal-bg').classList.remove('open'); }
 
-// Init
 loadCandidates();
 </script>
 </body>
