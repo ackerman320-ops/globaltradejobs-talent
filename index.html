@@ -765,6 +765,8 @@
     select { font-size: 12px; padding: 0 8px; }
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init("sV5OjXurSarNki2bK");</script>
 </head>
 <body>
 
@@ -832,10 +834,9 @@
       <input type="text" id="contact-name" placeholder="Jane Smith">
     </div>
     <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
-      <button class="modal-submit" onclick="window.location.href='https://globaltradejobs.com/contact'">Contact Us →</button>
+      <button class="modal-submit" style="width:100%;padding:14px;" onclick="submitEmployer()">Request Access</button>
     </div>
-    <p class="modal-note">No credit card required. Full access requires a paid plan.</p>
+
   </div>
 </div>
 
@@ -1034,6 +1035,7 @@ async function submitEmployer() {
   btn.disabled = true;
 
   try {
+    // 1. Save to Supabase
     const res = await fetch(`${SUPABASE_URL}/rest/v1/employers`, {
       method: 'POST',
       headers: {
@@ -1045,22 +1047,23 @@ async function submitEmployer() {
       body: JSON.stringify({ company_name: company, email, contact_name: name, access_tier: 'none' })
     });
 
-    if (res.ok || res.status === 201) {
-      closeModal();
-      showToast('✓ Account created! We\'ll be in touch shortly.');
-    } else {
-      const err = await res.json();
-      if (err.code === '23505') {
-        showToast('That email is already registered.');
-      } else {
-        showToast('Something went wrong. Please try again.');
-      }
-    }
+    // 2. Send email notification via EmailJS
+    await emailjs.send('service_yonnt6o', 'template_hm29i4n', {
+      company: company,
+      name: name,
+      email: email
+    });
+
+    closeModal();
+    closeProfileModal();
+    showToast('✓ Request submitted! We\'ll be in touch shortly.');
+
   } catch(e) {
+    console.error(e);
     showToast('Connection error. Please try again.');
   }
 
-  btn.textContent = 'Create free account →';
+  btn.textContent = 'Request Access';
   btn.disabled = false;
 }
 
