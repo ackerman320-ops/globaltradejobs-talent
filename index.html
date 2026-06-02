@@ -371,28 +371,28 @@ function renderCards(candidates) {
     // BLURRED (everyone else)
     return `
     <div style="position:relative;border-radius:12px;overflow:hidden;">
-    <div class="card" id="card-${c.id}" style="filter:blur(4px);pointer-events:none;user-select:none;position:relative;">
-      <div class="card-head">
-        <div class="avatar ${av}">${initials}</div>
-        <div>
-          <div class="card-name">████ ████</div>
-          <div class="card-title">██████████ · ██████</div>
+      <div class="card" style="filter:blur(4px);pointer-events:none;user-select:none;">
+        <div class="card-head">
+          <div class="avatar ${av}">${initials}</div>
+          <div>
+            <div class="card-name">████ ████</div>
+            <div class="card-title">██████████ · ██████</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">██████</span><span class="tag">██████</span><span class="tag cert">███</span></div>
+          <div class="card-meta"><span></span><span>██ yrs exp.</span></div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-sm btn-sm-teal" style="width:100%;">Request Access</button>
         </div>
       </div>
-      <div class="card-body">
-        <div class="tags"><span class="tag">██████</span><span class="tag">██████</span><span class="tag cert">███</span></div>
-        <div class="card-meta"><span></span><span>██ yrs exp.</span></div>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,0.15);backdrop-filter:blur(1px);">
+        <div style="width:36px;height:36px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);color:#0b3a61;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <button onclick="openModal()" style="padding:8px 20px;background:#7ec8e3;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.15);">Request Access</button>
       </div>
-      <div class="card-footer">
-        <button class="btn-sm btn-sm-teal" style="width:100%;">Request Access</button>
-      </div>
-    </div>
-    </div>
-    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:10;">
-      <div style="width:36px;height:36px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);color:#0b3a61;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      </div>
-      <button onclick="openModal()" style="padding:8px 20px;background:#7ec8e3;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;">Request Access</button>
     </div>`;
   }).join('');
 }
