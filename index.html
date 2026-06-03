@@ -172,7 +172,6 @@
   <div class="hero-inner">
     <h1>The Global Trade<br>Talent Network</h1>
     <p>Connect with top-tier professionals in customs and trade compliance. Whether you are seeking an experienced Licensed Customs Broker or a seasoned director to manage ITAR and strict Export Controls, our directory provides direct access to verified talent that keeps supply chains moving.</p>
-
   </div>
 </div>
 
@@ -299,13 +298,12 @@ async function loadCandidates() {
 function renderCards(candidates) {
   const grid = document.getElementById('grid');
 
-  // Separate featured and non-featured
-  const featured = candidates.filter(c => c.is_featured);
+  // Shuffle featured, keep non-featured after
+  const featured = candidates.filter(c => c.is_featured).sort(() => Math.random() - 0.5);
   const nonFeatured = candidates.filter(c => !c.is_featured);
-
-  // All non-featured are blurred
   const ordered = [...featured, ...nonFeatured];
-  const shownIds = new Set(); // empty — no non-featured shown
+
+  const shownIds = new Set();
 
   grid.innerHTML = ordered.map(c => {
     const initials = c.initials || getInitials(c.full_name || '');
@@ -322,7 +320,6 @@ function renderCards(candidates) {
     const skillTags = allSkills.map(t => `<span class="tag">${t}</span>`).join('');
     const expStr = c.years_experience ? c.years_experience + ' yrs exp.' : '';
 
-    // FEATURED CARD
     if (c.is_featured) {
       const bio = c.summary_blurb || '';
       return `
@@ -353,7 +350,6 @@ function renderCards(candidates) {
       </div>`;
     }
 
-    // SHOWN NON-FEATURED (15 random - no name, but shows info)
     if (shownIds.has(c.id)) {
       return `
       <div class="card" id="card-${c.id}">
@@ -366,10 +362,7 @@ function renderCards(candidates) {
         </div>
         <div class="card-body">
           <div class="tags">${certTags}${skillTags}</div>
-          <div class="card-meta">
-            <span></span>
-            <span>${expStr}</span>
-          </div>
+          <div class="card-meta"><span></span><span>${expStr}</span></div>
         </div>
         <div class="card-footer">
           <button class="btn-sm btn-sm-teal" style="width:100%;" onclick="openModal()">Request Access</button>
@@ -377,7 +370,6 @@ function renderCards(candidates) {
       </div>`;
     }
 
-    // BLURRED (everyone else)
     return `
     <div style="position:relative;border-radius:12px;overflow:hidden;">
       <div class="card" style="filter:blur(4px);pointer-events:none;user-select:none;">
