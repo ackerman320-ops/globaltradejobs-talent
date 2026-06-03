@@ -132,7 +132,7 @@
     <a href="https://globaltradejobs.com"><img src="https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Close%20up%20logo.png" alt="GlobalTradeJobs" style="height:40px;width:auto;display:block;"></a>
     <nav>
       <a href="https://globaltradejobs.com/jobs">Jobs</a>
-      <a href="https://globaltradejobs.com/contact" class="btn-teal">Feature a Course</a>
+      <a href="https://globaltradejobs.com/contact" class="btn-teal" style="background:#0b3a61;">Post a Course</a>
     </nav>
   </div>
 </header>
@@ -284,7 +284,7 @@ function renderCourses(courses) {
         <h3>Do you offer a global trade course?</h3>
         <p>Feature your training program in our directory and connect with compliance professionals actively seeking education.</p>
       </div>
-      <a href="https://globaltradejobs.com/contact" class="btn-feature">Feature a Course →</a>
+      <a href="https://globaltradejobs.com/contact" class="btn-feature" style="background:white;color:#0b3a61;">Feature Your Course →</a>
     </div>`;
 
   const cards = courses.map(c => {
@@ -377,8 +377,6 @@ function toggleCard(id) {
   }
 }
 
-// Shuffle courses on load
-COURSES.sort(() => Math.random() - 0.5);
 filterCourses();
 </script>
 </body>
