@@ -1,9 +1,14 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/:path*",
+      "src": "/(.*)",
       "has": [{"type": "host", "value": "consultants.globaltradejobs.com"}],
-      "destination": "/consultants/index.html"
+      "dest": "/consultants/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "has": [{"type": "host", "value": "resumes.globaltradejobs.com"}],
+      "dest": "/index.html"
     }
   ]
 }
