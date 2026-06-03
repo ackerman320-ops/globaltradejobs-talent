@@ -1,0 +1,14 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "has": [{"type": "host", "value": "consultants.globaltradejobs.com"}],
+      "destination": "/consultants/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "has": [{"type": "host", "value": "resumes.globaltradejobs.com"}],
+      "destination": "/index.html"
+    }
+  ]
+}
