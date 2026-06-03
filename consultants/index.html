@@ -234,6 +234,10 @@ async function loadConsultants() {
 }
 
 function renderConsultants(consultants) {
+  // Shuffle featured consultants, keep non-featured after
+  const featured = consultants.filter(c => c.is_featured).sort(() => Math.random() - 0.5);
+  const nonFeatured = consultants.filter(c => !c.is_featured);
+  consultants = [...featured, ...nonFeatured];
   const list = document.getElementById('list');
   
   const joinBanner = `
