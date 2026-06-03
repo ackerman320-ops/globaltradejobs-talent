@@ -42,6 +42,20 @@
   .consultant-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
   .consultant-card.featured { border: 2px solid #0b3a61; box-shadow: 0 4px 20px rgba(11,58,97,0.1); }
 
+  /* TWO-TONE FEATURED CARD HEADER */
+  .consultant-card.featured .card-header { background: #0b3a61; border-radius: 10px 10px 0 0; }
+  .consultant-card.featured .card-header:hover { background: #0d4475; }
+  .consultant-card.featured .card-name { color: white; }
+  .consultant-card.featured .card-credentials { color: rgba(255,255,255,0.65); }
+  .consultant-card.featured .card-title { color: rgba(255,255,255,0.75); }
+  .consultant-card.featured .card-short-bio { color: rgba(255,255,255,0.85); }
+  .consultant-card.featured .card-chevron { color: rgba(255,255,255,0.5); }
+  .consultant-card.featured .featured-badge { background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.3); }
+  .consultant-card.featured .verified-badge { background: rgba(126,200,227,0.2); color: #7ec8e3; }
+  .consultant-card.featured .avatar { background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.4); }
+  .consultant-card.featured .tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.2); }
+  .consultant-card.featured .tag.cert { background: rgba(126,200,227,0.25); color: #7ec8e3; border-color: rgba(126,200,227,0.4); }
+
   /* CARD HEADER - Always visible */
   .card-header { padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer; }
   .card-header:hover { background: #f8f9fa; }
@@ -128,7 +142,7 @@
     <a href="https://globaltradejobs.com"><img src="https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Close%20up%20logo.png" alt="GlobalTradeJobs" style="height:40px;width:auto;display:block;"></a>
     <nav>
       <a href="https://globaltradejobs.com/jobs">Jobs</a>
-<a href="https://globaltradejobs.com/candidate-pricing" class="btn-teal">Join the Directory</a>
+      <a href="https://globaltradejobs.com/candidate-pricing" class="btn-teal">Join the Directory</a>
     </nav>
   </div>
 </header>
@@ -137,7 +151,6 @@
   <div class="hero-inner">
     <h1>The Global Trade<br>Consultant Network</h1>
     <p>Connect with an elite network of industry-leading experts in global trade. Whether you need a Licensed Customs Broker to navigate complex HTS classifications or a Trade Compliance specialist to manage ITAR and strict Export Controls, our directory provides direct access to the professionals who secure and streamline your supply chain.</p>
-
   </div>
 </div>
 
@@ -194,7 +207,6 @@ async function loadConsultants() {
     });
     let data = await res.json();
 
-    // Client-side search filter
     if (q) {
       const ql = q.toLowerCase();
       data = data.filter(c =>
@@ -243,7 +255,6 @@ function renderConsultants(consultants) {
     const featuredBadge = c.is_featured ? `<span class="featured-badge">⭐ Featured</span>` : '';
     const verifiedBadge = c.is_verified ? `<span class="verified-badge">✓ Verified Expert</span>` : '';
 
-    // Expanded panel content
     const industriesTags = (c.industries||[]).map(t => `<span class="expand-tag">${t}</span>`).join('');
     const allAdvisoryTags = (c.advisory_areas||[]).map(t => `<span class="expand-tag advisory">${t}</span>`).join('');
     const allCertTags = (c.certifications||[]).map(t => `<span class="expand-tag cert">${t}</span>`).join('');
@@ -317,7 +328,6 @@ function toggleCard(id) {
     chevron.classList.remove('open');
     openCard = null;
   } else {
-    // Close previously open card
     if (openCard && openCard !== id) {
       document.getElementById(`expanded-${openCard}`)?.classList.remove('open');
       document.getElementById(`chevron-${openCard}`)?.classList.remove('open');
@@ -325,7 +335,6 @@ function toggleCard(id) {
     expanded.classList.add('open');
     chevron.classList.add('open');
     openCard = id;
-    // Smooth scroll to card
     setTimeout(() => {
       document.getElementById(`card-${id}`).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 50);
