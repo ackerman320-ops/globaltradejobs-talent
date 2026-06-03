@@ -377,6 +377,8 @@ function toggleCard(id) {
   }
 }
 
+// Shuffle courses on load
+COURSES.sort(() => Math.random() - 0.5);
 filterCourses();
 </script>
 </body>
