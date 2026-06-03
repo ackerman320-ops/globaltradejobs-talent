@@ -9,6 +9,11 @@
       "src": "/(.*)",
       "has": [{"type": "host", "value": "resumes.globaltradejobs.com"}],
       "dest": "/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "has": [{"type": "host", "value": "courses.globaltradejobs.com"}],
+      "dest": "/courses/index.html"
     }
   ]
 }
