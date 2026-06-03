@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/",
+      "source": "/:path*",
       "has": [{"type": "host", "value": "consultants.globaltradejobs.com"}],
       "destination": "/consultants/index.html"
     }
