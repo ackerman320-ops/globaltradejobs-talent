@@ -168,7 +168,13 @@
 </main>
 
 <script>
-const ISECS_LOGO = "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png";
+const LOGOS = {
+  'us-sanctions': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png",
+  'china-sanctions': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png",
+  'eu-sanctions': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png",
+  'india-sanctions': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png",
+  'cble-selfpaced': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Customs%20Clearance%20and%20Trade%20Solutions.png"
+};
 
 let openCard = null;
 
@@ -229,6 +235,25 @@ const COURSES = [
     website: "www.csecp.org",
     enroll_url: "https://csecp.org/home",
     syllabus_url: "https://csecp.org/eu-certificate-course"
+  },
+  {
+    id: 'cble-selfpaced',
+    title: "CBLE Self-Paced Prep Course",
+    region: "U.S.",
+    iconClass: "icon-us",
+    certification: "CBLE Prep",
+    hours: null,
+    language: "English",
+    format: "Online · Self-Paced",
+    accreditor: null,
+    is_featured: true,
+    topics: ["Customs Broker Exam", "Tariff Classification", "Entry Procedures", "Exam Strategy", "Mindset Readiness"],
+    short_desc: "Flexible exam prep for trade professionals preparing for the Customs Broker License Exam — built around work schedules, family commitments, and travel.",
+    full_desc: "Built on the foundation of the successful live course, the CBLE Self-Paced Prep Course is designed for trade professionals preparing for the Customs Broker License Exam who need a flexible approach that fits around work schedules, family commitments, travel, and other responsibilities. The course includes 18 recorded lessons strategically organized to cover key content, practical exam skills, and mindset readiness. It also includes four practice exams with personalized analytics reports and a digital reference library, all delivered through a structured, easy-to-access online platform.",
+    email: null,
+    website: "cbleprep.clearcts.com",
+    enroll_url: "https://cbleprep.clearcts.com",
+    syllabus_url: null
   },
   {
     id: 'india-sanctions',
@@ -301,7 +326,7 @@ function renderCourses(courses) {
     <div class="course-card ${c.is_featured ? 'featured' : ''}" id="card-${c.id}">
       <div class="card-header" onclick="toggleCard('${c.id}')">
         <div class="course-icon ${c.iconClass}">
-          <img src="${ISECS_LOGO}" alt="ISECS" />
+          <img src="${LOGOS[c.id]}" alt="${c.title}" />
         </div>
         <div class="card-info">
           <div class="card-name-row">
@@ -311,7 +336,7 @@ function renderCourses(courses) {
           </div>
           <div class="card-meta">
             <span>📜 ${c.certification} Certification</span>
-            <span>⏱ ${c.hours} Estimated Hours</span>
+            ${c.hours ? `<span>⏱ ${c.hours} Estimated Hours</span>` : ""}
             <span>🌐 ${c.language}</span>
             <span>💻 ${c.format}</span>
           </div>
@@ -345,7 +370,7 @@ function renderCourses(courses) {
           </div>
           <div class="contact-section">
             <a href="${c.enroll_url}" target="_blank" class="btn-enroll">Enroll in Course →</a>
-            <a href="${c.syllabus_url}" target="_blank" class="btn-syllabus">View Full Syllabus</a>
+            ${c.syllabus_url ? `<a href="${c.syllabus_url}" target="_blank" class="btn-syllabus">View Full Syllabus</a>` : ""}
             ${emailLink}
             ${websiteLink}
           </div>
