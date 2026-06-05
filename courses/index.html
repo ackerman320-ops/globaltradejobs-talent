@@ -173,7 +173,8 @@ const LOGOS = {
   'china-sanctions': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png",
   'eu-sanctions': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png",
   'india-sanctions': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png",
-  'cble-selfpaced': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Customs%20Clearance%20and%20Trade%20Solutions.png"
+  'cble-selfpaced': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Customs%20Clearance%20and%20Trade%20Solutions.png",
+  'cble-live': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Customs%20Clearance%20and%20Trade%20Solutions.png"
 };
 
 let openCard = null;
@@ -250,6 +251,25 @@ const COURSES = [
     topics: ["Customs Broker Exam", "Tariff Classification", "Entry Procedures", "Exam Strategy", "Mindset Readiness"],
     short_desc: "Flexible exam prep for trade professionals preparing for the Customs Broker License Exam — built around work schedules, family commitments, and travel.",
     full_desc: "Built on the foundation of the successful live course, the CBLE Self-Paced Prep Course is designed for trade professionals preparing for the Customs Broker License Exam who need a flexible approach that fits around work schedules, family commitments, travel, and other responsibilities. The course includes 18 recorded lessons strategically organized to cover key content, practical exam skills, and mindset readiness. It also includes four practice exams with personalized analytics reports and a digital reference library, all delivered through a structured, easy-to-access online platform.",
+    email: null,
+    website: "cbleprep.clearcts.com",
+    enroll_url: "https://cbleprep.clearcts.com",
+    syllabus_url: null
+  },
+  {
+    id: 'cble-live',
+    title: "CBLE Live Prep Course",
+    region: "U.S.",
+    iconClass: "icon-us",
+    certification: "CBLE Prep",
+    hours: null,
+    language: "English",
+    format: "Online · Live Instructor-Led",
+    accreditor: null,
+    is_featured: true,
+    topics: ["Customs Broker Exam", "Tariff Classification", "Entry Procedures", "Exam Strategy", "Mindset Readiness"],
+    short_desc: "Live, instructor-led exam prep led by founder Kevin King, a Licensed Customs Broker who passed on his first try — giving you a clear weekly roadmap, practice exams, and analytics so you always know what to study and where to focus.",
+    full_desc: "Join founder Kevin King, a U.S. Licensed Customs Broker who passed the exam on his first try in May 2024, for a structured weekly program covering key exam topics including customs broker regulations, entry procedures, classification, valuation, and more. The course includes six practice exams with in-class review and personalized analytics reports, test-taking and time management strategies, exam day mindset coaching, and interactive learning games such as bingo, trivia, and scavenger hunts to reinforce learning. Includes session recordings, key reference documents, and quick reference sheets. Designed for busy professionals with at least a basic understanding of trade compliance concepts.",
     email: null,
     website: "cbleprep.clearcts.com",
     enroll_url: "https://cbleprep.clearcts.com",
@@ -336,7 +356,6 @@ function renderCourses(courses) {
           </div>
           <div class="card-meta">
             <span>📜 ${c.certification} Certification</span>
-            ${c.hours ? `<span>⏱ ${c.hours} Estimated Hours</span>` : ""}
             <span>🌐 ${c.language}</span>
             <span>💻 ${c.format}</span>
           </div>
@@ -359,7 +378,6 @@ function renderCourses(courses) {
             <div class="expand-tags">
               ${certExpandTag}
               <span class="expand-tag">${c.format}</span>
-              <span class="expand-tag">${c.hours} Hours</span>
               <span class="expand-tag">${c.language}</span>
               ${c.accreditor ? `<span class="expand-tag topic">${c.accreditor}</span>` : ''}
             </div>
