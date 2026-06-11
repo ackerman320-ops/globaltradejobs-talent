@@ -175,6 +175,11 @@
   </div>
 </div>
 
+<!-- GLOBE MAP -->
+<div style="background:#06101a;margin:0;padding:0;line-height:0;">
+  <iframe src="/gtj_globe.html" width="100%" height="600" frameborder="0" scrolling="no" style="display:block;border:none;"></iframe>
+</div>
+
 <div class="search-section">
   <div class="search-inner">
     <div class="search-wrap" style="flex:2;">
@@ -198,6 +203,7 @@
     <a href="https://globaltradejobs.com/candidate-pricing" style="padding:10px 24px;background:white;color:#0b3a61;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;">Claim Your Spot →</a>
   </div>
 </div>
+
 <main>
   <div class="grid" id="grid">
     <div class="loading"><div class="spinner"></div>Loading candidates...</div>
@@ -298,7 +304,6 @@ async function loadCandidates() {
 function renderCards(candidates) {
   const grid = document.getElementById('grid');
 
-  // Shuffle featured, keep non-featured after
   const featured = candidates.filter(c => c.is_featured).sort(() => Math.random() - 0.5);
   const nonFeatured = candidates.filter(c => !c.is_featured);
   const ordered = [...featured, ...nonFeatured];
