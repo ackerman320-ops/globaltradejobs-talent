@@ -180,17 +180,7 @@ const CLABELS=[
   {n:'Washington',lat:47.4,lng:-120.7,t:4},{n:'W. Virginia',lat:38.6,lng:-80.6,t:4},
   {n:'Wisconsin',lat:44.3,lng:-89.8,t:4},{n:'Wyoming',lat:43.0,lng:-107.6,t:4},
 ];
-const CITIES=[
-  {n:'New York',lat:40.71,lng:-74.01,p:3},{n:'London',lat:51.51,lng:-0.13,p:3},{n:'Tokyo',lat:35.69,lng:139.69,p:3},
-  {n:'Los Angeles',lat:34.05,lng:-118.24,p:3},{n:'Chicago',lat:41.88,lng:-87.63,p:3},
-  {n:'Paris',lat:48.86,lng:2.35,p:3},{n:'Moscow',lat:55.75,lng:37.62,p:3},
-  {n:'Dubai',lat:25.20,lng:55.27,p:3},{n:'Singapore',lat:1.35,lng:103.82,p:3},
-  {n:'Houston',lat:29.76,lng:-95.37,p:2},{n:'Toronto',lat:43.65,lng:-79.38,p:2},
-  {n:'Berlin',lat:52.52,lng:13.40,p:2},{n:'Sydney',lat:-33.87,lng:151.21,p:2},
-  {n:'Miami',lat:25.77,lng:-80.19,p:2},{n:'Seattle',lat:47.61,lng:-122.33,p:2},
-  {n:'Frankfurt',lat:50.11,lng:8.68,p:2},{n:'Brussels',lat:50.85,lng:4.35,p:2},
-  {n:'Copenhagen',lat:55.68,lng:12.57,p:2},{n:'Philadelphia',lat:39.95,lng:-75.17,p:2},
-];
+const CITIES=[];
 
 function lbl(txt,x,y,sz,alpha,bold){
   ctx.save();ctx.font=(bold?'500 ':'')+sz+'px Arial,sans-serif';
@@ -210,16 +200,7 @@ function draw(){
     const a=Math.min(0.75,(z-minZ)*1.5+(t===1?0.35:0));if(a<0.06)return;
     lbl(c.n.toUpperCase(),p[0],p[1],Math.max(8,Math.min(11,6.5+z*2)),a,true);
   });
-  CITIES.forEach(c=>{
-    const pt=project(c.lat,c.lng);if(!pt)return;
-    const minZ=c.p===3?1.1:1.6;if(z<minZ)return;
-    const a=Math.min(0.9,(z-minZ)*1.5);if(a<0.06)return;
-    const dr=c.p===3?2.5:2;
-    ctx.beginPath();ctx.arc(pt[0],pt[1],dr,0,2*Math.PI);ctx.fillStyle='rgba(210,230,255,'+Math.min(0.8,a)+')';ctx.fill();
-    ctx.save();ctx.font=Math.max(8,Math.min(11,7+(z-1)))+'px Arial,sans-serif';
-    ctx.fillStyle='rgba(210,230,255,'+a+')';ctx.textAlign='left';ctx.textBaseline='middle';
-    ctx.shadowColor='rgba(0,0,0,0.95)';ctx.shadowBlur=3;ctx.fillText(c.n,pt[0]+dr+3,pt[1]);ctx.restore();
-  });
+  
   renderPins();
 }
 
@@ -247,6 +228,7 @@ function renderPins(){
     bub.onmouseout=()=>bub.style.transform='scale(1)';
     pin.appendChild(bub);
     pin.onclick=(e)=>{e.stopPropagation();showCard(f,pt);};
+    pin.addEventListener('touchend',(e)=>{e.preventDefault();e.stopPropagation();showCard(f,pt);},{passive:false});
     gc.appendChild(pin);
   });
 }
