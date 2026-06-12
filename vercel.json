@@ -11,9 +11,9 @@
       "dest": "/gtj_globe.html"
     },
     {
-      "src": "/talent/(.*)",
+      "src": "/candidate/(.*)",
       "has": [{"type": "host", "value": "resumes.globaltradejobs.com"}],
-      "dest": "/talent/index.html"
+      "dest": "/candidate/index.html"
     },
     {
       "src": "/(.*)",
