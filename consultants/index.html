@@ -117,6 +117,17 @@
   </div>
 </div>
 
+<!-- CTA BANNER -->
+<div style="background:#0b3a61;padding:20px 2rem;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div>
+      <div style="font-size:17px;font-weight:700;color:white;margin-bottom:5px;">Are you a customs &amp; trade consultant?</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.75);">Get featured on our global map and listed in our consultant directory — connect with companies actively seeking your expertise.</div>
+    </div>
+    <a href="https://globaltradejobs.com/candidate-pricing" style="padding:11px 26px;background:#7ec8e3;color:#0b3a61;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;">Get Listed →</a>
+  </div>
+</div>
+
 <!-- CONSULTANT GLOBE MAP -->
 <div style="background:#06101a;margin:0;padding:0;line-height:0;">
   <iframe src="/gtj_consultants_globe.html" width="100%" height="600" frameborder="0" scrolling="no" style="display:block;border:none;"></iframe>
@@ -173,7 +184,7 @@ function renderConsultants(consultants) {
   const nonFeatured = consultants.filter(c => !c.is_featured);
   consultants = [...featured, ...nonFeatured];
   const list = document.getElementById('list');
-  const joinBanner = `<div class="join-banner"><div><h3>Are you a customs &amp; trade consultant?</h3><p>Get featured on our global map and listed in our consultant directory — connect with companies actively seeking your expertise.</p></div><a href="https://globaltradejobs.com/candidate-pricing" class="btn-join" style="background:white;color:#0b3a61;">Get Listed →</a></div>`;
+  const joinBanner = '';
   const cards = consultants.map((c, i) => {
     const av = getAvatar(i);
     const credDisplay = c.credentials ? `<span class="card-credentials">${c.credentials}</span>` : '';
