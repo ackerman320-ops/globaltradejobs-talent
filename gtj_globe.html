@@ -312,10 +312,10 @@ function resize(){
 
 canvas.addEventListener('wheel',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(e.deltaY<0?1.12:0.89)));draw();},{passive:false});
 canvas.addEventListener('mousedown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;});
-window.addEventListener('mousemove',e=>{if(!dragging)return;rotX+=(e.clientX-lx)*0.35;rotY-=(e.clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.clientX;ly=e.clientY;draw();});
+window.addEventListener('mousemove',e=>{if(!dragging)return;rotX-=(e.clientX-lx)*0.35;rotY-=(e.clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.clientX;ly=e.clientY;draw();});
 window.addEventListener('mouseup',()=>dragging=false);
 canvas.addEventListener('touchstart',e=>{if(e.touches.length===1){dragging=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY;}},{passive:true});
-canvas.addEventListener('touchmove',e=>{if(!dragging||e.touches.length!==1)return;rotX+=(e.touches[0].clientX-lx)*0.35;rotY-=(e.touches[0].clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.touches[0].clientX;ly=e.touches[0].clientY;draw();e.preventDefault();},{passive:false});
+canvas.addEventListener('touchmove',e=>{if(!dragging||e.touches.length!==1)return;rotX-=(e.touches[0].clientX-lx)*0.35;rotY-=(e.touches[0].clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.touches[0].clientX;ly=e.touches[0].clientY;draw();e.preventDefault();},{passive:false});
 canvas.addEventListener('touchend',()=>dragging=false);
 gc.addEventListener('click',e=>{if(e.target===canvas)closeCard();});
 window.addEventListener('resize',resize);
