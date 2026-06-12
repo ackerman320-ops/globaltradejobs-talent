@@ -40,7 +40,9 @@
   .profile-name { font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
   .profile-title { font-size: 14px; color: var(--gray-600); margin-bottom: 8px; }
   .profile-location { font-size: 13px; color: var(--gray-400); display: flex; align-items: center; gap: 5px; }
-  .certs-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .certs-section { margin-top: 14px; }
+  .certs-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-400); margin-bottom: 6px; }
+  .certs-row { display: flex; flex-wrap: wrap; gap: 6px; }
   .cert-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: var(--navy); color: white; font-weight: 500; }
 
   /* NOT CLAIMED BOX */
@@ -86,7 +88,10 @@
       <div class="profile-name" id="prof-name"></div>
       <div class="profile-title" id="prof-title"></div>
       <div class="profile-location" id="prof-location"></div>
-      <div class="certs-row" id="prof-certs"></div>
+      <div class="certs-section" id="certs-section" style="display:none;">
+    <div class="certs-label">Licenses &amp; Certifications</div>
+    <div class="certs-row" id="prof-certs"></div>
+  </div>
     </div>
   </div>
 
@@ -186,6 +191,7 @@ if (prof) {
   if (prof.certs && prof.certs.length) {
     document.getElementById('prof-certs').innerHTML = prof.certs.map(c =>
       `<span class="cert-badge">${c}</span>`).join('');
+    document.getElementById('certs-section').style.display = 'block';
   }
   document.title = prof.name + ' — Global Trade Jobs';
 } else {
