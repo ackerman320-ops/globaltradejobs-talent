@@ -173,7 +173,7 @@ function renderConsultants(consultants) {
   const nonFeatured = consultants.filter(c => !c.is_featured);
   consultants = [...featured, ...nonFeatured];
   const list = document.getElementById('list');
-  const joinBanner = `<div class="join-banner"><div><h3>Are you a consultant in customs &amp; trade?</h3><p>Join our directory as a Verified Consultant Profile and connect with companies actively seeking your expertise.</p></div><a href="https://globaltradejobs.com/candidate-pricing" class="btn-join" style="background:white;color:#0b3a61;">Get Listed →</a></div>`;
+  const joinBanner = `<div class="join-banner"><div><h3>Are you a customs &amp; trade consultant?</h3><p>Get featured on our global map and listed in our consultant directory — connect with companies actively seeking your expertise.</p></div><a href="https://globaltradejobs.com/candidate-pricing" class="btn-join" style="background:white;color:#0b3a61;">Get Listed →</a></div>`;
   const cards = consultants.map((c, i) => {
     const av = getAvatar(i);
     const credDisplay = c.credentials ? `<span class="card-credentials">${c.credentials}</span>` : '';
