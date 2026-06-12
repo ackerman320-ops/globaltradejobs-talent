@@ -17,17 +17,17 @@
     },
     {
       "src": "/gtj_globe.html",
-      "has": [{"type": "host", "value": "resumes.globaltradejobs.com"}],
+      "has": [{"type": "host", "value": "candidates.globaltradejobs.com"}],
       "dest": "/gtj_globe.html"
     },
     {
       "src": "/candidate/(.*)",
-      "has": [{"type": "host", "value": "resumes.globaltradejobs.com"}],
+      "has": [{"type": "host", "value": "candidates.globaltradejobs.com"}],
       "dest": "/candidate/index.html"
     },
     {
       "src": "/(.*)",
-      "has": [{"type": "host", "value": "resumes.globaltradejobs.com"}],
+      "has": [{"type": "host", "value": "candidates.globaltradejobs.com"}],
       "dest": "/index.html"
     },
     {
