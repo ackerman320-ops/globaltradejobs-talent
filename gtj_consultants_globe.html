@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Trade Consultant Map</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+#gc{position:relative;background:#06101a;width:100%;height:100vh;overflow:hidden;}
+#cv{display:block;width:100%;cursor:grab;}
+#cv:active{cursor:grabbing;}
+#loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#06101a;z-index:50;}
+#loader-ring{width:36px;height:36px;border:3px solid rgba(55,138,221,0.2);border-top-color:#378ADD;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loader-txt{color:rgba(255,255,255,0.5);font-size:13px;font-family:sans-serif;}
+.card{position:absolute;z-index:20;background:rgba(6,16,26,0.97);border:0.5px solid rgba(255,255,255,0.18);border-radius:12px;padding:14px;width:250px;color:#e6e6e6;font-size:12px;display:none;font-family:sans-serif;}
+.card.on{display:block;}
+.cc{position:absolute;top:10px;right:10px;cursor:pointer;color:rgba(255,255,255,0.4);font-size:15px;line-height:1;background:none;border:none;}
+.cc:hover{color:#fff;}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.cav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden;background:rgba(10,22,40,0.9);border:2px solid rgba(255,255,255,0.7);}
+.cav img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.cn{font-weight:600;font-size:13px;color:#fff;line-height:1.3;}
+.cs{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;}
+.featured-pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);margin-bottom:5px;}
+.specs{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;}
+.spec{background:rgba(55,138,221,0.18);border:0.5px solid rgba(55,138,221,0.4);color:#85b7eb;font-size:10px;padding:2px 7px;border-radius:20px;}
+.cdiv{border:none;border-top:0.5px solid rgba(255,255,255,0.1);margin:8px 0;}
+.acts{display:flex;gap:6px;margin-top:10px;}
+.abtn{flex:1;padding:7px 0;border-radius:8px;font-size:11px;text-align:center;cursor:pointer;border:0.5px solid;transition:background 0.15s;font-family:sans-serif;}
+.abp{background:rgba(55,138,221,0.18);border-color:rgba(55,138,221,0.45);color:#85b7eb;}
+.abp:hover{background:rgba(55,138,221,0.32);}
+.abs{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.52);}
+.abs:hover{background:rgba(255,255,255,0.12);}
+</style>
+</head>
+<body>
+<div id="gc">
+  <canvas id="cv"></canvas>
+  <div id="loader"><div id="loader-ring"></div><div id="loader-txt">Loading globe…</div></div>
+  <div id="card" class="card">
+    <button class="cc" onclick="closeCard()">&#xd7;</button>
+    <div class="ch">
+      <div class="cav" id="cav"></div>
+      <div>
+        <div id="cfeat"></div>
+        <div class="cn" id="cnm"></div>
+        <div class="cs" id="cloc"></div>
+      </div>
+    </div>
+    <div class="specs" id="cspecs"></div>
+    <hr class="cdiv">
+    <div class="cs" id="cdesc" style="line-height:1.6;color:rgba(255,255,255,0.7);"></div>
+    <div class="acts">
+      <div class="abtn abp" onclick="openProfile()">View Profile</div>
+      <div class="abtn abs" onclick="openWebsite()">Visit Website</div>
+    </div>
+  </div>
+  <div id="map-hint" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:10;background:rgba(0,0,0,0.65);color:rgba(255,255,255,0.9);font-size:11px;padding:6px 12px;border-radius:20px;pointer-events:none;transition:opacity 1.5s ease;font-family:sans-serif;white-space:nowrap;">Scroll or pinch to zoom &nbsp;·&nbsp; Drag to rotate</div>
+</div>
+
+<script>
+const BASE = 'https://consultants.globaltradejobs.com/firm/';
+
+const firms = [
+  // FEATURED - MLIT Inc (paying customer)
+  {id:1,name:'MLIT Inc.',title:'Customs Brokerage & Trade Compliance',city:'Henderson',country:'USA',lat:36.04,lng:-114.98,specs:['Customs Brokerage','Import/Export','Trade Compliance','FTZ'],desc:'35+ years of combined expertise in customs clearance and international trade compliance.',website:'https://www.mlitinc.com',slug:'mlit-inc',logo:'https://static.wixstatic.com/media/8e02f5_3c4c2913421b4279bd48af4d16e78a3c.jpg/v1/fill/w_200,h_40,al_c,q_80,enc_avif,quality_auto/MLITI%20logo.jpg',featured:true},
+  // USA
+  {id:2,name:'Braumiller Consulting',title:'International Trade Compliance',city:'Dallas',country:'USA',lat:32.78,lng:-96.80,specs:['Export Controls','HTS Classification','Trade Compliance'],desc:'Trade compliance expertise across 50+ countries in Europe, Asia, and the Americas.',website:'https://www.braumillerconsulting.com',slug:'braumiller-consulting',featured:false},
+  {id:3,name:'Tradewin',title:'Global Trade Compliance Consulting',city:'Seattle',country:'USA',lat:47.61,lng:-122.33,specs:['Customs Consulting','FTA','C-TPAT','Duty Drawback'],desc:'Consulting solutions that save money and streamline compliance processes.',website:'https://www.tradewin.net',slug:'tradewin',featured:false},
+  {id:4,name:'EFS Consulting Americas',title:'International Trade Compliance',city:'Atlanta',country:'USA',lat:33.75,lng:-84.39,specs:['EAR','ITAR','Export Controls','FTA'],desc:'Helping US manufacturers and exporters navigate international trade regulations.',website:'https://efs.consulting',slug:'efs-consulting-americas',featured:false},
+  {id:5,name:'Guidepost Solutions',title:'Trade & Export Compliance',city:'New York',country:'USA',lat:40.71,lng:-74.01,specs:['ITAR','OFAC','Export Controls','Sanctions'],desc:'Led by former government officials with deep regulatory enforcement experience.',website:'https://guidepostsolutions.com',slug:'guidepost-solutions',featured:false},
+  {id:6,name:'A.N. Deringer',title:'Customs Brokerage & Consulting',city:'St. Albans',country:'USA',lat:44.81,lng:-73.09,specs:['Customs Brokerage','Trade Compliance','Freight'],desc:'Family-owned customs broker with over 100 years of industry experience.',website:'https://www.anderinger.com',slug:'an-deringer',featured:false},
+  {id:7,name:'C.H. Robinson',title:'Customs Brokerage Services',city:'Eden Prairie',country:'USA',lat:44.85,lng:-93.47,specs:['Customs Brokerage','Trade Policy','Supply Chain'],desc:'800+ cross-border specialists and 100+ licensed customs brokers worldwide.',website:'https://www.chrobinson.com',slug:'ch-robinson',featured:false},
+  {id:8,name:'Livingston International',title:'Customs & Trade Consulting',city:'Chicago',country:'USA',lat:41.88,lng:-87.63,specs:['Customs Brokerage','Trade Consulting','Freight'],desc:'North Americas leading customs broker with 2,700+ employees globally.',website:'https://www.livingstonintl.com',slug:'livingston-international-us',featured:false},
+  {id:9,name:'GEODIS',title:'Customs Brokerage & Trade Compliance',city:'Houston',country:'USA',lat:29.76,lng:-95.37,specs:['Customs Brokerage','FTZ','Duty Drawback','C-TPAT'],desc:'Global logistics with extensive customs brokerage network across US ports of entry.',website:'https://geodis.com',slug:'geodis-us',featured:false},
+  {id:10,name:'BDP International',title:'Supply Chain & Customs Compliance',city:'Philadelphia',country:'USA',lat:39.95,lng:-75.17,specs:['Customs Compliance','Supply Chain','Logistics'],desc:'Specialized logistics and customs compliance for chemical and biotech industries.',website:'https://www.bdpinternational.com',slug:'bdp-international',featured:false},
+  {id:11,name:'Expeditors International',title:'Global Customs Brokerage',city:'Seattle',country:'USA',lat:47.65,lng:-122.29,specs:['Customs Brokerage','Freight','Trade Compliance'],desc:'17,000+ employees across a network of offices in over 100 countries.',website:'https://www.expeditors.com',slug:'expeditors-international',featured:false},
+  {id:12,name:'V. Alexander & Co.',title:'Customs Brokerage & Compliance',city:'Memphis',country:'USA',lat:35.15,lng:-90.05,specs:['Customs Brokerage','Import Compliance','FTZ'],desc:'Comprehensive customs brokerage and international trade compliance services.',website:'https://www.valexander.com',slug:'v-alexander',featured:false},
+  {id:13,name:'Sandler, Travis & Rosenberg',title:'Trade & Customs Law',city:'Miami',country:'USA',lat:25.77,lng:-80.19,specs:['Trade Law','Customs Law','Import/Export'],desc:'International trade and customs law firm with decades of expertise.',website:'https://www.strtrade.com',slug:'sandler-travis-rosenberg',featured:false},
+  {id:14,name:'Crowell & Moring',title:'International Trade Law',city:'Washington DC',country:'USA',lat:38.90,lng:-77.04,specs:['Trade Law','Export Controls','Sanctions','OFAC'],desc:'Leading law firm specializing in international trade, customs and export controls.',website:'https://www.crowell.com',slug:'crowell-moring',featured:false},
+  {id:15,name:'Baker McKenzie',title:'Global Trade Compliance',city:'Chicago',country:'USA',lat:41.90,lng:-87.65,specs:['Trade Compliance','Export Controls','Customs Law'],desc:'Global law firm providing trade compliance, customs and export control advisory.',website:'https://www.bakermckenzie.com',slug:'baker-mckenzie-us',featured:false},
+  {id:16,name:'KPMG Trade & Customs',title:'Trade & Customs Advisory',city:'New York',country:'USA',lat:40.75,lng:-73.99,specs:['Trade Compliance','HTS Classification','FTZ','Duty Drawback'],desc:'Helping organizations build strategic trade compliance frameworks globally.',website:'https://kpmg.com',slug:'kpmg-trade',featured:false},
+  {id:17,name:'J.M. Rodgers Co.',title:'Customs Brokerage & Consulting',city:'New York',country:'USA',lat:40.65,lng:-73.78,specs:['Customs Brokerage','Import Compliance','Trade Consulting'],desc:'Full-service customs brokerage and international trade consulting firm.',website:'https://www.jmrodgers.com',slug:'jm-rodgers',featured:false},
+  {id:18,name:'IBC Customs Brokerage',title:'Customs Brokerage',city:'New York',country:'USA',lat:40.72,lng:-73.85,specs:['Customs Brokerage','C-TPAT','Import Specialist'],desc:'Certified US Customs Broker with strategic locations at major ports of entry.',website:'https://www.ibcinc.com',slug:'ibc-customs',featured:false},
+  // Canada
+  {id:19,name:'Livingston International HQ',title:'Customs & Trade Consulting',city:'Toronto',country:'Canada',lat:43.65,lng:-79.38,specs:['Customs Brokerage','Trade Consulting','FTA'],desc:'Canadas largest customs broker with operations across North America and globally.',website:'https://www.livingstonintl.com',slug:'livingston-international-ca',featured:false},
+  {id:20,name:'CASAS International',title:'Customs Brokerage & Compliance',city:'Vancouver',country:'Canada',lat:49.28,lng:-123.12,specs:['Customs Brokerage','Import/Export','Trade Compliance'],desc:'Full-service customs brokerage serving importers and exporters across Canada.',website:'https://www.casas.ca',slug:'casas-international',featured:false},
+  // Europe
+  {id:21,name:'Maersk Trade Consulting',title:'Global Trade & Customs Consulting',city:'Copenhagen',country:'Denmark',lat:55.68,lng:12.57,specs:['Customs Consulting','AEO','CBAM','Trade Compliance'],desc:'Simplify customs, stay compliant, and cut trade costs with Maersk expertise.',website:'https://www.maersk.com',slug:'maersk-trade',featured:false},
+  {id:22,name:'EFS Consulting Europe',title:'International Trade Compliance',city:'Frankfurt',country:'Germany',lat:50.11,lng:8.68,specs:['EU Customs','Export Controls','CE Marking','Trade Compliance'],desc:'Deep regulatory expertise across EU, Asia-Pacific and emerging markets.',website:'https://efs.consulting',slug:'efs-consulting-europe',featured:false},
+  {id:23,name:'Deloitte Trade Compliance',title:'Global Trade Advisory',city:'London',country:'UK',lat:51.51,lng:-0.13,specs:['Trade Compliance','Customs','Export Controls','Brexit'],desc:'Global trade advisory services helping multinationals navigate complex regulations.',website:'https://www.deloitte.com',slug:'deloitte-trade',featured:false},
+  {id:24,name:'Baker McKenzie Europe',title:'Trade & Customs Law',city:'Brussels',country:'Belgium',lat:50.85,lng:4.35,specs:['EU Trade Law','Customs','Export Controls','Sanctions'],desc:'Leading European trade and customs law practice across 40+ countries.',website:'https://www.bakermckenzie.com',slug:'baker-mckenzie-europe',featured:false},
+  {id:25,name:'Akin Gump',title:'Trade Compliance & Sanctions',city:'London',country:'UK',lat:51.52,lng:-0.10,specs:['Export Controls','OFAC','Sanctions','Trade Law'],desc:'International law firm advising on export controls, sanctions and customs compliance.',website:'https://www.akingump.com',slug:'akin-gump',featured:false},
+  // Asia/Global
+  {id:26,name:'Kuehne + Nagel',title:'Customs & Trade Compliance',city:'Singapore',country:'Singapore',lat:1.35,lng:103.82,specs:['Customs Brokerage','Trade Compliance','Freight'],desc:'Global logistics leader with comprehensive customs and trade compliance services.',website:'https://www.kuehne-nagel.com',slug:'kuehne-nagel',featured:false},
+  {id:27,name:'Nippon Express',title:'Customs Brokerage & Logistics',city:'Tokyo',country:'Japan',lat:35.69,lng:139.69,specs:['Customs Brokerage','Import/Export','Trade Compliance'],desc:'Global logistics with strong customs brokerage expertise across Asia-Pacific.',website:'https://www.nipponexpress.com',slug:'nippon-express',featured:false},
+  {id:28,name:'DB Schenker',title:'Customs & Trade Compliance',city:'Frankfurt',country:'Germany',lat:50.05,lng:8.57,specs:['Customs Brokerage','Trade Compliance','Supply Chain'],desc:'One of the worlds leading logistics providers with global customs expertise.',website:'https://www.dbschenker.com',slug:'db-schenker',featured:false},
+];
+
+let activeProf=null,W,H,scale,baseScale,rotX=20,rotY=20,dragging=false,lx=0,ly=0;
+let countries=[],stateBorders=[];
+const canvas=document.getElementById('cv');
+const gc=document.getElementById('gc');
+const ctx=canvas.getContext('2d');
+const D=Math.PI/180;
+
+function project(lat,lng){
+  const lam=(lng+rotX)*D,phi=lat*D,p0=rotY*D;
+  const sp=Math.sin(phi),cp=Math.cos(phi),sp0=Math.sin(p0),cp0=Math.cos(p0),cl=Math.cos(lam);
+  if(sp*sp0+cp*cp0*cl<0.01)return null;
+  return[W/2+scale*(cp*Math.sin(lam)),H/2-scale*(sp*cp0-cp*sp0*cl)];
+}
+
+function drawSphere(){
+  ctx.beginPath();ctx.arc(W/2,H/2,scale,0,2*Math.PI);
+  ctx.fillStyle='#0b1929';ctx.fill();
+  ctx.strokeStyle='rgba(55,138,221,0.3)';ctx.lineWidth=1.5;ctx.stroke();
+}
+function drawGrat(){
+  ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=0.5;
+  for(let g=-180;g<=180;g+=30){ctx.beginPath();let f=true;for(let t=-90;t<=90;t+=4){const p=project(t,g);if(p){f?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;}else f=true;}ctx.stroke();}
+  for(let t=-60;t<=60;t+=30){ctx.beginPath();let f=true;for(let g=-180;g<=180;g+=4){const p=project(t,g);if(p){f?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;}else f=true;}ctx.stroke();}
+}
+function drawRings(rings,fill,stroke,lw){
+  rings.forEach(ring=>{
+    ctx.beginPath();let f=true,pn=false;
+    for(const c of ring){const p=project(c[1],c[0]);if(p){(f||pn)?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;pn=false;}else pn=true;}
+    ctx.closePath();
+    if(fill){ctx.fillStyle=fill;ctx.fill();}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke();}
+  });
+}
+
+const CLABELS=[
+  {n:'Russia',lat:61.5,lng:90,t:1},{n:'Canada',lat:60,lng:-96,t:1},{n:'United States',lat:38,lng:-97,t:1},
+  {n:'China',lat:35,lng:103,t:1},{n:'Brazil',lat:-10,lng:-53,t:1},{n:'Australia',lat:-25,lng:134,t:1},
+  {n:'India',lat:21,lng:79,t:1},{n:'Argentina',lat:-34,lng:-64,t:1},{n:'Mexico',lat:24,lng:-103,t:1},
+  {n:'Saudi Arabia',lat:24,lng:45,t:1},{n:'Indonesia',lat:-3,lng:118,t:1},{n:'Algeria',lat:28,lng:3,t:1},
+  {n:'France',lat:46,lng:2,t:2},{n:'Germany',lat:51,lng:11,t:2},{n:'Italy',lat:43,lng:13,t:2},
+  {n:'Japan',lat:36,lng:138,t:2},{n:'Nigeria',lat:9,lng:9,t:2},{n:'UK',lat:55,lng:-3,t:2},
+  {n:'Spain',lat:41,lng:-4,t:2},{n:'Poland',lat:52,lng:19,t:2},{n:'Turkey',lat:39,lng:35,t:2},
+  {n:'Ukraine',lat:49,lng:31,t:2},{n:'South Africa',lat:-29,lng:25,t:2},{n:'Pakistan',lat:30,lng:69,t:2},
+  {n:'Netherlands',lat:52,lng:5,t:3},{n:'Belgium',lat:51,lng:4,t:3},{n:'Denmark',lat:56,lng:10,t:3},
+  {n:'S.Korea',lat:37,lng:128,t:3},{n:'Singapore',lat:1.4,lng:103.8,t:3},
+];
+const CITIES=[
+  {n:'New York',lat:40.71,lng:-74.01,p:3},{n:'London',lat:51.51,lng:-0.13,p:3},{n:'Tokyo',lat:35.69,lng:139.69,p:3},
+  {n:'Los Angeles',lat:34.05,lng:-118.24,p:3},{n:'Chicago',lat:41.88,lng:-87.63,p:3},
+  {n:'Paris',lat:48.86,lng:2.35,p:3},{n:'Moscow',lat:55.75,lng:37.62,p:3},
+  {n:'Dubai',lat:25.20,lng:55.27,p:3},{n:'Singapore',lat:1.35,lng:103.82,p:3},
+  {n:'Houston',lat:29.76,lng:-95.37,p:2},{n:'Toronto',lat:43.65,lng:-79.38,p:2},
+  {n:'Berlin',lat:52.52,lng:13.40,p:2},{n:'Sydney',lat:-33.87,lng:151.21,p:2},
+  {n:'Miami',lat:25.77,lng:-80.19,p:2},{n:'Seattle',lat:47.61,lng:-122.33,p:2},
+  {n:'Frankfurt',lat:50.11,lng:8.68,p:2},{n:'Brussels',lat:50.85,lng:4.35,p:2},
+  {n:'Copenhagen',lat:55.68,lng:12.57,p:2},{n:'Philadelphia',lat:39.95,lng:-75.17,p:2},
+];
+
+function lbl(txt,x,y,sz,alpha,bold){
+  ctx.save();ctx.font=(bold?'500 ':'')+sz+'px Arial,sans-serif';
+  ctx.fillStyle='rgba(170,205,240,'+alpha+')';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.shadowColor='rgba(0,0,0,0.95)';ctx.shadowBlur=4;ctx.fillText(txt,x,y);ctx.restore();
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);drawSphere();drawGrat();
+  countries.forEach(c=>drawRings(c.rings,'#1a3048',null,0));
+  countries.forEach(c=>drawRings(c.rings,null,'rgba(90,155,215,0.45)',0.7));
+  stateBorders.forEach(r=>drawRings([r],null,'rgba(90,155,215,0.22)',0.4));
+  const z=scale/baseScale;
+  CLABELS.forEach(c=>{
+    const p=project(c.lat,c.lng);if(!p)return;
+    const t=c.t||2,minZ=t===1?0:t===2?0.65:1.2;if(z<minZ)return;
+    const a=Math.min(0.75,(z-minZ)*1.5+(t===1?0.35:0));if(a<0.06)return;
+    lbl(c.n.toUpperCase(),p[0],p[1],Math.max(8,Math.min(11,6.5+z*2)),a,true);
+  });
+  CITIES.forEach(c=>{
+    const pt=project(c.lat,c.lng);if(!pt)return;
+    const minZ=c.p===3?1.1:1.6;if(z<minZ)return;
+    const a=Math.min(0.9,(z-minZ)*1.5);if(a<0.06)return;
+    const dr=c.p===3?2.5:2;
+    ctx.beginPath();ctx.arc(pt[0],pt[1],dr,0,2*Math.PI);ctx.fillStyle='rgba(210,230,255,'+Math.min(0.8,a)+')';ctx.fill();
+    ctx.save();ctx.font=Math.max(8,Math.min(11,7+(z-1)))+'px Arial,sans-serif';
+    ctx.fillStyle='rgba(210,230,255,'+a+')';ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.shadowColor='rgba(0,0,0,0.95)';ctx.shadowBlur=3;ctx.fillText(c.n,pt[0]+dr+3,pt[1]);ctx.restore();
+  });
+  renderPins();
+}
+
+function renderPins(){
+  document.querySelectorAll('.pin').forEach(p=>p.remove());
+  firms.forEach(f=>{
+    const pt=project(f.lat,f.lng);if(!pt)return;
+    const pin=document.createElement('div');
+    pin.className='pin';
+    pin.style.cssText='position:absolute;transform:translate(-50%,-50%);cursor:pointer;z-index:6;left:'+pt[0]+'px;top:'+pt[1]+'px;';
+    const bub=document.createElement('div');
+    if(f.featured){
+      // Featured firm gets logo + gold ring
+      bub.style.cssText='width:42px;height:42px;border-radius:50%;background:white;border:2.5px solid #ffd700;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 14px rgba(255,215,0,0.4);transition:transform 0.15s;overflow:hidden;';
+      if(f.logo){
+        bub.innerHTML='<img src="'+f.logo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentNode.innerHTML=\'🏢\'">';
+      } else {
+        bub.textContent='🏢';
+      }
+    } else {
+      bub.style.cssText='width:38px;height:38px;border-radius:50%;background:rgba(8,18,32,0.88);border:2px solid rgba(255,255,255,0.55);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 2px 10px rgba(0,0,0,0.6);transition:transform 0.15s;';
+      bub.textContent='🏢';
+    }
+    bub.onmouseover=()=>bub.style.transform='scale(1.18)';
+    bub.onmouseout=()=>bub.style.transform='scale(1)';
+    pin.appendChild(bub);
+    pin.onclick=(e)=>{e.stopPropagation();showCard(f,pt);};
+    gc.appendChild(pin);
+  });
+}
+
+function showCard(f,pt){
+  activeProf=f;
+  const cavEl=document.getElementById('cav');
+  if(f.logo){
+    cavEl.innerHTML='<img src="'+f.logo+'" style="width:100%;height:100%;object-fit:contain;border-radius:50%;padding:2px;" onerror="this.parentNode.innerHTML=\'🏢\'">';
+  } else {
+    cavEl.textContent='🏢';
+  }
+  document.getElementById('cfeat').innerHTML=f.featured?'<div class="featured-pill">⭐ Featured Firm</div>':'';
+  document.getElementById('cnm').textContent=f.name;
+  document.getElementById('cloc').textContent=f.title+' · '+f.city+', '+f.country;
+  document.getElementById('cdesc').textContent=f.desc;
+  document.getElementById('cspecs').innerHTML=f.specs.map(s=>'<span class="spec">'+s+'</span>').join('');
+  const card=document.getElementById('card');
+  let lft=pt[0]+22,top=pt[1]-20;
+  if(lft+260>W)lft=pt[0]-272;if(top+240>H)top=H-248;if(top<8)top=8;if(lft<8)lft=8;
+  card.style.left=lft+'px';card.style.top=top+'px';card.classList.add('on');
+}
+function closeCard(){document.getElementById('card').classList.remove('on');activeProf=null;}
+function openProfile(){if(activeProf)window.open(BASE+activeProf.slug,'_blank');}
+function openWebsite(){if(activeProf&&activeProf.website)window.open(activeProf.website,'_blank');}
+
+function resize(){
+  W=window.innerWidth;H=window.innerHeight;
+  canvas.width=W;canvas.height=H;canvas.style.height=H+'px';
+  baseScale=Math.min(W,H)*0.43;if(!scale)scale=baseScale;
+  if(countries.length)draw();
+}
+
+canvas.addEventListener('wheel',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(e.deltaY<0?1.25:0.8)));draw();},{passive:false});
+canvas.addEventListener('dblclick',e=>{scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*1.5));draw();});
+canvas.addEventListener('contextmenu',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*0.7));draw();});
+canvas.addEventListener('mousedown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;closeCard();});
+window.addEventListener('mousemove',e=>{if(!dragging)return;rotX-=(e.clientX-lx)*0.35;rotY-=(e.clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.clientX;ly=e.clientY;draw();});
+window.addEventListener('mouseup',()=>dragging=false);
+let lastPinchDist=null;
+canvas.addEventListener('touchstart',e=>{if(e.touches.length===1){dragging=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY;}else if(e.touches.length===2){dragging=false;lastPinchDist=null;}},{passive:true});
+canvas.addEventListener('touchmove',e=>{
+  if(e.touches.length===2){e.preventDefault();const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY,dist=Math.sqrt(dx*dx+dy*dy);if(lastPinchDist){scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(dist/lastPinchDist)));draw();}lastPinchDist=dist;return;}
+  if(!dragging||e.touches.length!==1)return;
+  rotX-=(e.touches[0].clientX-lx)*0.35;rotY-=(e.touches[0].clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.touches[0].clientX;ly=e.touches[0].clientY;draw();e.preventDefault();
+},{passive:false});
+canvas.addEventListener('touchend',()=>{dragging=false;lastPinchDist=null;});
+gc.addEventListener('click',e=>{if(e.target===canvas)closeCard();});
+window.addEventListener('resize',resize);
+
+resize();
+setTimeout(()=>{const h=document.getElementById('map-hint');if(h)h.style.opacity='0';},6000);
+setTimeout(()=>{const h=document.getElementById('map-hint');if(h)h.style.display='none';},8000);
+
+(async()=>{
+  try{
+    const [r1,r2]=await Promise.all([
+      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'),
+      fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json')
+    ]);
+    const [w,us]=await Promise.all([r1.json(),r2.json()]);
+    function decode(topo,obj){
+      const sc=topo.transform?topo.transform.scale:[1,1],tr=topo.transform?topo.transform.translate:[0,0];
+      const decoded=topo.arcs.map(arc=>{let x=0,y=0;return arc.map(d=>{x+=d[0];y+=d[1];return[x*sc[0]+tr[0],y*sc[1]+tr[1]];});});
+      function ring(idxs){const coords=[];for(let i of idxs){const rev=i<0;const arc=decoded[rev?~i:i];const pts=rev?[...arc].reverse():arc;for(let j=rev?0:1;j<pts.length;j++)coords.push(pts[j]);}return coords;}
+      return obj.geometries.map(g=>{const rings=[];if(g.type==='Polygon')rings.push(ring(g.arcs[0]));else if(g.type==='MultiPolygon')g.arcs.forEach(p=>rings.push(ring(p[0])));return rings;});
+    }
+    countries=decode(w,w.objects.countries).map(rings=>({rings}));
+    stateBorders=decode(us,us.objects.states).flat();
+    document.getElementById('loader').style.display='none';
+    draw();
+  }catch(e){
+    document.getElementById('loader-txt').textContent='Ready';
+    setTimeout(()=>document.getElementById('loader').style.display='none',500);
+    draw();
+  }
+})();
+</script>
+</body>
+</html>
