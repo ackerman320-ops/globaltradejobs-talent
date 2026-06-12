@@ -44,7 +44,8 @@ body{background:#06101a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
     <span class="cc" onclick="closeCard()">&#xd7;</span>
     <div class="ch">
       <div class="cav" id="cav"></div>
-      <div><div class="cn" id="cnm"></div><div class="cs" id="ctl"></div><div class="cs" id="cloc"></div></div>
+      <div><div class="cn" id="cnm"></div><div class="cs" id="ctl"></div><div class="cs" id="cloc">
+  <div id="map-hint" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:10;background:rgba(0,0,0,0.65);color:rgba(255,255,255,0.9);font-size:11px;padding:6px 12px;border-radius:20px;pointer-events:none;transition:opacity 1.5s ease;font-family:sans-serif;">Scroll or pinch to zoom &nbsp;·&nbsp; Drag to rotate</div></div></div>
     </div>
     <div class="certs" id="ccerts"></div>
     <hr class="cdiv">
@@ -310,7 +311,16 @@ function resize(){
   if(countries.length)draw();
 }
 
-canvas.addEventListener('wheel',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(e.deltaY<0?1.12:0.89)));draw();},{passive:false});
+canvas.addEventListener('wheel',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(e.deltaY<0?1.25:0.8)));draw();},{passive:false});
+canvas.addEventListener('dblclick',e=>{
+  scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*1.5));
+  draw();
+});
+canvas.addEventListener('contextmenu',e=>{
+  e.preventDefault();
+  scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*0.7));
+  draw();
+});
 canvas.addEventListener('mousedown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;});
 window.addEventListener('mousemove',e=>{if(!dragging)return;rotX-=(e.clientX-lx)*0.35;rotY-=(e.clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.clientX;ly=e.clientY;draw();});
 window.addEventListener('mouseup',()=>dragging=false);
@@ -375,6 +385,9 @@ resize();
     draw();
   }
 })();
+// Fade out hint after 4 seconds
+setTimeout(()=>{const h=document.getElementById('map-hint');if(h)h.style.opacity='0';},6000);
+setTimeout(()=>{const h=document.getElementById('map-hint');if(h)h.style.display='none';},8000);
 </script>
 </body>
 </html>
