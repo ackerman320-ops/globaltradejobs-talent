@@ -6,8 +6,8 @@
 <title>Global Trade Consultant Map</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{width:100%;height:100%;}
-#gc{position:relative;background:#06101a;width:100%;height:100%;overflow:hidden;}
+html,body{width:100%;height:600px;overflow:hidden;}
+#gc{position:relative;background:#06101a;width:100%;height:600px;overflow:hidden;}
 #cv{display:block;width:100%;cursor:grab;}
 #cv:active{cursor:grabbing;}
 #loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#06101a;z-index:50;}
@@ -239,7 +239,7 @@ function openProfile(){if(activeProf)window.open(BASE+activeProf.slug,'_blank');
 function openWebsite(){if(activeProf&&activeProf.website)window.open(activeProf.website,'_blank');}
 
 function resize(){
-  W=window.innerWidth;H=window.innerHeight;
+  W=window.innerWidth;H=600;
   canvas.width=W;canvas.height=H;canvas.style.height=H+'px';
   baseScale=Math.min(W,H)*0.43;if(!scale)scale=baseScale;
   if(countries.length)draw();
