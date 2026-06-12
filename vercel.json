@@ -6,6 +6,11 @@
       "dest": "/gtj_consultants_globe.html"
     },
     {
+      "src": "/firm/(.*)",
+      "has": [{"type": "host", "value": "consultants.globaltradejobs.com"}],
+      "dest": "/firm/index.html"
+    },
+    {
       "src": "/(.*)",
       "has": [{"type": "host", "value": "consultants.globaltradejobs.com"}],
       "dest": "/consultants/index.html"
