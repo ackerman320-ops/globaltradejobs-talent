@@ -302,6 +302,7 @@ function renderPins(){
     bub.onmouseout=()=>bub.style.transform='scale(1)';
     pin.appendChild(bub);
     pin.onclick=(e)=>{e.stopPropagation();showCard(p,pt);};
+pin.addEventListener('touchend',(e)=>{e.preventDefault();e.stopPropagation();showCard(p,pt);},{passive:false});
     gc.appendChild(pin);
   });
 }
