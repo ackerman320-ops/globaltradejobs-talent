@@ -59,16 +59,8 @@ body{background:#06101a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
 </div>
 
 <script>
-// ============================================================
-// CONFIGURATION — edit these to match your site
-// ============================================================
 const BASE = 'https://candidates.globaltradejobs.com/candidate/';
 
-// ============================================================
-// PROFESSIONALS — add/edit/remove entries here
-// Fields: id, name, title, city, country, lat, lng,
-//         certs (array), exp, avail, slug, emoji
-// ============================================================
 const profs = [
   {id:1,name:'Sarah Chen',title:'Customs Compliance Manager',city:'New York',country:'USA',lat:40.71,lng:-74.01,certs:['LCB','CCS'],exp:'12 yrs',avail:'Open to roles',slug:'sarah-chen',emoji:'👩'},
   {id:2,name:'Marcus Webb',title:'Customs Compliance Director',city:'Chicago',country:'USA',lat:41.88,lng:-87.63,certs:['LCB','CCS','CUSECO'],exp:'18 yrs',avail:'Consulting',slug:'marcus-webb',emoji:'👨'},
@@ -95,7 +87,7 @@ const profs = [
   {id:23,name:'Christine Wu',title:'Global Trade Manager',city:'Las Vegas',country:'USA',lat:36.17,lng:-115.14,certs:['CCS'],exp:'13 yrs',avail:'Open to roles',slug:'christine-wu',emoji:'👩'},
   {id:24,name:'Marcus Bell',title:'Supply Chain Compliance Lead',city:'St. Louis',country:'USA',lat:38.63,lng:-90.20,certs:['CUSECO','CCS'],exp:'11 yrs',avail:'Open to roles',slug:'marcus-bell',emoji:'👨'},
   {id:25,name:'Diana Hart',title:'Duty Drawback Consultant',city:'Tampa',country:'USA',lat:27.95,lng:-82.46,certs:['LCB'],exp:'8 yrs',avail:'Freelance',slug:'diana-hart',emoji:'👩'},
-  {id:26,name:'Priya Nair',title:'FTZ & Duty Drawback Expert',city:'London',country:'UK',lat:51.51,lng:-0.13,certs:['CTCS'],exp:'9 yrs',avail:'Freelance',slug:'priya-nair',emoji:'👩'},
+  {id:26,name:'Priya Nair',title:'FTZ \x26 Duty Drawback Expert',city:'London',country:'UK',lat:51.51,lng:-0.13,certs:['CTCS'],exp:'9 yrs',avail:'Freelance',slug:'priya-nair',emoji:'👩'},
   {id:27,name:'Hans Mueller',title:'EU Customs Compliance Director',city:'Berlin',country:'Germany',lat:52.52,lng:13.40,certs:['CCS','CES'],exp:'17 yrs',avail:'Open to roles',slug:'hans-mueller',emoji:'👨'},
   {id:28,name:'Sophie Laurent',title:'Trade Compliance Manager',city:'Paris',country:'France',lat:48.86,lng:2.35,certs:['CGBP','CCS'],exp:'11 yrs',avail:'Open to roles',slug:'sophie-laurent',emoji:'👩'},
   {id:29,name:'Antonio Ricci',title:'Import Specialist',city:'Milan',country:'Italy',lat:45.47,lng:9.19,certs:['LCB'],exp:'8 yrs',avail:'Freelance',slug:'antonio-ricci',emoji:'🧔'},
@@ -119,20 +111,17 @@ const profs = [
   {id:47,name:'Lucas Oliveira',title:'Trade Compliance Coordinator',city:'Sao Paulo',country:'Brazil',lat:-23.55,lng:-46.63,certs:['LCB'],exp:'7 yrs',avail:'Open to roles',slug:'lucas-oliveira',emoji:'👨'},
   {id:48,name:'Aisha Nkosi',title:'Customs Broker',city:'Johannesburg',country:'South Africa',lat:-26.20,lng:28.04,certs:['LCB','CCS'],exp:'9 yrs',avail:'Open to roles',slug:'aisha-nkosi',emoji:'👩'},
   {id:49,name:'Mei Lin',title:'FTZ Compliance Specialist',city:'Singapore',country:'Singapore',lat:1.35,lng:103.82,certs:['CGBP','CTCS'],exp:'8 yrs',avail:'Freelance',slug:'mei-lin',emoji:'👩'},
-  {id:50,name:'Omar Khalil',title:'Sanctions & Export Compliance',city:'Cairo',country:'Egypt',lat:30.04,lng:31.24,certs:['CES'],exp:'11 yrs',avail:'Open to roles',slug:'omar-khalil',emoji:'🧔'},
-
+  {id:50,name:'Omar Khalil',title:'Sanctions \x26 Export Compliance',city:'Cairo',country:'Egypt',lat:30.04,lng:31.24,certs:['CES'],exp:'11 yrs',avail:'Open to roles',slug:'omar-khalil',emoji:'🧔'},
   {id:51,name:'Jean-Pierre Bouchard',title:'Customs Compliance Manager',city:'Montreal',country:'Canada',lat:45.50,lng:-73.57,certs:['LCB','CCS'],exp:'14 yrs',avail:'Open to roles',slug:'jean-pierre-bouchard',emoji:'👨'},
   {id:52,name:'Anika Sharma',title:'Trade Policy Specialist',city:'Toronto',country:'Canada',lat:43.65,lng:-79.38,certs:['CGBP'],exp:'9 yrs',avail:'Consulting',slug:'anika-sharma',emoji:'👩'},
-  {id:53,name:'Tyler Mackenzie',title:'Import & Export Coordinator',city:'Vancouver',country:'Canada',lat:49.28,lng:-123.12,certs:[],exp:'5 yrs',avail:'Open to roles',slug:'tyler-mackenzie',emoji:'👨'},
+  {id:53,name:'Tyler Mackenzie',title:'Import \x26 Export Coordinator',city:'Vancouver',country:'Canada',lat:49.28,lng:-123.12,certs:[],exp:'5 yrs',avail:'Open to roles',slug:'tyler-mackenzie',emoji:'👨'},
   {id:54,name:'Chloe Tremblay',title:'Global Logistics Analyst',city:'Calgary',country:'Canada',lat:51.05,lng:-114.07,certs:['CCS','CUSECO'],exp:'7 yrs',avail:'Open to roles',slug:'chloe-tremblay',emoji:'👩'},
   {id:55,name:'Marcus Okafor',title:'Supply Chain Specialist',city:'Ottawa',country:'Canada',lat:45.42,lng:-75.69,certs:[],exp:'6 yrs',avail:'Freelance',slug:'marcus-okafor',emoji:'🧑'},
   {id:56,name:'Valentina Cruz',title:'Customs Broker',city:'Mexico City',country:'Mexico',lat:19.43,lng:-99.13,certs:['LCB'],exp:'8 yrs',avail:'Open to roles',slug:'valentina-cruz',emoji:'👩'},
   {id:57,name:'Rodrigo Herrera',title:'Trade Compliance Analyst',city:'Guadalajara',country:'Mexico',lat:20.66,lng:-103.35,certs:['CCS','CES'],exp:'6 yrs',avail:'Open to roles',slug:'rodrigo-herrera',emoji:'👨'},
-  {id:58,name:'Sofia Mendoza',title:'Import Specialist',city:'Monterrey',country:'Mexico',lat:25.69,lng:-100.32,certs:[],exp:'4 yrs',avail:'Open to roles',slug:'sofia-mendoza',emoji:'👩'},];
+  {id:58,name:'Sofia Mendoza',title:'Import Specialist',city:'Monterrey',country:'Mexico',lat:25.69,lng:-100.32,certs:[],exp:'4 yrs',avail:'Open to roles',slug:'sofia-mendoza',emoji:'👩'},
+];
 
-// ============================================================
-// GLOBE ENGINE — no need to edit below this line
-// ============================================================
 let activeProf=null,W,H,scale,baseScale,rotX=20,rotY=20,dragging=false,lx=0,ly=0;
 let countries=[],stateBorders=[];
 const canvas=document.getElementById('cv');
@@ -218,34 +207,6 @@ const CLABELS=[
   {n:'Washington',lat:47.4,lng:-120.7,t:4},{n:'W. Virginia',lat:38.6,lng:-80.6,t:4},
   {n:'Wisconsin',lat:44.3,lng:-89.8,t:4},{n:'Wyoming',lat:43.0,lng:-107.6,t:4},
 ];
-const CITIES=[
-  {n:'New York',lat:40.71,lng:-74.01,p:3},{n:'London',lat:51.51,lng:-0.13,p:3},{n:'Tokyo',lat:35.69,lng:139.69,p:3},
-  {n:'Los Angeles',lat:34.05,lng:-118.24,p:3},{n:'Shanghai',lat:31.23,lng:121.47,p:3},{n:'Beijing',lat:39.91,lng:116.39,p:3},
-  {n:'Chicago',lat:41.88,lng:-87.63,p:3},{n:'Mumbai',lat:19.08,lng:72.88,p:3},{n:'Paris',lat:48.86,lng:2.35,p:3},
-  {n:'Moscow',lat:55.75,lng:37.62,p:3},{n:'Istanbul',lat:41.01,lng:28.95,p:3},{n:'Dubai',lat:25.20,lng:55.27,p:3},
-  {n:'Singapore',lat:1.35,lng:103.82,p:3},{n:'Seoul',lat:37.57,lng:126.98,p:3},{n:'Mexico City',lat:19.43,lng:-99.13,p:3},
-  {n:'Sao Paulo',lat:-23.55,lng:-46.63,p:3},{n:'Cairo',lat:30.04,lng:31.24,p:3},{n:'Lagos',lat:6.52,lng:3.38,p:3},
-  {n:'Bangkok',lat:13.75,lng:100.52,p:3},{n:'Delhi',lat:28.66,lng:77.23,p:3},
-  {n:'Houston',lat:29.76,lng:-95.37,p:2},{n:'Toronto',lat:43.65,lng:-79.38,p:2},{n:'Berlin',lat:52.52,lng:13.40,p:2},
-  {n:'Sydney',lat:-33.87,lng:151.21,p:2},{n:'Madrid',lat:40.42,lng:-3.70,p:2},{n:'Rome',lat:41.90,lng:12.50,p:2},
-  {n:'Johannesburg',lat:-26.20,lng:28.04,p:2},{n:'Miami',lat:25.77,lng:-80.19,p:2},{n:'Karachi',lat:24.86,lng:67.01,p:2},
-  {n:'Jakarta',lat:-6.21,lng:106.85,p:2},{n:'Seattle',lat:47.61,lng:-122.33,p:2},{n:'Atlanta',lat:33.75,lng:-84.39,p:2},
-  {n:'Amsterdam',lat:52.37,lng:4.90,p:2},{n:'Riyadh',lat:24.69,lng:46.72,p:2},{n:'Hong Kong',lat:22.32,lng:114.17,p:2},
-];
-const STATES=[
-  {n:'California',lat:36.7,lng:-119.4},{n:'Texas',lat:31,lng:-100},{n:'Florida',lat:27.7,lng:-81.5},
-  {n:'New York',lat:42.9,lng:-75.6},{n:'Illinois',lat:40,lng:-89.2},{n:'Washington',lat:47.4,lng:-120.5},
-  {n:'Georgia',lat:32.7,lng:-83.4},{n:'Arizona',lat:34.3,lng:-111.7},{n:'Colorado',lat:39,lng:-105.5},
-  {n:'Virginia',lat:37.5,lng:-78.7},{n:'Oregon',lat:43.9,lng:-120.6},{n:'Minnesota',lat:46.4,lng:-93.2},
-  {n:'Nevada',lat:38.8,lng:-116.4},{n:'Michigan',lat:44.3,lng:-85.4},{n:'Ohio',lat:40.4,lng:-82.8},
-  {n:'Pennsylvania',lat:40.6,lng:-77.2},{n:'Tennessee',lat:35.8,lng:-86.3},{n:'Missouri',lat:38.5,lng:-92.5},
-  {n:'Indiana',lat:40.3,lng:-86.1},{n:'Kansas',lat:38.5,lng:-98.3},{n:'Iowa',lat:42,lng:-93.5},
-  {n:'Utah',lat:39.3,lng:-111.1},{n:'Nebraska',lat:41.5,lng:-99.9},{n:'N.Carolina',lat:35.5,lng:-79.4},
-  {n:'S.Carolina',lat:33.8,lng:-80.9},{n:'Louisiana',lat:31.1,lng:-91.8},{n:'Alabama',lat:32.8,lng:-86.8},
-  {n:'Oklahoma',lat:35.6,lng:-97.5},{n:'Wisconsin',lat:44.5,lng:-89.5},{n:'Montana',lat:46.9,lng:-110.5},
-  {n:'New Mexico',lat:34.3,lng:-106},{n:'Kentucky',lat:37.7,lng:-85},{n:'Arkansas',lat:34.8,lng:-92.4},
-  {n:'Mississippi',lat:32.7,lng:-89.7},{n:'Wyoming',lat:43,lng:-107.3},{n:'Idaho',lat:44.4,lng:-114.6},
-];
 
 function lbl(txt,x,y,sz,alpha,bold){
   ctx.save();ctx.font=(bold?'500 ':'')+sz+'px -apple-system,Arial,sans-serif';
@@ -262,28 +223,11 @@ function draw(){
   const z=scale/baseScale;
   CLABELS.forEach(c=>{
     const p=project(c.lat,c.lng);if(!p)return;
-    const t=c.t||2,minZ=t===1?0:t===2?0.65:1.2;
+    const t=c.t||2,minZ=t===1?0:t===2?0.65:t===3?1.2:1.8;
     if(z<minZ)return;
     const a=Math.min(0.75,(z-minZ)*1.5+(t===1?0.35:0));
     if(a<0.06)return;
     lbl(c.n.toUpperCase(),p[0],p[1],Math.max(8,Math.min(11,6.5+z*2)),a,true);
-  });
-  if(z>1.5)STATES.forEach(s=>{
-    const p=project(s.lat,s.lng);if(!p)return;
-    const a=Math.min(0.5,(z-1.5)*1.8);if(a<0.06)return;
-    lbl(s.n,p[0],p[1],Math.max(7,Math.min(10,5+z)),a,false);
-  });
-  CITIES.forEach(c=>{
-    const pt=project(c.lat,c.lng);if(!pt)return;
-    const minZ=c.p===3?1.1:1.6;if(z<minZ)return;
-    const a=Math.min(0.9,(z-minZ)*1.5);if(a<0.06)return;
-    const dr=c.p===3?2.5:2;
-    ctx.beginPath();ctx.arc(pt[0],pt[1],dr,0,2*Math.PI);
-    ctx.fillStyle='rgba(210,230,255,'+Math.min(0.8,a)+')';ctx.fill();
-    ctx.save();ctx.font=Math.max(8,Math.min(11,7+(z-1)))+'px -apple-system,Arial,sans-serif';
-    ctx.fillStyle='rgba(210,230,255,'+a+')';ctx.textAlign='left';ctx.textBaseline='middle';
-    ctx.shadowColor='rgba(0,0,0,0.95)';ctx.shadowBlur=3;
-    ctx.fillText(c.n,pt[0]+dr+3,pt[1]);ctx.restore();
   });
   renderPins();
 }
@@ -302,7 +246,7 @@ function renderPins(){
     bub.onmouseout=()=>bub.style.transform='scale(1)';
     pin.appendChild(bub);
     pin.onclick=(e)=>{e.stopPropagation();showCard(p,pt);};
-pin.addEventListener('touchend',(e)=>{e.preventDefault();e.stopPropagation();showCard(p,pt);},{passive:false});
+    pin.addEventListener('touchend',(e)=>{e.preventDefault();e.stopPropagation();showCard(p,pt);},{passive:false});
     gc.appendChild(pin);
   });
 }
@@ -317,7 +261,6 @@ function showCard(p,pt){
   document.getElementById('cavl').textContent=p.avail;
   const certsHtml=p.certs.map(c=>'<span class="cb">'+c+'</span>').join('');document.getElementById('ccerts').innerHTML=certsHtml;document.getElementById('ccerts').style.display=certsHtml?'flex':'none';
   const card=document.getElementById('card');
-  // Convert canvas coords to viewport coords for fixed positioning
   const rect=canvas.getBoundingClientRect();
   let lft=rect.left+pt[0]+22, top=rect.top+pt[1]-20;
   const vw=window.innerWidth, vh=window.innerHeight;
@@ -338,38 +281,23 @@ function resize(){
 }
 
 canvas.addEventListener('wheel',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(e.deltaY<0?1.25:0.8)));draw();},{passive:false});
-canvas.addEventListener('dblclick',e=>{
-  scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*1.5));
-  draw();
-});
-canvas.addEventListener('contextmenu',e=>{
-  e.preventDefault();
-  scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*0.7));
-  draw();
-});
+canvas.addEventListener('dblclick',e=>{scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*1.5));draw();});
+canvas.addEventListener('contextmenu',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*0.7));draw();});
 canvas.addEventListener('mousedown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;});
 window.addEventListener('mousemove',e=>{if(!dragging)return;rotX-=(e.clientX-lx)*0.35;rotY-=(e.clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.clientX;ly=e.clientY;draw();});
 window.addEventListener('mouseup',()=>dragging=false);
 canvas.addEventListener('touchstart',e=>{if(e.touches.length===1){dragging=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY;}},{passive:true});
 canvas.addEventListener('touchmove',e=>{if(!dragging||e.touches.length!==1)return;rotX-=(e.touches[0].clientX-lx)*0.35;rotY-=(e.touches[0].clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.touches[0].clientX;ly=e.touches[0].clientY;draw();e.preventDefault();},{passive:false});
 canvas.addEventListener('touchend',()=>{dragging=false;lastPinchDist=null;});
-
-// Pinch to zoom
 let lastPinchDist=null;
-canvas.addEventListener('touchstart',e=>{
-  if(e.touches.length===2){dragging=false;lastPinchDist=null;}
-},{passive:true});
+canvas.addEventListener('touchstart',e=>{if(e.touches.length===2){dragging=false;lastPinchDist=null;}},{passive:true});
 canvas.addEventListener('touchmove',e=>{
   if(e.touches.length===2){
     e.preventDefault();
     const dx=e.touches[0].clientX-e.touches[1].clientX;
     const dy=e.touches[0].clientY-e.touches[1].clientY;
     const dist=Math.sqrt(dx*dx+dy*dy);
-    if(lastPinchDist){
-      const factor=dist/lastPinchDist;
-      scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*factor));
-      draw();
-    }
+    if(lastPinchDist){scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(dist/lastPinchDist)));draw();}
     lastPinchDist=dist;
   }
 },{passive:false});
@@ -411,7 +339,6 @@ resize();
     draw();
   }
 })();
-// Fade out hint after 4 seconds
 setTimeout(()=>{const h=document.getElementById('map-hint');if(h)h.style.opacity='0';},6000);
 setTimeout(()=>{const h=document.getElementById('map-hint');if(h)h.style.display='none';},8000);
 </script>
