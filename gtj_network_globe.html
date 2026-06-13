@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Trade Network</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:600px;overflow:hidden;}
+#gc{position:relative;background:#06101a;width:100%;height:600px;overflow:hidden;}
+#cv{display:block;width:100%;cursor:grab;}
+#cv:active{cursor:grabbing;}
+#heatCanvas{position:absolute;top:0;left:0;pointer-events:none;}
+#loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#06101a;z-index:50;}
+#loader-ring{width:36px;height:36px;border:3px solid rgba(55,138,221,0.2);border-top-color:#378ADD;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loader-txt{color:rgba(255,255,255,0.5);font-size:13px;font-family:sans-serif;}
+#counter{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:10;background:rgba(6,16,26,0.8);color:white;font-size:13px;font-weight:600;padding:7px 18px;border-radius:20px;border:0.5px solid rgba(55,138,221,0.35);font-family:sans-serif;white-space:nowrap;backdrop-filter:blur(4px);}
+#counter span{color:#7ec8e3;}
+#legend{position:absolute;bottom:16px;right:16px;z-index:10;background:rgba(6,16,26,0.82);border:0.5px solid rgba(55,138,221,0.3);border-radius:10px;padding:10px 12px;font-family:sans-serif;backdrop-filter:blur(4px);}
+#legend .leg-title{font-size:10px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;text-align:center;}
+#map-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:10;background:rgba(0,0,0,0.65);color:rgba(255,255,255,0.9);font-size:11px;padding:6px 12px;border-radius:20px;pointer-events:none;transition:opacity 1.5s ease;font-family:sans-serif;white-space:nowrap;}
+</style>
+</head>
+<body>
+<div id="gc">
+  <canvas id="cv"></canvas>
+  <canvas id="heatCanvas"></canvas>
+  <div id="loader"><div id="loader-ring"></div><div id="loader-txt">Loading globe…</div></div>
+  <div id="counter">🌍 <span>41,000+</span> Global Trade Professionals</div>
+  <div id="legend">
+    <div class="leg-title">Concentration</div>
+    <div style="display:flex;align-items:stretch;gap:8px;">
+      <canvas id="leg-canvas" width="16" height="90" style="border-radius:4px;display:block;flex-shrink:0;"></canvas>
+      <div style="display:flex;flex-direction:column;justify-content:space-between;font-size:10px;color:rgba(255,255,255,0.6);">
+        <div>High</div>
+        <div>Low</div>
+      </div>
+    </div>
+  </div>
+  <div id="map-hint">Scroll or pinch to zoom &nbsp;·&nbsp; Drag to rotate</div>
+</div>
+
+<script>
+const HEATPOINTS=[
+  {lat:40.71,lng:-74.01,n:1318},
+  {lat:47.61,lng:-122.33,n:851},
+  {lat:38.9,lng:-77.04,n:635},
+  {lat:55.68,lng:12.57,n:634},
+  {lat:12.97,lng:77.59,n:273},
+  {lat:43.65,lng:-79.38,n:583},
+  {lat:41.88,lng:-87.63,n:544},
+  {lat:34.05,lng:-118.24,n:512},
+  {lat:28.66,lng:77.23,n:227},
+  {lat:33.75,lng:-84.39,n:494},
+  {lat:47.38,lng:8.54,n:472},
+  {lat:19.08,lng:72.88,n:188},
+  {lat:37.77,lng:-122.42,n:418},
+  {lat:48.86,lng:2.35,n:388},
+  {lat:32.78,lng:-96.8,n:382},
+  {lat:51.51,lng:-0.13,n:359},
+  {lat:42.36,lng:-71.06,n:341},
+  {lat:42.33,lng:-83.05,n:295},
+  {lat:29.76,lng:-95.37,n:289},
+  {lat:51.0,lng:6.0,n:289},
+  {lat:46.2,lng:6.15,n:255},
+  {lat:13.08,lng:80.27,n:112},
+  {lat:44.85,lng:-93.47,n:249},
+  {lat:48.14,lng:11.58,n:231},
+  {lat:18.52,lng:73.86,n:101},
+  {lat:35.23,lng:-80.84,n:225},
+  {lat:25.77,lng:-80.19,n:223},
+  {lat:17.38,lng:78.49,n:94},
+  {lat:-23.55,lng:-46.63,n:163},
+  {lat:19.43,lng:-99.13,n:159},
+  {lat:-1.29,lng:36.82,n:156},
+  {lat:33.45,lng:-112.07,n:138},
+  {lat:31.5,lng:-99.3,n:136},
+  {lat:28.54,lng:-81.38,n:60},
+  {lat:52.37,lng:4.9,n:133},
+  {lat:39.95,lng:-75.17,n:133},
+  {lat:44.98,lng:-93.27,n:126},
+  {lat:38.0,lng:-97.0,n:117},
+  {lat:32.72,lng:-117.15,n:115},
+  {lat:23.03,lng:72.59,n:50},
+  {lat:-34.6,lng:-58.38,n:108},
+  {lat:52.23,lng:21.01,n:106},
+  {lat:30.04,lng:31.24,n:105},
+  {lat:50.11,lng:8.68,n:105},
+  {lat:50.85,lng:4.35,n:103},
+  {lat:1.35,lng:103.82,n:103},
+  {lat:39.74,lng:-104.98,n:102},
+  {lat:36.8,lng:-119.4,n:100},
+  {lat:14.6,lng:120.98,n:99},
+  {lat:41.5,lng:-81.69,n:90},
+  {lat:53.33,lng:-6.25,n:88},
+  {lat:28.54,lng:77.39,n:39},
+  {lat:22.57,lng:88.36,n:35},
+  {lat:40.57,lng:-111.89,n:79},
+  {lat:41.01,lng:28.95,n:76},
+  {lat:24.86,lng:67.01,n:76},
+  {lat:27.95,lng:-82.46,n:76},
+  {lat:36.17,lng:-86.78,n:76},
+  {lat:-26.2,lng:28.04,n:73},
+  {lat:30.27,lng:-97.74,n:73},
+  {lat:10.82,lng:106.63,n:73},
+  {lat:35.15,lng:-90.05,n:73},
+  {lat:27.8,lng:-81.7,n:73},
+  {lat:45.5,lng:-73.57,n:72},
+  {lat:-6.21,lng:106.85,n:72},
+  {lat:43.77,lng:11.25,n:70},
+  {lat:40.42,lng:-3.7,n:69},
+  {lat:9.03,lng:38.74,n:67},
+  {lat:45.52,lng:-122.68,n:64},
+  {lat:43.37,lng:1.27,n:63},
+  {lat:56.1,lng:-106.3,n:58},
+  {lat:37.42,lng:-122.08,n:58},
+  {lat:39.1,lng:-84.51,n:55},
+  {lat:34.85,lng:-82.39,n:55},
+  {lat:35.78,lng:-78.64,n:54},
+  {lat:-33.87,lng:151.21,n:52},
+  {lat:4.71,lng:-74.07,n:52},
+  {lat:39.96,lng:-82.99,n:51},
+  {lat:55.0,lng:-3.0,n:51},
+  {lat:36.82,lng:10.17,n:49},
+  {lat:43.04,lng:-87.91,n:49},
+  {lat:22.31,lng:73.18,n:22},
+  {lat:49.28,lng:-123.12,n:49},
+  {lat:38.63,lng:-90.2,n:49},
+  {lat:31.55,lng:74.34,n:48},
+  {lat:3.14,lng:101.69,n:48},
+  {lat:21.17,lng:72.83,n:20},
+  {lat:53.55,lng:9.99,n:45},
+  {lat:13.75,lng:100.52,n:45},
+  {lat:53.48,lng:-2.24,n:43},
+  {lat:44.43,lng:26.1,n:43},
+  {lat:31.23,lng:121.47,n:43},
+  {lat:11.0,lng:76.96,n:19},
+  {lat:39.77,lng:-86.16,n:43},
+  {lat:37.8,lng:-78.2,n:43},
+  {lat:20.59,lng:-100.39,n:42},
+  {lat:31.76,lng:-106.49,n:42},
+  {lat:45.47,lng:9.19,n:42},
+  {lat:30.33,lng:-81.66,n:42},
+  {lat:42.89,lng:-78.87,n:42},
+  {lat:44.3,lng:-85.4,n:42},
+  {lat:26.91,lng:75.79,n:18},
+  {lat:37.57,lng:126.98,n:39},
+  {lat:38.72,lng:-9.14,n:39},
+  {lat:41.76,lng:-72.68,n:37},
+  {lat:25.2,lng:55.27,n:37},
+  {lat:40.44,lng:-79.99,n:37},
+  {lat:35.69,lng:51.42,n:37},
+  {lat:20.6,lng:78.9,n:16},
+  {lat:-37.81,lng:144.96,n:34},
+  {lat:36.86,lng:-76.01,n:34},
+  {lat:22.72,lng:75.86,n:15},
+  {lat:57.71,lng:11.97,n:34},
+  {lat:31.2,lng:29.92,n:34},
+  {lat:40.3,lng:-89.0,n:34},
+  {lat:32.2,lng:-83.4,n:33},
+  {lat:42.9,lng:-75.6,n:31},
+  {lat:40.6,lng:-77.2,n:30},
+  {lat:39.1,lng:-76.8,n:30},
+  {lat:33.9,lng:-80.9,n:28},
+  {lat:35.9,lng:-86.7,n:27},
+  {lat:35.5,lng:-79.4,n:27},
+  {lat:40.4,lng:-82.8,n:22},
+  {lat:42.2,lng:-71.5,n:22},
+  {lat:40.1,lng:-74.5,n:21},
+  {lat:46.4,lng:-93.1,n:18},
+  {lat:47.4,lng:-120.7,n:18},
+  {lat:32.8,lng:-86.8,n:16},
+  {lat:39.1,lng:-105.4,n:16},
+  {lat:34.3,lng:-111.1,n:15},
+  {lat:40.0,lng:-86.1,n:15},
+  {lat:-25.3,lng:133.8,n:15},
+  {lat:52.0,lng:20.0,n:15},
+  {lat:23.6,lng:-102.6,n:15},
+  {lat:-14.2,lng:-51.9,n:13},
+  {lat:44.1,lng:-120.5,n:12},
+  {lat:41.6,lng:-72.7,n:10},
+  {lat:38.5,lng:-92.5,n:10},
+  {lat:52.1,lng:5.3,n:10},
+  {lat:32.7,lng:-89.7,n:9},
+  {lat:37.7,lng:-85.3,n:9},
+  {lat:38.5,lng:-98.4,n:7},
+  {lat:40.5,lng:-3.7,n:7},
+  {lat:44.3,lng:-89.8,n:6},
+  {lat:31.2,lng:-91.8,n:6},
+  {lat:27.5,lng:-99.51,n:6},
+  {lat:39.4,lng:-111.1,n:4},
+  {lat:42.1,lng:-93.5,n:4},
+  {lat:46.2,lng:2.2,n:4},
+  {lat:8.5,lng:-80.0,n:3},
+  {lat:41.5,lng:-99.9,n:3},
+  {lat:53.4,lng:-8.2,n:3},
+  {lat:39.0,lng:-75.5,n:3},
+  {lat:35.6,lng:-97.5,n:3},
+  {lat:34.8,lng:-106.2,n:3},
+  {lat:41.9,lng:12.6,n:3},
+  {lat:-35.7,lng:-71.5,n:3},
+  {lat:47.2,lng:19.5,n:3},
+  {lat:36.07,lng:-79.79,n:3},
+  {lat:41.08,lng:-81.52,n:3},
+  {lat:41.76,lng:-88.32,n:3},
+  {lat:51.2,lng:10.4,n:3},
+  {lat:38.6,lng:-80.6,n:1},
+  {lat:39.5,lng:-116.9,n:1},
+  {lat:44.4,lng:-114.6,n:1},
+  {lat:20.3,lng:-156.4,n:1},
+  {lat:39.4,lng:-8.2,n:1},
+  {lat:9.7,lng:-83.8,n:1},
+  {lat:23.4,lng:53.8,n:1},
+  {lat:-9.2,lng:-75.0,n:1},
+  {lat:44.0,lng:21.0,n:1},
+  {lat:-0.0,lng:37.9,n:1},
+  {lat:34.8,lng:-92.4,n:1},
+  {lat:9.1,lng:8.7,n:1},
+  {lat:56.3,lng:9.5,n:1},
+  {lat:41.2,lng:20.2,n:1},
+  {lat:39.1,lng:-94.58,n:1},
+];
+
+const MAX_N=1318;
+let W,H,scale,baseScale,rotX=20,rotY=20,dragging=false,lx=0,ly=0;
+let countries=[],stateBorders=[];
+const canvas=document.getElementById('cv');
+const heatCanvas=document.getElementById('heatCanvas');
+const gc=document.getElementById('gc');
+const ctx=canvas.getContext('2d');
+const hCtx=heatCanvas.getContext('2d');
+const D=Math.PI/180;
+
+// Draw legend
+const legCanvas=document.getElementById('leg-canvas');
+const legCtx=legCanvas.getContext('2d');
+const legGrad=legCtx.createLinearGradient(0,0,0,90);
+legGrad.addColorStop(0,'rgba(255,255,200,1)');
+legGrad.addColorStop(0.15,'rgba(255,50,0,1)');
+legGrad.addColorStop(0.35,'rgba(255,180,0,1)');
+legGrad.addColorStop(0.55,'rgba(0,200,100,1)');
+legGrad.addColorStop(0.75,'rgba(11,138,221,0.8)');
+legGrad.addColorStop(1,'rgba(6,16,26,0.3)');
+legCtx.fillStyle=legGrad;
+legCtx.fillRect(0,0,16,90);
+
+function project(lat,lng){
+  const lam=(lng+rotX)*D,phi=lat*D,p0=rotY*D;
+  const sp=Math.sin(phi),cp=Math.cos(phi),sp0=Math.sin(p0),cp0=Math.cos(p0),cl=Math.cos(lam);
+  if(sp*sp0+cp*cp0*cl<0.01)return null;
+  return[W/2+scale*(cp*Math.sin(lam)),H/2-scale*(sp*cp0-cp*sp0*cl)];
+}
+
+function drawSphere(){
+  ctx.beginPath();ctx.arc(W/2,H/2,scale,0,2*Math.PI);
+  ctx.fillStyle='#0b1929';ctx.fill();
+  ctx.strokeStyle='rgba(55,138,221,0.3)';ctx.lineWidth=1.5;ctx.stroke();
+}
+function drawGrat(){
+  ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=0.5;
+  for(let g=-180;g<=180;g+=30){ctx.beginPath();let f=true;for(let t=-90;t<=90;t+=4){const p=project(t,g);if(p){f?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;}else f=true;}ctx.stroke();}
+  for(let t=-60;t<=60;t+=30){ctx.beginPath();let f=true;for(let g=-180;g<=180;g+=4){const p=project(t,g);if(p){f?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;}else f=true;}ctx.stroke();}
+}
+function drawRings(rings,fill,stroke,lw){
+  rings.forEach(ring=>{
+    ctx.beginPath();let f=true,pn=false;
+    for(const c of ring){const p=project(c[1],c[0]);if(p){(f||pn)?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;pn=false;}else pn=true;}
+    ctx.closePath();
+    if(fill){ctx.fillStyle=fill;ctx.fill();}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke();}
+  });
+}
+
+const CLABELS=[
+  {n:'Russia',lat:61.5,lng:90,t:1},{n:'Canada',lat:60,lng:-96,t:1},{n:'United States',lat:38,lng:-97,t:1},
+  {n:'China',lat:35,lng:103,t:1},{n:'Brazil',lat:-10,lng:-53,t:1},{n:'Australia',lat:-25,lng:134,t:1},
+  {n:'India',lat:21,lng:79,t:1},{n:'Argentina',lat:-34,lng:-64,t:1},{n:'Mexico',lat:24,lng:-103,t:1},
+  {n:'Saudi Arabia',lat:24,lng:45,t:1},{n:'Indonesia',lat:-3,lng:118,t:1},{n:'Algeria',lat:28,lng:3,t:1},
+  {n:'France',lat:46,lng:2,t:2},{n:'Germany',lat:51,lng:11,t:2},{n:'Italy',lat:43,lng:13,t:2},
+  {n:'Japan',lat:36,lng:138,t:2},{n:'Nigeria',lat:9,lng:9,t:2},{n:'UK',lat:55,lng:-3,t:2},
+  {n:'Spain',lat:41,lng:-4,t:2},{n:'Poland',lat:52,lng:19,t:2},{n:'Turkey',lat:39,lng:35,t:2},
+  {n:'South Africa',lat:-29,lng:25,t:2},{n:'Egypt',lat:26,lng:30,t:2},
+  {n:'S.Korea',lat:37,lng:128,t:2},{n:'Thailand',lat:15,lng:101,t:2},
+  {n:'Netherlands',lat:52,lng:5,t:3},{n:'Belgium',lat:51,lng:4,t:3},{n:'Denmark',lat:56,lng:10,t:3},
+  {n:'Singapore',lat:1.4,lng:103.8,t:3},{n:'Switzerland',lat:47,lng:8,t:3},{n:'UAE',lat:24,lng:54,t:3},
+  {n:'Ireland',lat:53,lng:-8,t:3},{n:'Kenya',lat:1,lng:38,t:3},
+];
+
+function lbl(txt,x,y,sz,alpha,bold){
+  ctx.save();ctx.font=(bold?'500 ':'')+sz+'px Arial,sans-serif';
+  ctx.fillStyle='rgba(170,205,240,'+alpha+')';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.shadowColor='rgba(0,0,0,0.95)';ctx.shadowBlur=4;ctx.fillText(txt,x,y);ctx.restore();
+}
+
+function drawHeatLayer(){
+  hCtx.clearRect(0,0,W,H);
+
+  // Clip to sphere
+  hCtx.save();
+  hCtx.beginPath();hCtx.arc(W/2,H/2,scale-1,0,2*Math.PI);hCtx.clip();
+
+  // Use 'lighter' blending so overlapping blobs add up naturally
+  hCtx.globalCompositeOperation='source-over';
+
+  const sorted=[...HEATPOINTS].sort((a,b)=>a.n-b.n);
+  sorted.forEach(p=>{
+    const pt=project(p.lat,p.lng);if(!pt)return;
+    const ratio=Math.pow(p.n/MAX_N,0.38);
+    // Blob radius scales with zoom
+    const z=scale/baseScale;
+    const R=Math.max(15,Math.min(80,ratio*80+10))*(z*0.2+0.8);
+
+    const grad=hCtx.createRadialGradient(pt[0],pt[1],0,pt[0],pt[1],R);
+
+    // Classic heat map: red->orange->yellow->green->teal->blue->transparent
+    if(ratio>0.7){
+      grad.addColorStop(0,  `rgba(255,255,200,${(ratio*0.9).toFixed(2)})`);
+      grad.addColorStop(0.1,`rgba(255,50,0,${(ratio*0.85).toFixed(2)})`);
+      grad.addColorStop(0.25,`rgba(255,120,0,${(ratio*0.7).toFixed(2)})`);
+      grad.addColorStop(0.45,`rgba(255,200,0,${(ratio*0.5).toFixed(2)})`);
+      grad.addColorStop(0.65,`rgba(0,200,100,${(ratio*0.3).toFixed(2)})`);
+      grad.addColorStop(0.82,`rgba(11,138,221,${(ratio*0.15).toFixed(2)})`);
+      grad.addColorStop(1,  'rgba(6,16,26,0)');
+    } else if(ratio>0.35){
+      grad.addColorStop(0,  `rgba(255,120,0,${(ratio*0.8).toFixed(2)})`);
+      grad.addColorStop(0.25,`rgba(255,200,0,${(ratio*0.6).toFixed(2)})`);
+      grad.addColorStop(0.5,`rgba(0,200,100,${(ratio*0.35).toFixed(2)})`);
+      grad.addColorStop(0.75,`rgba(11,138,221,${(ratio*0.15).toFixed(2)})`);
+      grad.addColorStop(1,  'rgba(6,16,26,0)');
+    } else if(ratio>0.12){
+      grad.addColorStop(0,  `rgba(255,200,0,${(ratio*0.7).toFixed(2)})`);
+      grad.addColorStop(0.35,`rgba(0,200,100,${(ratio*0.4).toFixed(2)})`);
+      grad.addColorStop(0.65,`rgba(11,138,221,${(ratio*0.2).toFixed(2)})`);
+      grad.addColorStop(1,  'rgba(6,16,26,0)');
+    } else {
+      grad.addColorStop(0,  `rgba(0,180,200,${(ratio*0.6).toFixed(2)})`);
+      grad.addColorStop(0.5,`rgba(11,80,140,${(ratio*0.2).toFixed(2)})`);
+      grad.addColorStop(1,  'rgba(6,16,26,0)');
+    }
+
+    hCtx.beginPath();hCtx.arc(pt[0],pt[1],R,0,2*Math.PI);
+    hCtx.fillStyle=grad;hCtx.fill();
+  });
+
+  hCtx.restore();
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  drawSphere();drawGrat();
+  countries.forEach(c=>drawRings(c.rings,'#1a3048',null,0));
+  countries.forEach(c=>drawRings(c.rings,null,'rgba(90,155,215,0.45)',0.7));
+  stateBorders.forEach(r=>drawRings([r],null,'rgba(90,155,215,0.22)',0.4));
+  drawHeatLayer();
+  const z=scale/baseScale;
+  CLABELS.forEach(c=>{
+    const p=project(c.lat,c.lng);if(!p)return;
+    const t=c.t||2,minZ=t===1?0:t===2?0.65:t===3?1.2:1.8;if(z<minZ)return;
+    const a=Math.min(0.75,(z-minZ)*1.5+(t===1?0.35:0));if(a<0.06)return;
+    lbl(c.n.toUpperCase(),p[0],p[1],Math.max(8,Math.min(11,6.5+z*2)),a,true);
+  });
+
+
+}
+
+function resize(){
+  W=window.innerWidth;H=600;
+  canvas.width=W;canvas.height=H;canvas.style.height=H+'px';
+  heatCanvas.width=W;heatCanvas.height=H;heatCanvas.style.height=H+'px';
+  baseScale=Math.min(W,H)*0.43;if(!scale)scale=baseScale;
+  if(countries.length)draw();
+}
+
+canvas.addEventListener('wheel',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(e.deltaY<0?1.25:0.8)));draw();},{passive:false});
+canvas.addEventListener('dblclick',()=>{scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*1.5));draw();});
+canvas.addEventListener('contextmenu',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*0.7));draw();});
+canvas.addEventListener('mousedown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;});
+window.addEventListener('mousemove',e=>{if(!dragging)return;rotX-=(e.clientX-lx)*0.35;rotY-=(e.clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.clientX;ly=e.clientY;draw();});
+window.addEventListener('mouseup',()=>dragging=false);
+let lastPinchDist=null;
+canvas.addEventListener('touchstart',e=>{if(e.touches.length===1){dragging=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY;}else if(e.touches.length===2){dragging=false;lastPinchDist=null;}},{passive:true});
+canvas.addEventListener('touchmove',e=>{
+  if(e.touches.length===2){e.preventDefault();const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY,dist=Math.sqrt(dx*dx+dy*dy);if(lastPinchDist){scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(dist/lastPinchDist)));draw();}lastPinchDist=dist;return;}
+  if(!dragging||e.touches.length!==1)return;
+  rotX-=(e.touches[0].clientX-lx)*0.35;rotY-=(e.touches[0].clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.touches[0].clientX;ly=e.touches[0].clientY;draw();e.preventDefault();
+},{passive:false});
+canvas.addEventListener('touchend',()=>{dragging=false;lastPinchDist=null;});
+window.addEventListener('resize',resize);
+
+resize();
+setTimeout(()=>{const h=document.getElementById('map-hint');if(h)h.style.opacity='0';},6000);
+setTimeout(()=>{const h=document.getElementById('map-hint');if(h)h.style.display='none';},8000);
+
+(async()=>{
+  try{
+    const [r1,r2]=await Promise.all([
+      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'),
+      fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json')
+    ]);
+    const [w,us]=await Promise.all([r1.json(),r2.json()]);
+    function decode(topo,obj){
+      const sc=topo.transform?topo.transform.scale:[1,1],tr=topo.transform?topo.transform.translate:[0,0];
+      const decoded=topo.arcs.map(arc=>{let x=0,y=0;return arc.map(d=>{x+=d[0];y+=d[1];return[x*sc[0]+tr[0],y*sc[1]+tr[1]];});});
+      function ring(idxs){const coords=[];for(let i of idxs){const rev=i<0;const arc=decoded[rev?~i:i];const pts=rev?[...arc].reverse():arc;for(let j=rev?0:1;j<pts.length;j++)coords.push(pts[j]);}return coords;}
+      return obj.geometries.map(g=>{const rings=[];if(g.type==='Polygon')rings.push(ring(g.arcs[0]));else if(g.type==='MultiPolygon')g.arcs.forEach(p=>rings.push(ring(p[0])));return rings;});
+    }
+    countries=decode(w,w.objects.countries).map(rings=>({rings}));
+    stateBorders=decode(us,us.objects.states).flat();
+    document.getElementById('loader').style.display='none';
+    draw();
+  }catch(e){
+    document.getElementById('loader-txt').textContent='Ready';
+    setTimeout(()=>document.getElementById('loader').style.display='none',500);
+    draw();
+  }
+})();
+</script>
+</body>
+</html>
