@@ -31,6 +31,16 @@
       "dest": "/index.html"
     },
     {
+      "src": "/gtj_network_globe.html",
+      "has": [{"type": "host", "value": "community.globaltradejobs.com"}],
+      "dest": "/gtj_network_globe.html"
+    },
+    {
+      "src": "/(.*)",
+      "has": [{"type": "host", "value": "community.globaltradejobs.com"}],
+      "dest": "/community/index.html"
+    },
+    {
       "src": "/(.*)",
       "has": [{"type": "host", "value": "courses.globaltradejobs.com"}],
       "dest": "/courses/index.html"
