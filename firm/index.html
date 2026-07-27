@@ -33,8 +33,6 @@
   .page-wrap { max-width: 860px; margin: 40px auto; padding: 0 2rem 80px; }
   .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--gray-600); text-decoration: none; margin-bottom: 24px; }
   .back-link:hover { color: var(--navy); }
-
-  /* PROFILE HEADER */
   .profile-header { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius: var(--radius); padding: 32px; margin-bottom: 20px; display: flex; align-items: center; gap: 24px; box-shadow: var(--shadow-md); }
   .logo-wrap { width: 80px; height: 80px; border-radius: 50%; background: white; border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
   .logo-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
@@ -45,8 +43,6 @@
   .featured-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: rgba(255,215,0,0.2); color: #ffd700; border: 1px solid rgba(255,215,0,0.4); }
   .website-link { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--teal); text-decoration: none; border: 1px solid rgba(126,200,227,0.4); padding: 4px 12px; border-radius: 20px; margin-top: 8px; }
   .website-link:hover { background: rgba(126,200,227,0.1); }
-
-  /* SECTIONS */
   .section { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 16px; box-shadow: var(--shadow); }
   .section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--navy); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #eaf6fb; }
   .bio-text { font-size: 14px; color: var(--gray-600); line-height: 1.75; }
@@ -59,19 +55,14 @@
   .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .meta-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
   .meta-value { font-size: 13px; font-weight: 500; color: var(--gray-800); }
-
-  /* NOT CLAIMED */
   .not-claimed { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 16px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 16px; }
   .not-claimed-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--gray-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gray-400); }
   .not-claimed-text { font-size: 14px; color: var(--gray-600); }
-
-  /* CTA */
   .cta-box { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius: var(--radius); padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; box-shadow: var(--shadow-md); }
   .cta-text h2 { font-size: 17px; font-weight: 700; color: white; margin-bottom: 5px; }
   .cta-text p { font-size: 13px; color: rgba(255,255,255,0.72); line-height: 1.6; max-width: 460px; }
   .cta-btn { padding: 11px 26px; background: var(--teal); color: var(--navy); border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
   .cta-btn:hover { background: var(--teal-dark); }
-
   @media (max-width: 600px) {
     .services-grid { grid-template-columns: 1fr; }
     .meta-grid { grid-template-columns: 1fr; }
@@ -123,8 +114,7 @@ const firms = {
       { name: 'Customs Audits & Training', desc: 'Internal compliance audits, customs penalty response, and staff training programs on import/export regulations.' },
     ],
     social: { linkedin: 'https://www.linkedin.com/company/mercantile-logistics-&-international-trade-inc-/', facebook: 'https://www.facebook.com/mlitinc/', twitter: 'https://twitter.com/MLITINC' }
-  }
-,
+  },
   'setlight-consulting': {
     name: 'Setlight Consulting',
     shortName: 'Setlight Consulting',
@@ -137,11 +127,7 @@ const firms = {
     email: '',
     experience: '20+ years',
     size: 'Boutique firm',
-    bio: `Setlight Consulting is a specialized international trade and tax consultancy founded and led by Dr. Chabaporn Wenzel, a globally recognized expert with over two decades of experience in customs and international trade, export controls and sanctions, regulatory compliance, indirect taxes, and corporate strategy.
-
-With a distinguished career spanning 17 years in the global automotive industry — including senior leadership roles at BMW Group and Deloitte — Dr. Wenzel brings unparalleled depth of expertise to every engagement. Her international experience covers Europe, the Americas, Asia Pacific, Africa, and the Middle East.
-
-Setlight Consulting empowers businesses to navigate complex regulatory environments, optimize trade operations, and build resilient compliance frameworks. Leveraging advanced IT solutions including SAP GTS and MIC, the firm delivers practical, technology-driven solutions that streamline processes and set new benchmarks for compliance excellence.`,
+    bio: `Setlight Consulting is a specialized international trade and tax consultancy founded and led by Dr. Chabaporn Wenzel, a globally recognized expert with over two decades of experience in customs and international trade, export controls and sanctions, regulatory compliance, indirect taxes, and corporate strategy.\n\nWith a distinguished career spanning 17 years in the global automotive industry — including senior leadership roles at BMW Group and Deloitte — Dr. Wenzel brings unparalleled depth of expertise to every engagement. Her international experience covers Europe, the Americas, Asia Pacific, Africa, and the Middle East.\n\nSetlight Consulting empowers businesses to navigate complex regulatory environments, optimize trade operations, and build resilient compliance frameworks. Leveraging advanced IT solutions including SAP GTS and MIC, the firm delivers practical, technology-driven solutions that streamline processes and set new benchmarks for compliance excellence.`,
     specs: ['Export Controls','Sanctions','Customs Compliance','VAT/Indirect Taxes','Trade Law','SAP GTS','Regulatory Advisory','International Trade'],
     services: [
       { name: 'Legal & Regulatory Advisory', desc: 'Legal opinions, international contract drafting, criminal and administrative defence, and regulatory support across jurisdictions.' },
@@ -152,10 +138,33 @@ Setlight Consulting empowers businesses to navigate complex regulatory environme
       { name: 'Organizational Consulting', desc: 'Consulting services on government, industrial and tax policies to empower businesses meeting operational and compliance goals.' },
     ],
     social: { linkedin: 'https://www.linkedin.com/company/setlight-consulting' }
+  },
+  'the-trade-pros': {
+    name: 'The Trade Pros',
+    shortName: 'The Trade Pros',
+    title: 'Licensed Customs Broker & Trade Compliance Consulting',
+    city: 'Aliso Viejo', state: 'CA', country: 'USA',
+    logo: 'https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/trade%20pro.png',
+    featured: true,
+    website: 'https://www.tradeprosconsulting.com',
+    phone: '(832) 499-7854',
+    email: 'destineebroussard@gmail.com',
+    experience: '4+ years',
+    size: 'Boutique firm',
+    bio: `The Trade Pros is a boutique customs brokerage and trade compliance consulting firm founded by Destinee Broussard, a Licensed Customs Broker (LCB) and Certified Customs Specialist (CCS) based in Aliso Viejo, California.\n\nWith a deep understanding of U.S. import and export regulations, Destinee brings hands-on expertise to businesses of all sizes — from small importers navigating their first shipment to established companies seeking to strengthen their trade compliance programs. The Trade Pros combines regulatory knowledge with a practical, client-first approach to deliver results that reduce risk and control costs.\n\nWhether you need help classifying goods, managing customs entries, qualifying for free trade agreement benefits, or building an internal compliance program from the ground up, The Trade Pros is the partner you can count on to get it right.`,
+    specs: ['LCB','CCS','Customs Brokerage','HTS Classification','Import Compliance','Export Compliance','Duty Drawback','USMCA/FTA','Tariff Classification','Trade Compliance'],
+    services: [
+      { name: 'Customs Brokerage', desc: 'Licensed customs brokerage services for compliant and efficient clearance of imports and exports at all U.S. ports of entry.' },
+      { name: 'HTS Classification', desc: 'Accurate Harmonized Tariff Schedule classification to ensure correct duty rates and avoid costly misclassification penalties.' },
+      { name: 'Import & Export Compliance', desc: 'End-to-end compliance support covering customs entry review, valuation, country of origin determinations, and regulatory requirements.' },
+      { name: 'FTA & Duty Optimization', desc: 'USMCA and free trade agreement qualification, plus duty drawback program management to recover overpaid duties.' },
+      { name: 'Trade Compliance Programs', desc: 'Development and implementation of internal trade compliance frameworks, policies, and standard operating procedures.' },
+      { name: 'Compliance Training & Audits', desc: 'Staff training on import/export regulations and internal compliance audits to identify and remediate risk before it becomes a problem.' },
+    ],
+    social: { linkedin: 'https://www.linkedin.com/company/124924136/' }
   }
 };
 
-// All other placeholder firm slugs
 const placeholders = ['braumiller-consulting','tradewin','efs-consulting-americas','guidepost-solutions','an-deringer','ch-robinson','livingston-international-us','geodis-us','bdp-international','expeditors-international','v-alexander','sandler-travis-rosenberg','crowell-moring','baker-mckenzie-us','kpmg-trade','jm-rodgers','ibc-customs','livingston-international-ca','casas-international','maersk-trade','efs-consulting-europe','deloitte-trade','baker-mckenzie-europe','akin-gump','kuehne-nagel','nippon-express','db-schenker'];
 
 const placeholderNames = {'braumiller-consulting':'Braumiller Consulting Group','tradewin':'Tradewin','efs-consulting-americas':'EFS Consulting Americas','guidepost-solutions':'Guidepost Solutions','an-deringer':'A.N. Deringer','ch-robinson':'C.H. Robinson','livingston-international-us':'Livingston International','geodis-us':'GEODIS','bdp-international':'BDP International','expeditors-international':'Expeditors International','v-alexander':'V. Alexander & Co.','sandler-travis-rosenberg':'Sandler, Travis & Rosenberg','crowell-moring':'Crowell & Moring','baker-mckenzie-us':'Baker McKenzie','kpmg-trade':'KPMG Trade & Customs','jm-rodgers':'J.M. Rodgers Co.','ibc-customs':'IBC Customs Brokerage','livingston-international-ca':'Livingston International HQ','casas-international':'CASAS International','maersk-trade':'Maersk Trade Consulting','efs-consulting-europe':'EFS Consulting Europe','deloitte-trade':'Deloitte Trade Compliance','baker-mckenzie-europe':'Baker McKenzie Europe','akin-gump':'Akin Gump','kuehne-nagel':'Kuehne + Nagel','nippon-express':'Nippon Express','db-schenker':'DB Schenker'};
