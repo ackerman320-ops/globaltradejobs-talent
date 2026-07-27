@@ -64,11 +64,9 @@ html,body{width:100%;height:600px;overflow:hidden;}
 const BASE = 'https://consultants.globaltradejobs.com/firm/';
 
 const firms = [
-  // FEATURED - MLIT Inc (paying customer)
   {id:1,name:'MLIT Inc.',title:'Customs Brokerage & Trade Compliance',city:'Henderson',country:'USA',lat:36.04,lng:-114.98,specs:['Customs Brokerage','Import/Export','Trade Compliance','FTZ'],desc:'35+ years of combined expertise in customs clearance and international trade compliance.',website:'https://www.mlitinc.com',slug:'mlit-inc',logo:'https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/MLIT.png',featured:true},
-  // FEATURED - Setlight Consulting
   {id:29,name:'Setlight Consulting',title:'International Trade & Tax Consultancy',city:'Dubai',country:'UAE',lat:25.20,lng:55.27,specs:['Export Controls','Sanctions','Customs Compliance','VAT','Trade Law','SAP GTS'],desc:'20+ years of expertise in customs, international trade, export controls, sanctions, and indirect taxes across Europe, Americas, Asia Pacific, and the Middle East.',website:'https://setlightconsulting.com',slug:'setlight-consulting',logo:'https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Setlight%20Consulting.png',featured:true},
-  // USA
+  {id:30,name:'The Trade Pros',title:'Licensed Customs Broker & Trade Compliance Consulting',city:'Aliso Viejo',country:'USA',lat:33.57,lng:-117.73,specs:['Customs Brokerage','LCB','CCS','Import/Export Compliance','Tariff Classification'],desc:'Licensed Customs Broker (LCB) and Certified Customs Specialist (CCS) helping importers and exporters navigate complex trade compliance requirements with confidence.',website:'https://www.tradeprosconsulting.com',slug:'the-trade-pros',logo:'https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/trade%20pro.png',featured:true},
   {id:2,name:'Braumiller Consulting',title:'International Trade Compliance',city:'Dallas',country:'USA',lat:32.78,lng:-96.80,specs:['Export Controls','HTS Classification','Trade Compliance'],desc:'Trade compliance expertise across 50+ countries in Europe, Asia, and the Americas.',website:'https://www.braumillerconsulting.com',slug:'braumiller-consulting',featured:false},
   {id:3,name:'Tradewin',title:'Global Trade Compliance Consulting',city:'Seattle',country:'USA',lat:47.61,lng:-122.33,specs:['Customs Consulting','FTA','C-TPAT','Duty Drawback'],desc:'Consulting solutions that save money and streamline compliance processes.',website:'https://www.tradewin.net',slug:'tradewin',featured:false},
   {id:4,name:'EFS Consulting Americas',title:'International Trade Compliance',city:'Atlanta',country:'USA',lat:33.75,lng:-84.39,specs:['EAR','ITAR','Export Controls','FTA'],desc:'Helping US manufacturers and exporters navigate international trade regulations.',website:'https://efs.consulting',slug:'efs-consulting-americas',featured:false},
@@ -86,20 +84,16 @@ const firms = [
   {id:16,name:'KPMG Trade & Customs',title:'Trade & Customs Advisory',city:'New York',country:'USA',lat:40.75,lng:-73.99,specs:['Trade Compliance','HTS Classification','FTZ','Duty Drawback'],desc:'Helping organizations build strategic trade compliance frameworks globally.',website:'https://kpmg.com',slug:'kpmg-trade',featured:false},
   {id:17,name:'J.M. Rodgers Co.',title:'Customs Brokerage & Consulting',city:'New York',country:'USA',lat:40.65,lng:-73.78,specs:['Customs Brokerage','Import Compliance','Trade Consulting'],desc:'Full-service customs brokerage and international trade consulting firm.',website:'https://www.jmrodgers.com',slug:'jm-rodgers',featured:false},
   {id:18,name:'IBC Customs Brokerage',title:'Customs Brokerage',city:'New York',country:'USA',lat:40.72,lng:-73.85,specs:['Customs Brokerage','C-TPAT','Import Specialist'],desc:'Certified US Customs Broker with strategic locations at major ports of entry.',website:'https://www.ibcinc.com',slug:'ibc-customs',featured:false},
-  // Canada
   {id:19,name:'Livingston International HQ',title:'Customs & Trade Consulting',city:'Toronto',country:'Canada',lat:43.65,lng:-79.38,specs:['Customs Brokerage','Trade Consulting','FTA'],desc:'Canadas largest customs broker with operations across North America and globally.',website:'https://www.livingstonintl.com',slug:'livingston-international-ca',featured:false},
   {id:20,name:'CASAS International',title:'Customs Brokerage & Compliance',city:'Vancouver',country:'Canada',lat:49.28,lng:-123.12,specs:['Customs Brokerage','Import/Export','Trade Compliance'],desc:'Full-service customs brokerage serving importers and exporters across Canada.',website:'https://www.casas.ca',slug:'casas-international',featured:false},
-  // Europe
   {id:21,name:'Maersk Trade Consulting',title:'Global Trade & Customs Consulting',city:'Copenhagen',country:'Denmark',lat:55.68,lng:12.57,specs:['Customs Consulting','AEO','CBAM','Trade Compliance'],desc:'Simplify customs, stay compliant, and cut trade costs with Maersk expertise.',website:'https://www.maersk.com',slug:'maersk-trade',featured:false},
   {id:22,name:'EFS Consulting Europe',title:'International Trade Compliance',city:'Frankfurt',country:'Germany',lat:50.11,lng:8.68,specs:['EU Customs','Export Controls','CE Marking','Trade Compliance'],desc:'Deep regulatory expertise across EU, Asia-Pacific and emerging markets.',website:'https://efs.consulting',slug:'efs-consulting-europe',featured:false},
   {id:23,name:'Deloitte Trade Compliance',title:'Global Trade Advisory',city:'London',country:'UK',lat:51.51,lng:-0.13,specs:['Trade Compliance','Customs','Export Controls','Brexit'],desc:'Global trade advisory services helping multinationals navigate complex regulations.',website:'https://www.deloitte.com',slug:'deloitte-trade',featured:false},
   {id:24,name:'Baker McKenzie Europe',title:'Trade & Customs Law',city:'Brussels',country:'Belgium',lat:50.85,lng:4.35,specs:['EU Trade Law','Customs','Export Controls','Sanctions'],desc:'Leading European trade and customs law practice across 40+ countries.',website:'https://www.bakermckenzie.com',slug:'baker-mckenzie-europe',featured:false},
   {id:25,name:'Akin Gump',title:'Trade Compliance & Sanctions',city:'London',country:'UK',lat:51.52,lng:-0.10,specs:['Export Controls','OFAC','Sanctions','Trade Law'],desc:'International law firm advising on export controls, sanctions and customs compliance.',website:'https://www.akingump.com',slug:'akin-gump',featured:false},
-  // Asia/Global
   {id:26,name:'Kuehne + Nagel',title:'Customs & Trade Compliance',city:'Singapore',country:'Singapore',lat:1.35,lng:103.82,specs:['Customs Brokerage','Trade Compliance','Freight'],desc:'Global logistics leader with comprehensive customs and trade compliance services.',website:'https://www.kuehne-nagel.com',slug:'kuehne-nagel',featured:false},
   {id:27,name:'Nippon Express',title:'Customs Brokerage & Logistics',city:'Tokyo',country:'Japan',lat:35.69,lng:139.69,specs:['Customs Brokerage','Import/Export','Trade Compliance'],desc:'Global logistics with strong customs brokerage expertise across Asia-Pacific.',website:'https://www.nipponexpress.com',slug:'nippon-express',featured:false},
   {id:28,name:'DB Schenker',title:'Customs & Trade Compliance',city:'Frankfurt',country:'Germany',lat:50.05,lng:8.57,specs:['Customs Brokerage','Trade Compliance','Supply Chain'],desc:'One of the worlds leading logistics providers with global customs expertise.',website:'https://www.dbschenker.com',slug:'db-schenker',featured:false},
-  {id:30,name:'The Trade Pros',title:'Licensed Customs Broker & Trade Compliance Consulting',city:'Aliso Viejo',country:'USA',lat:33.57,lng:-117.73,specs:['Customs Brokerage','LCB','CCS','Import/Export Compliance','Tariff Classification'],desc:'Licensed Customs Broker (LCB) and Certified Customs Specialist (CCS) helping importers and exporters navigate complex trade compliance requirements with confidence.',website:'https://www.tradeprosconsulting.com',slug:'the-trade-pros',featured:true},slug:'the-trade-pros',logo:'https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/trade%20pro.png',featured:true},
 ];
 
 let activeProf=null,W,H,scale,baseScale,rotX=20,rotY=20,dragging=false,lx=0,ly=0;
@@ -181,7 +175,6 @@ const CLABELS=[
   {n:'Washington',lat:47.4,lng:-120.7,t:4},{n:'W. Virginia',lat:38.6,lng:-80.6,t:4},
   {n:'Wisconsin',lat:44.3,lng:-89.8,t:4},{n:'Wyoming',lat:43.0,lng:-107.6,t:4},
 ];
-const CITIES=[];
 
 function lbl(txt,x,y,sz,alpha,bold){
   ctx.save();ctx.font=(bold?'500 ':'')+sz+'px Arial,sans-serif';
@@ -201,7 +194,6 @@ function draw(){
     const a=Math.min(0.75,(z-minZ)*1.5+(t===1?0.35:0));if(a<0.06)return;
     lbl(c.n.toUpperCase(),p[0],p[1],Math.max(8,Math.min(11,6.5+z*2)),a,true);
   });
-  
   renderPins();
 }
 
@@ -214,7 +206,6 @@ function renderPins(){
     pin.style.cssText='position:absolute;transform:translate(-50%,-50%);cursor:pointer;z-index:6;left:'+pt[0]+'px;top:'+pt[1]+'px;';
     const bub=document.createElement('div');
     if(f.featured){
-      // Featured firm gets logo + gold ring
       bub.style.cssText='width:42px;height:42px;border-radius:50%;background:white;border:2.5px solid #ffd700;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 14px rgba(255,215,0,0.4);transition:transform 0.15s;overflow:hidden;';
       if(f.logo){
         bub.innerHTML='<img src="'+f.logo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentNode.innerHTML=\'🏢\'">';
