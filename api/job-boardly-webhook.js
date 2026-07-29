@@ -1,4 +1,4 @@
-Page_DownPage_Down// api/job-boardly-webhook.js
+// api/job-boardly-webhook.js
 //
 // Receives Job Boardly's signed webhook when a candidate registers,
 // then adds them to an EmailOctopus list. EmailOctopus's own automation
@@ -12,8 +12,13 @@ Page_DownPage_Down// api/job-boardly-webhook.js
 //                                   application AND candidate.registered events.
 //   EMAILOCTOPUS_API_KEY         - from EmailOctopus > Settings > API
 //   EMAILOCTOPUS_LIST_ID         - the list new candidates get added to
+//
+// NOTE: written in CommonJS (require/module.exports), not ES modules
+// (import/export). This repo has no package.json declaring
+// "type": "module", so Vercel's Node.js runtime parses .js files as
+// CommonJS by default.
 
-import crypto from 'crypto';
+const crypto = require('crypto');
 
 const JOB_BOARDLY_SIGNING_SECRET = process.env.JOB_BOARDLY_SIGNING_SECRET;
 const EMAILOCTOPUS_API_KEY = process.env.EMAILOCTOPUS_API_KEY;
@@ -21,7 +26,7 @@ const EMAILOCTOPUS_LIST_ID = process.env.EMAILOCTOPUS_LIST_ID;
 
 // Vercel needs the raw body to verify the HMAC signature, so we turn off
 // the default body parser and read the stream ourselves.
-export const config = {
+const config = {
   api: {
     bodyParser: false,
   },
@@ -52,7 +57,7 @@ function verifySignature(rawBody, signatureHeader, secret) {
   return crypto.timingSafeEqual(expectedBuf, providedBuf);
 }
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).send('Method not allowed');
   }
@@ -138,3 +143,6 @@ export default async function handler(req, res) {
   // the error is logged in Vercel for you to catch.
   return res.status(200).send('Received, but EmailOctopus add failed - check logs');
 }
+
+module.exports = handler;
+module.exports.config = config;
