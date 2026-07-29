@@ -1,6 +1,10 @@
 {
   "routes": [
     {
+      "src": "/api/job-boardly-webhook",
+      "dest": "/api/job-boardly-webhook.js"
+    },
+    {
       "src": "/gtj_consultants_globe.html",
       "has": [{"type": "host", "value": "consultants.globaltradejobs.com"}],
       "dest": "/gtj_consultants_globe.html"
