@@ -3,266 +3,346 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trade Professional Profile — Global Trade Jobs</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Global Trade Jobs — Featured Talent Map</title>
 <style>
-  :root {
-    --navy: #0b3a61;
-    --navy-light: #1a5a8a;
-    --teal: #7ec8e3;
-    --teal-dark: #5ab4d4;
-    --gray-50: #f8f9fa;
-    --gray-100: #f1f3f5;
-    --gray-200: #e9ecef;
-    --gray-400: #adb5bd;
-    --gray-600: #6c757d;
-    --gray-800: #343a40;
-    --white: #ffffff;
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); min-height: 100vh; }
-  header { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 0 2rem; position: sticky; top: 0; z-index: 100; }
-  .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
-  nav a { font-size: 14px; color: var(--gray-600); text-decoration: none; }
-  .btn-nav { display: inline-flex; align-items: center; padding: 7px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; text-decoration: none; background: var(--navy); color: white; }
-  .btn-nav:hover { background: var(--navy-light); }
-  .page-wrap { max-width: 860px; margin: 40px auto; padding: 0 2rem 80px; }
-  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--gray-600); text-decoration: none; margin-bottom: 24px; }
-  .back-link:hover { color: var(--navy); }
-
-  /* PROFILE HEADER */
-  .profile-header { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius: var(--radius); padding: 32px; margin-bottom: 20px; display: flex; align-items: center; gap: 24px; box-shadow: var(--shadow-md); }
-  .avatar { width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 36px; flex-shrink: 0; }
-  .profile-name { font-size: 26px; font-weight: 700; color: white; margin-bottom: 4px; }
-  .profile-title { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
-  .profile-location { font-size: 13px; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 5px; margin-bottom: 14px; }
-  .linkedin-link { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--teal); text-decoration: none; border: 1px solid rgba(126,200,227,0.4); padding: 4px 12px; border-radius: 20px; }
-  .linkedin-link:hover { background: rgba(126,200,227,0.1); }
-
-  /* SECTIONS */
-  .section { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 16px; box-shadow: var(--shadow); }
-  .section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--navy); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #eaf6fb; }
-  .bio-text { font-size: 14px; color: var(--gray-600); line-height: 1.75; }
-  .certs-row { display: flex; flex-wrap: wrap; gap: 8px; }
-  .cert-badge { font-size: 12px; padding: 4px 12px; border-radius: 20px; background: var(--navy); color: white; font-weight: 500; }
-  .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .skill-tag { font-size: 12px; padding: 4px 12px; border-radius: 20px; background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200); }
-  .achievement { padding: 16px; background: var(--gray-50); border-radius: var(--radius-sm); border-left: 3px solid var(--navy); margin-bottom: 12px; }
-  .achievement:last-child { margin-bottom: 0; }
-  .achievement-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
-  .achievement-desc { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
-  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .meta-item-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
-  .meta-item-value { font-size: 13px; font-weight: 500; color: var(--gray-800); }
-
-  /* NOT CLAIMED */
-  .not-claimed { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 16px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 16px; }
-  .not-claimed-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--gray-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gray-400); }
-  .not-claimed-text { font-size: 14px; color: var(--gray-600); }
-
-  /* CTA */
-  .cta-box { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius: var(--radius); padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; box-shadow: var(--shadow-md); }
-  .cta-text h2 { font-size: 17px; font-weight: 700; color: white; margin-bottom: 5px; }
-  .cta-text p { font-size: 13px; color: rgba(255,255,255,0.72); line-height: 1.6; max-width: 460px; }
-  .cta-btn { padding: 11px 26px; background: var(--teal); color: var(--navy); border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; flex-shrink: 0; transition: background .15s; display: inline-block; }
-  .cta-btn:hover { background: var(--teal-dark); }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#06101a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+#gc{position:relative;background:#06101a;width:100%;height:100vh;overflow:hidden;}
+#cv{display:block;width:100%;cursor:grab;}
+#cv:active{cursor:grabbing;}
+#loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#06101a;z-index:50;}
+#loader-ring{width:36px;height:36px;border:3px solid rgba(55,138,221,0.2);border-top-color:#378ADD;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loader-txt{color:rgba(255,255,255,0.5);font-size:13px;}
+.card{position:fixed;z-index:9999;background:rgba(6,16,26,0.97);border:0.5px solid rgba(255,255,255,0.18);border-radius:12px;padding:14px;width:240px;color:#e6e6e6;font-size:12px;display:none;backdrop-filter:blur(8px);}
+.card.on{display:block;}
+.cc{position:absolute;top:10px;right:10px;cursor:pointer;color:rgba(255,255,255,0.4);font-size:16px;line-height:1;}
+.cc:hover{color:#fff;}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.cav{width:42px;height:42px;border-radius:50%;background:rgba(10,22,40,0.9);border:1.5px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.cn{font-weight:500;font-size:13px;color:#fff;line-height:1.3;}
+.cs{font-size:11px;color:rgba(255,255,255,0.45);margin-top:2px;}
+.certs{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;}
+.cb{background:rgba(55,138,221,0.18);border:0.5px solid rgba(55,138,221,0.4);color:#85b7eb;font-size:10px;padding:2px 7px;border-radius:20px;}
+.cdiv{border:none;border-top:0.5px solid rgba(255,255,255,0.1);margin:8px 0;}
+.crow{display:flex;justify-content:space-between;margin:4px 0;}
+.cl{color:rgba(255,255,255,0.38);font-size:11px;}
+.cv2{color:rgba(255,255,255,0.8);font-size:11px;}
+.acts{display:flex;gap:6px;margin-top:10px;}
+.abtn{flex:1;padding:7px 0;border-radius:8px;font-size:11px;text-align:center;cursor:pointer;border:0.5px solid;transition:background 0.15s;}
+.abp{background:rgba(55,138,221,0.18);border-color:rgba(55,138,221,0.45);color:#85b7eb;}
+.abp:hover{background:rgba(55,138,221,0.32);}
+.abs{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.52);}
+.abs:hover{background:rgba(255,255,255,0.12);}
 </style>
 </head>
 <body>
-
-<header>
-  <div class="header-inner">
-    <a href="https://resumes.globaltradejobs.com">
-      <img src="https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Close%20up%20logo.png" alt="GlobalTradeJobs" style="height:40px;width:auto;display:block;">
-    </a>
-    <nav>
-      <a href="https://globaltradejobs.com/jobs" style="margin-right:20px;">Jobs</a>
-      <a href="https://globaltradejobs.com/candidates/new" class="btn-nav">Post a Resume</a>
-    </nav>
+<div id="gc">
+  <canvas id="cv"></canvas>
+  <div id="loader"><div id="loader-ring"></div><div id="loader-txt">Loading globe…</div></div>
+  <div id="card" class="card">
+    <span class="cc" onclick="closeCard()">&#xd7;</span>
+    <div class="ch">
+      <div class="cav" id="cav"></div>
+      <div><div class="cn" id="cnm"></div><div class="cs" id="ctl"></div><div class="cs" id="cloc">
+  <div id="map-hint" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:10;background:rgba(0,0,0,0.65);color:rgba(255,255,255,0.9);font-size:11px;padding:6px 12px;border-radius:20px;pointer-events:none;transition:opacity 1.5s ease;font-family:sans-serif;">Scroll or pinch to zoom &nbsp;·&nbsp; Drag to rotate</div></div></div>
+    </div>
+    <div class="certs" id="ccerts"></div>
+    <hr class="cdiv">
+    <div class="crow"><span class="cl">Experience</span><span class="cv2" id="cexp"></span></div>
+    <div class="crow"><span class="cl">Availability</span><span class="cv2" id="cavl"></span></div>
+    <div class="acts">
+      <div class="abtn abp" onclick="openProfile()">&#128100; View Profile</div>
+      <div class="abtn abs" onclick="openLinkedIn()">LinkedIn</div>
+    </div>
   </div>
-</header>
-
-<div class="page-wrap">
-  <a href="https://resumes.globaltradejobs.com" class="back-link">← Back to Candidate Network</a>
-  <div id="profile-content"></div>
 </div>
 
 <script>
-const profiles = {
-  'marcus-webb': {
-    name: 'Marcus Webb',
-    title: 'Customs Compliance Director',
-    city: 'Chicago', country: 'USA',
-    emoji: '👨',
-    linkedin: 'https://www.linkedin.com',
-    certs: ['LCB','CCS','CUSECO'],
-    experience: '18 years',
-    availability: 'Consulting only',
-    workPref: 'Remote / Hybrid',
-    level: 'Director',
-    bio: `Marcus Webb is a Licensed Customs Broker and Certified Customs Specialist with over 18 years of experience leading trade compliance programs across Fortune 500 companies and global logistics firms. Based in Chicago, Marcus has built compliance frameworks from the ground up for organizations operating across North America, Europe, and Asia-Pacific.\n\nHis deep expertise spans import/export regulations, HTS classification, C-TPAT program management, and duty optimization strategies. Marcus has a track record of reducing customs clearance delays by over 40% and has saved clients millions through strategic duty drawback programs and free trade agreement qualification.`,
-    skills: ['Import/Export Compliance','HTS Classification','Duty Drawback','C-TPAT Program Management','Free Trade Agreements','Customs Audits','Trade Policy','CBP Relations','Tariff Engineering','Supply Chain Risk'],
-    achievements: [
-      { title: 'Enterprise Compliance Program Overhaul', desc: 'Led a company-wide customs compliance restructuring for a $2B logistics firm, reducing customs penalties by 85% and achieving C-TPAT Tier 3 certification within 12 months.' },
-      { title: 'Duty Drawback Recovery Initiative', desc: 'Identified and recovered $4.2M in duty drawback claims across a 3-year lookback period for a major automotive parts importer, implementing a sustainable recovery process going forward.' },
-      { title: 'FTA Qualification Project', desc: 'Qualified 340+ product SKUs under USMCA for a consumer goods manufacturer, generating $1.1M in annual duty savings.' },
-    ]
-  },
-  'sophie-laurent': {
-    name: 'Sophie Laurent',
-    title: 'Trade Compliance Manager',
-    city: 'Paris', country: 'France',
-    emoji: '👩',
-    linkedin: 'https://www.linkedin.com',
-    certs: ['CGBP','CCS'],
-    experience: '11 years',
-    availability: 'Open to roles',
-    workPref: 'Remote / On-site',
-    level: 'Manager',
-    bio: `Sophie Laurent is a seasoned Trade Compliance Manager with 11 years of experience spanning EU customs regulations, export controls, and global trade policy. Based in Paris, Sophie has managed compliance programs for multinational corporations across the aerospace, luxury goods, and pharmaceutical industries.\n\nSophie holds the Certified Global Business Professional (CGBP) designation and is fluent in French, English, and Spanish. She specializes in EU customs classification, dual-use export controls, and cross-border trade facilitation, with extensive experience navigating the complexities of post-Brexit UK-EU trade flows.`,
-    skills: ['EU Customs Regulations','Export Controls','Dual-Use Goods','TARIC Classification','AEO Certification','Post-Brexit Compliance','Intrastat Reporting','Trade Finance','Sanctions Screening','Multilingual Communication'],
-    achievements: [
-      { title: 'AEO Gold Status Achievement', desc: 'Led the Authorized Economic Operator (AEO-F) certification process for a luxury goods group with operations in 12 EU member states, achieving Gold status and reducing border inspection rates by 60%.' },
-      { title: 'Post-Brexit Trade Flow Restructuring', desc: 'Redesigned import/export procedures for a €500M pharmaceutical group following Brexit, ensuring zero supply chain disruption and full compliance with new UK-EU customs requirements.' },
-      { title: 'Export Control Compliance Program', desc: 'Built and implemented a dual-use export control screening program for an aerospace supplier, training 200+ employees and reducing unauthorized export risk across 35 countries.' },
-    ]
-  },
-  'steven-montgomery': {
-    name: 'Steven Montgomery',
-    title: 'Global Export Compliance Leader',
-    city: 'Austin', country: 'USA',
-    emoji: '👨',
-    linkedin: 'https://www.linkedin.com/in/steven-montgomery-95773413/',
-    certs: ['EAR','ITAR','OFAC'],
-    experience: '20+ years',
-    availability: 'Open to roles',
-    workPref: 'Remote / Relocating to EU',
-    level: 'Senior Manager',
-    bio: `Steven Montgomery is a Global Trade Compliance leader with over 20 years of experience directing export controls, sanctions, and supply-chain security programs across multinational organizations. A UK citizen currently based in the U.S. and open to relocating, Steven is seeking opportunities across the EU.\n\nHe has a proven record of advising executive leadership, mitigating regulatory and enforcement risk, and aligning compliance strategy with business objectives in highly regulated environments. Steven is recognized for building scalable compliance programs, leading global teams, and translating complex regulations into actionable enterprise solutions, with deep experience across the US, EU, PRC, and other Asian markets.`,
-    skills: ['Global Trade Compliance Strategy','Export Controls (EAR, ITAR, FDPR)','Sanctions Compliance (OFAC)','HTS Classification','M&A Due Diligence','Supply Chain Security (C-TPAT, AEO)','Process Automation','Executive Engagement','Global Team Leadership','Compliance Program Development'],
-    achievements: [
-      { title: 'Automated Export Classification System', desc: 'Directed development and deployment of automated export-classification systems, improving consistency, scalability, and audit defensibility across hardware, software, and technology portfolios.' },
-      { title: 'Enhanced Diversion Prevention Program', desc: 'Led implementation of enhanced customer screening and diversion prevention processes in response to evolving U.S. and global regulatory guidance, reducing exposure in high-risk markets.' },
-      { title: 'Global Export Compliance Leadership at Lenovo and NXP', desc: 'Directed global export-compliance programs for dual-use and ITAR-controlled products across multiple jurisdictions, including the US, EU, PRC, Malaysia, Taiwan, and Korea, serving as liaison with the U.S. Departments of Commerce and State.' },
-    ]
-  }
-};
+const BASE = 'https://candidates.globaltradejobs.com/candidate/';
 
-const slug = window.location.pathname.replace('/candidate/','').replace(/\//g,'').trim();
-const p = profiles[slug];
+const profs = [
+  {id:1,name:'Sarah Chen',title:'Customs Compliance Manager',city:'New York',country:'USA',lat:40.71,lng:-74.01,certs:['LCB','CCS'],exp:'12 yrs',avail:'Open to roles',slug:'sarah-chen',emoji:'👩'},
+  {id:2,name:'Marcus Webb',title:'Customs Compliance Director',city:'Chicago',country:'USA',lat:41.88,lng:-87.63,certs:['LCB','CCS','CUSECO'],exp:'18 yrs',avail:'Consulting',slug:'marcus-webb',emoji:'👨'},
+  {id:3,name:'Elena Varga',title:'Export Controls Specialist',city:'Houston',country:'USA',lat:29.76,lng:-95.37,certs:['CES'],exp:'11 yrs',avail:'Open to roles',slug:'elena-varga',emoji:'👩'},
+  {id:4,name:'David Park',title:'Trade Compliance Analyst',city:'Los Angeles',country:'USA',lat:34.05,lng:-118.24,certs:['CCS'],exp:'7 yrs',avail:'Open to roles',slug:'david-park',emoji:'🧑'},
+  {id:5,name:'Tanya Rivers',title:'Import Specialist',city:'Miami',country:'USA',lat:25.77,lng:-80.19,certs:['LCB'],exp:'9 yrs',avail:'Freelance',slug:'tanya-rivers',emoji:'👩'},
+  {id:6,name:'James Okonkwo',title:'Trade Finance Manager',city:'Atlanta',country:'USA',lat:33.75,lng:-84.39,certs:['CGBP'],exp:'14 yrs',avail:'Open to roles',slug:'james-okonkwo',emoji:'👨'},
+  {id:7,name:'Rachel Kim',title:'FTZ Administrator',city:'Seattle',country:'USA',lat:47.61,lng:-122.33,certs:['CCS'],exp:'8 yrs',avail:'Open to roles',slug:'rachel-kim',emoji:'👩'},
+  {id:8,name:'Carlos Mendez',title:'Duty Drawback Specialist',city:'Dallas',country:'USA',lat:32.78,lng:-96.80,certs:['LCB','CUSECO'],exp:'10 yrs',avail:'Consulting',slug:'carlos-mendez',emoji:'🧔'},
+  {id:9,name:'Amy Thornton',title:'ITAR Compliance Officer',city:'Boston',country:'USA',lat:42.36,lng:-71.06,certs:['CCS'],exp:'13 yrs',avail:'Open to roles',slug:'amy-thornton',emoji:'👩'},
+  {id:10,name:'Ryan Foster',title:'Customs Broker',city:'San Francisco',country:'USA',lat:37.77,lng:-122.42,certs:['LCB','CCS'],exp:'6 yrs',avail:'Open to roles',slug:'ryan-foster',emoji:'👦'},
+  {id:11,name:'Nicole Davis',title:'Trade Compliance Director',city:'Minneapolis',country:'USA',lat:44.98,lng:-93.27,certs:['CCS','CUSECO'],exp:'16 yrs',avail:'Open to roles',slug:'nicole-davis',emoji:'👩'},
+  {id:12,name:'Kevin Hall',title:'HTS Classification Expert',city:'Detroit',country:'USA',lat:42.33,lng:-83.05,certs:['LCB'],exp:'11 yrs',avail:'Freelance',slug:'kevin-hall',emoji:'👨'},
+  {id:13,name:'Linda Cruz',title:'OFAC Sanctions Analyst',city:'Washington DC',country:'USA',lat:38.90,lng:-77.04,certs:['CES'],exp:'9 yrs',avail:'Open to roles',slug:'linda-cruz',emoji:'👩'},
+  {id:14,name:'Tom Bradley',title:'Export Compliance Manager',city:'Denver',country:'USA',lat:39.74,lng:-104.98,certs:['CUSECO'],exp:'15 yrs',avail:'Consulting',slug:'tom-bradley',emoji:'🧑'},
+  {id:15,name:'Alicia Moore',title:'Logistics Compliance Analyst',city:'Phoenix',country:'USA',lat:33.45,lng:-112.07,certs:['CCS'],exp:'5 yrs',avail:'Open to roles',slug:'alicia-moore',emoji:'👩'},
+  {id:16,name:'Brian Lee',title:'Customs Entry Writer',city:'Portland',country:'USA',lat:45.52,lng:-122.68,certs:['LCB'],exp:'4 yrs',avail:'Open to roles',slug:'brian-lee',emoji:'👨'},
+  {id:17,name:'Sandra White',title:'Trade Policy Specialist',city:'Charlotte',country:'USA',lat:35.23,lng:-80.84,certs:['CCS'],exp:'12 yrs',avail:'Open to roles',slug:'sandra-white',emoji:'👩'},
+  {id:18,name:'Derek Johnson',title:'Freight Audit Manager',city:'Memphis',country:'USA',lat:35.15,lng:-90.05,certs:['LCB','CCS'],exp:'8 yrs',avail:'Open to roles',slug:'derek-johnson',emoji:'🧔'},
+  {id:19,name:'Paula Reyes',title:'Customs Compliance Specialist',city:'San Antonio',country:'USA',lat:29.42,lng:-98.49,certs:['LCB'],exp:'7 yrs',avail:'Freelance',slug:'paula-reyes',emoji:'👩'},
+  {id:20,name:'Ethan Clark',title:'Trade Compliance Consultant',city:'Kansas City',country:'USA',lat:39.10,lng:-94.58,certs:['CCS','CUSECO'],exp:'10 yrs',avail:'Consulting',slug:'ethan-clark',emoji:'👨'},
+  {id:21,name:'Megan Scott',title:'Import Compliance Manager',city:'Nashville',country:'USA',lat:36.17,lng:-86.78,certs:['LCB','CCS'],exp:'9 yrs',avail:'Open to roles',slug:'megan-scott',emoji:'👩'},
+  {id:22,name:'Anthony Rivera',title:'Tariff Classification Analyst',city:'New Orleans',country:'USA',lat:29.95,lng:-90.07,certs:['LCB'],exp:'6 yrs',avail:'Open to roles',slug:'anthony-rivera',emoji:'🧑'},
+  {id:23,name:'Christine Wu',title:'Global Trade Manager',city:'Las Vegas',country:'USA',lat:36.17,lng:-115.14,certs:['CCS'],exp:'13 yrs',avail:'Open to roles',slug:'christine-wu',emoji:'👩'},
+  {id:24,name:'Marcus Bell',title:'Supply Chain Compliance Lead',city:'St. Louis',country:'USA',lat:38.63,lng:-90.20,certs:['CUSECO','CCS'],exp:'11 yrs',avail:'Open to roles',slug:'marcus-bell',emoji:'👨'},
+  {id:25,name:'Diana Hart',title:'Duty Drawback Consultant',city:'Tampa',country:'USA',lat:27.95,lng:-82.46,certs:['LCB'],exp:'8 yrs',avail:'Freelance',slug:'diana-hart',emoji:'👩'},
+  {id:26,name:'Priya Nair',title:'FTZ \x26 Duty Drawback Expert',city:'London',country:'UK',lat:51.51,lng:-0.13,certs:['CTCS'],exp:'9 yrs',avail:'Freelance',slug:'priya-nair',emoji:'👩'},
+  {id:27,name:'Hans Mueller',title:'EU Customs Compliance Director',city:'Berlin',country:'Germany',lat:52.52,lng:13.40,certs:['CCS','CES'],exp:'17 yrs',avail:'Open to roles',slug:'hans-mueller',emoji:'👨'},
+  {id:28,name:'Sophie Laurent',title:'Trade Compliance Manager',city:'Paris',country:'France',lat:48.86,lng:2.35,certs:['CGBP','CCS'],exp:'11 yrs',avail:'Open to roles',slug:'sophie-laurent',emoji:'👩'},
+  {id:29,name:'Antonio Ricci',title:'Import Specialist',city:'Milan',country:'Italy',lat:45.47,lng:9.19,certs:['LCB'],exp:'8 yrs',avail:'Freelance',slug:'antonio-ricci',emoji:'🧔'},
+  {id:30,name:'Ingrid Larsson',title:'Export Controls Analyst',city:'Stockholm',country:'Sweden',lat:59.33,lng:18.07,certs:['CCS','CES'],exp:'10 yrs',avail:'Open to roles',slug:'ingrid-larsson',emoji:'👩'},
+  {id:31,name:'Pablo Garcia',title:'Customs Broker',city:'Madrid',country:'Spain',lat:40.42,lng:-3.70,certs:['LCB','CCS'],exp:'7 yrs',avail:'Open to roles',slug:'pablo-garcia',emoji:'👨'},
+  {id:32,name:'Anna Kowalski',title:'Trade Policy Advisor',city:'Warsaw',country:'Poland',lat:52.23,lng:21.01,certs:['CGBP'],exp:'12 yrs',avail:'Consulting',slug:'anna-kowalski',emoji:'👩'},
+  {id:33,name:'Luca Bauer',title:'Logistics Compliance Manager',city:'Vienna',country:'Austria',lat:48.21,lng:16.37,certs:['CCS'],exp:'9 yrs',avail:'Open to roles',slug:'luca-bauer',emoji:'🧑'},
+  {id:34,name:'Elena Petrov',title:'Sanctions Compliance Officer',city:'Amsterdam',country:'Netherlands',lat:52.37,lng:4.90,certs:['CES'],exp:'14 yrs',avail:'Open to roles',slug:'elena-petrov',emoji:'👩'},
+  {id:35,name:'Markus Fischer',title:'HTS Classification Specialist',city:'Zurich',country:'Switzerland',lat:47.38,lng:8.54,certs:['LCB'],exp:'6 yrs',avail:'Freelance',slug:'markus-fischer',emoji:'👨'},
+  {id:36,name:'Claire Dubois',title:'Global Trade Analyst',city:'Brussels',country:'Belgium',lat:50.85,lng:4.35,certs:['CGBP','CCS'],exp:'8 yrs',avail:'Open to roles',slug:'claire-dubois',emoji:'👩'},
+  {id:37,name:'Nikos Pappas',title:'Customs Compliance Lead',city:'Athens',country:'Greece',lat:37.98,lng:23.73,certs:['LCB','CUSECO'],exp:'10 yrs',avail:'Open to roles',slug:'nikos-pappas',emoji:'🧔'},
+  {id:38,name:'Katja Novak',title:'Export Compliance Specialist',city:'Prague',country:'Czech Rep.',lat:50.08,lng:14.44,certs:['CCS'],exp:'7 yrs',avail:'Open to roles',slug:'katja-novak',emoji:'👩'},
+  {id:39,name:'Tobias Andersen',title:'Trade Finance Specialist',city:'Copenhagen',country:'Denmark',lat:55.68,lng:12.57,certs:['CGBP','CCS'],exp:'11 yrs',avail:'Consulting',slug:'tobias-andersen',emoji:'👨'},
+  {id:40,name:'Maria Santos',title:'Duty Drawback Expert',city:'Lisbon',country:'Portugal',lat:38.72,lng:-9.14,certs:['LCB'],exp:'9 yrs',avail:'Open to roles',slug:'maria-santos',emoji:'👩'},
+  {id:41,name:'Yuki Tanaka',title:'Trade Compliance Manager',city:'Tokyo',country:'Japan',lat:35.69,lng:139.69,certs:['CCS'],exp:'13 yrs',avail:'Open to roles',slug:'yuki-tanaka',emoji:'👩'},
+  {id:42,name:'Wei Zhang',title:'Customs Director',city:'Shanghai',country:'China',lat:31.23,lng:121.47,certs:['LCB','CCS','CUSECO'],exp:'15 yrs',avail:'Open to roles',slug:'wei-zhang',emoji:'👨'},
+  {id:43,name:'Amara Osei',title:'Import Compliance Analyst',city:'Lagos',country:'Nigeria',lat:6.52,lng:3.38,certs:['LCB','CCS'],exp:'6 yrs',avail:'Freelance',slug:'amara-osei',emoji:'👩'},
+  {id:44,name:'Raj Patel',title:'Export Controls Specialist',city:'Mumbai',country:'India',lat:19.08,lng:72.88,certs:['ECoP'],exp:'10 yrs',avail:'Open to roles',slug:'raj-patel',emoji:'👨'},
+  {id:45,name:'Fatima Al-Hassan',title:'Trade Compliance Officer',city:'Dubai',country:'UAE',lat:25.20,lng:55.27,certs:['CES'],exp:'8 yrs',avail:'Open to roles',slug:'fatima-al-hassan',emoji:'👩'},
+  {id:46,name:'Min-Ji Park',title:'Global Customs Manager',city:'Seoul',country:'South Korea',lat:37.57,lng:126.98,certs:['CCS'],exp:'12 yrs',avail:'Consulting',slug:'min-ji-park',emoji:'👩'},
+  {id:47,name:'Lucas Oliveira',title:'Trade Compliance Coordinator',city:'Sao Paulo',country:'Brazil',lat:-23.55,lng:-46.63,certs:['LCB'],exp:'7 yrs',avail:'Open to roles',slug:'lucas-oliveira',emoji:'👨'},
+  {id:48,name:'Aisha Nkosi',title:'Customs Broker',city:'Johannesburg',country:'South Africa',lat:-26.20,lng:28.04,certs:['LCB','CCS'],exp:'9 yrs',avail:'Open to roles',slug:'aisha-nkosi',emoji:'👩'},
+  {id:49,name:'Mei Lin',title:'FTZ Compliance Specialist',city:'Singapore',country:'Singapore',lat:1.35,lng:103.82,certs:['CGBP','CTCS'],exp:'8 yrs',avail:'Freelance',slug:'mei-lin',emoji:'👩'},
+  {id:50,name:'Omar Khalil',title:'Sanctions \x26 Export Compliance',city:'Cairo',country:'Egypt',lat:30.04,lng:31.24,certs:['CES'],exp:'11 yrs',avail:'Open to roles',slug:'omar-khalil',emoji:'🧔'},
+  {id:51,name:'Jean-Pierre Bouchard',title:'Customs Compliance Manager',city:'Montreal',country:'Canada',lat:45.50,lng:-73.57,certs:['LCB','CCS'],exp:'14 yrs',avail:'Open to roles',slug:'jean-pierre-bouchard',emoji:'👨'},
+  {id:52,name:'Anika Sharma',title:'Trade Policy Specialist',city:'Toronto',country:'Canada',lat:43.65,lng:-79.38,certs:['CGBP'],exp:'9 yrs',avail:'Consulting',slug:'anika-sharma',emoji:'👩'},
+  {id:53,name:'Tyler Mackenzie',title:'Import \x26 Export Coordinator',city:'Vancouver',country:'Canada',lat:49.28,lng:-123.12,certs:[],exp:'5 yrs',avail:'Open to roles',slug:'tyler-mackenzie',emoji:'👨'},
+  {id:54,name:'Chloe Tremblay',title:'Global Logistics Analyst',city:'Calgary',country:'Canada',lat:51.05,lng:-114.07,certs:['CCS','CUSECO'],exp:'7 yrs',avail:'Open to roles',slug:'chloe-tremblay',emoji:'👩'},
+  {id:55,name:'Marcus Okafor',title:'Supply Chain Specialist',city:'Ottawa',country:'Canada',lat:45.42,lng:-75.69,certs:[],exp:'6 yrs',avail:'Freelance',slug:'marcus-okafor',emoji:'🧑'},
+  {id:56,name:'Valentina Cruz',title:'Customs Broker',city:'Mexico City',country:'Mexico',lat:19.43,lng:-99.13,certs:['LCB'],exp:'8 yrs',avail:'Open to roles',slug:'valentina-cruz',emoji:'👩'},
+  {id:57,name:'Rodrigo Herrera',title:'Trade Compliance Analyst',city:'Guadalajara',country:'Mexico',lat:20.66,lng:-103.35,certs:['CCS','CES'],exp:'6 yrs',avail:'Open to roles',slug:'rodrigo-herrera',emoji:'👨'},
+  {id:58,name:'Sofia Mendoza',title:'Import Specialist',city:'Monterrey',country:'Mexico',lat:25.69,lng:-100.32,certs:[],exp:'4 yrs',avail:'Open to roles',slug:'sofia-mendoza',emoji:'👩'},
+  {id:59,name:'Steven Montgomery',title:'Global Export Compliance Leader',city:'Austin',country:'USA',lat:30.27,lng:-97.74,certs:['EAR','ITAR','OFAC'],exp:'20+ yrs',avail:'Open to roles',slug:'steven-montgomery',emoji:'👨',linkedin:'https://www.linkedin.com/in/steven-montgomery-95773413/'},
+  {id:60,name:'Christian Davidson',title:'Manager, Global Trade Compliance & Logistics',city:'Richmond',country:'USA',lat:37.54,lng:-77.43,certs:['FTZ','C-TPAT','HazMat'],exp:'15+ yrs',avail:'Open to roles',slug:'christian-davidson',emoji:'👨',linkedin:'https://www.linkedin.com/in/christian-davidson-logistics-va'},
+];
 
-if (p) {
-  document.title = p.name + ' — Global Trade Jobs';
-  const certsHTML = p.certs.length ? `<div class="section">
-    <div class="section-title">Licenses &amp; Certifications</div>
-    <div class="certs-row">${p.certs.map(c=>`<span class="cert-badge">${c}</span>`).join('')}</div>
-  </div>` : '';
+let activeProf=null,W,H,scale,baseScale,rotX=20,rotY=20,dragging=false,lx=0,ly=0;
+let countries=[],stateBorders=[];
+const canvas=document.getElementById('cv');
+const gc=document.getElementById('gc');
+const ctx=canvas.getContext('2d');
+const D=Math.PI/180;
 
-  document.getElementById('profile-content').innerHTML = `
-    <div class="profile-header">
-      <div class="avatar">${p.emoji}</div>
-      <div>
-        <div class="profile-name">${p.name}</div>
-        <div class="profile-title">${p.title}</div>
-        <div class="profile-location">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          ${p.city}, ${p.country}
-        </div>
-        <a href="${p.linkedin}" target="_blank" class="linkedin-link">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-          View LinkedIn
-        </a>
-      </div>
-    </div>
-
-    ${certsHTML}
-
-    <div class="section">
-      <div class="section-title">About</div>
-      <div class="bio-text">${p.bio.replace(/\n\n/g,'<br><br>')}</div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Areas of Expertise</div>
-      <div class="skills-grid">${p.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Projects &amp; Achievements</div>
-      ${p.achievements.map(a=>`<div class="achievement"><div class="achievement-title">${a.title}</div><div class="achievement-desc">${a.desc}</div></div>`).join('')}
-    </div>
-
-    <div class="section">
-      <div class="section-title">Details</div>
-      <div class="meta-grid">
-        <div><div class="meta-item-label">Experience</div><div class="meta-item-value">${p.experience}</div></div>
-        <div><div class="meta-item-label">Availability</div><div class="meta-item-value">${p.availability}</div></div>
-        <div><div class="meta-item-label">Work Preference</div><div class="meta-item-value">${p.workPref}</div></div>
-        <div><div class="meta-item-label">Level</div><div class="meta-item-value">${p.level}</div></div>
-      </div>
-    </div>
-
-    <div class="cta-box">
-      <div class="cta-text">
-        <h2>Are you a customs &amp; trade compliance professional?</h2>
-        <p>Claim your spot and get found by top employers hiring now.</p>
-      </div>
-      <a href="https://globaltradejobs.com/candidate-pricing" class="cta-btn">Claim Your Featured Profile →</a>
-    </div>
-  `;
-} else {
-  // Not a featured profile - show placeholder
-  const placeholders = ["sarah-chen","elena-varga","david-park","tanya-rivers","james-okonkwo","rachel-kim","carlos-mendez","amy-thornton","ryan-foster","nicole-davis","kevin-hall","linda-cruz","tom-bradley","alicia-moore","brian-lee","sandra-white","derek-johnson","paula-reyes","ethan-clark","megan-scott","anthony-rivera","christine-wu","marcus-bell","diana-hart","priya-nair","hans-mueller","antonio-ricci","ingrid-larsson","pablo-garcia","anna-kowalski","luca-bauer","elena-petrov","markus-fischer","claire-dubois","nikos-pappas","katja-novak","tobias-andersen","maria-santos","yuki-tanaka","wei-zhang","amara-osei","raj-patel","fatima-al-hassan","min-ji-park","lucas-oliveira","aisha-nkosi","mei-lin","omar-khalil","jean-pierre-bouchard","anika-sharma","tyler-mackenzie","chloe-tremblay","marcus-okafor","valentina-cruz","rodrigo-herrera","sofia-mendoza"];
-  
-  if (placeholders.includes(slug)) {
-    const allProfs = {"sarah-chen":{name:"Sarah Chen",title:"Customs Compliance Manager",city:"New York",country:"USA",emoji:"👩",certs:["LCB","CCS"]},"elena-varga":{name:"Elena Varga",title:"Export Controls Specialist",city:"Houston",country:"USA",emoji:"👩",certs:["CES"]},"david-park":{name:"David Park",title:"Trade Compliance Analyst",city:"Los Angeles",country:"USA",emoji:"🧑",certs:["CCS"]},"tanya-rivers":{name:"Tanya Rivers",title:"Import Specialist",city:"Miami",country:"USA",emoji:"👩",certs:["LCB"]},"james-okonkwo":{name:"James Okonkwo",title:"Trade Finance Manager",city:"Atlanta",country:"USA",emoji:"👨",certs:["CGBP"]},"rachel-kim":{name:"Rachel Kim",title:"FTZ Administrator",city:"Seattle",country:"USA",emoji:"👩",certs:["CCS"]},"carlos-mendez":{name:"Carlos Mendez",title:"Duty Drawback Specialist",city:"Dallas",country:"USA",emoji:"🧔",certs:["LCB","CUSECO"]},"amy-thornton":{name:"Amy Thornton",title:"ITAR Compliance Officer",city:"Boston",country:"USA",emoji:"👩",certs:["CES"]},"ryan-foster":{name:"Ryan Foster",title:"Customs Broker",city:"San Francisco",country:"USA",emoji:"👦",certs:["LCB","CCS"]},"nicole-davis":{name:"Nicole Davis",title:"Trade Compliance Director",city:"Minneapolis",country:"USA",emoji:"👩",certs:["CCS","CUSECO"]},"kevin-hall":{name:"Kevin Hall",title:"HTS Classification Expert",city:"Detroit",country:"USA",emoji:"👨",certs:["LCB"]},"linda-cruz":{name:"Linda Cruz",title:"OFAC Sanctions Analyst",city:"Washington DC",country:"USA",emoji:"👩",certs:["CES"]},"tom-bradley":{name:"Tom Bradley",title:"Export Compliance Manager",city:"Denver",country:"USA",emoji:"🧑",certs:["CES"]},"alicia-moore":{name:"Alicia Moore",title:"Logistics Compliance Analyst",city:"Phoenix",country:"USA",emoji:"👩",certs:["CCS"]},"brian-lee":{name:"Brian Lee",title:"Customs Entry Writer",city:"Portland",country:"USA",emoji:"👨",certs:["LCB"]},"sandra-white":{name:"Sandra White",title:"Trade Policy Specialist",city:"Charlotte",country:"USA",emoji:"👩",certs:["CCS"]},"derek-johnson":{name:"Derek Johnson",title:"Freight Audit Manager",city:"Memphis",country:"USA",emoji:"🧔",certs:["LCB","CCS"]},"paula-reyes":{name:"Paula Reyes",title:"Customs Compliance Specialist",city:"San Antonio",country:"USA",emoji:"👩",certs:["LCB"]},"ethan-clark":{name:"Ethan Clark",title:"Trade Compliance Consultant",city:"Kansas City",country:"USA",emoji:"👨",certs:["CCS","CUSECO"]},"megan-scott":{name:"Megan Scott",title:"Import Compliance Manager",city:"Nashville",country:"USA",emoji:"👩",certs:["LCB","CCS"]},"anthony-rivera":{name:"Anthony Rivera",title:"Tariff Classification Analyst",city:"New Orleans",country:"USA",emoji:"🧑",certs:["LCB"]},"christine-wu":{name:"Christine Wu",title:"Global Trade Manager",city:"Las Vegas",country:"USA",emoji:"👩",certs:["CCS","CUSECO"]},"marcus-bell":{name:"Marcus Bell",title:"Supply Chain Compliance Lead",city:"St. Louis",country:"USA",emoji:"👨",certs:["CUSECO","CCS"]},"diana-hart":{name:"Diana Hart",title:"Duty Drawback Consultant",city:"Tampa",country:"USA",emoji:"👩",certs:["LCB"]},"priya-nair":{name:"Priya Nair",title:"FTZ & Duty Drawback Expert",city:"London",country:"UK",emoji:"👩",certs:["CTCS"]},"hans-mueller":{name:"Hans Mueller",title:"EU Customs Compliance Director",city:"Berlin",country:"Germany",emoji:"👨",certs:["CCS","CES"]},"antonio-ricci":{name:"Antonio Ricci",title:"Import Specialist",city:"Milan",country:"Italy",emoji:"🧔",certs:["LCB"]},"ingrid-larsson":{name:"Ingrid Larsson",title:"Export Controls Analyst",city:"Stockholm",country:"Sweden",emoji:"👩",certs:["CES"]},"pablo-garcia":{name:"Pablo Garcia",title:"Customs Broker",city:"Madrid",country:"Spain",emoji:"👨",certs:["LCB","CCS"]},"anna-kowalski":{name:"Anna Kowalski",title:"Trade Policy Advisor",city:"Warsaw",country:"Poland",emoji:"👩",certs:["CGBP"]},"luca-bauer":{name:"Luca Bauer",title:"Logistics Compliance Manager",city:"Vienna",country:"Austria",emoji:"🧑",certs:["CCS"]},"elena-petrov":{name:"Elena Petrov",title:"Sanctions Compliance Officer",city:"Amsterdam",country:"Netherlands",emoji:"👩",certs:["CES"]},"markus-fischer":{name:"Markus Fischer",title:"HTS Classification Specialist",city:"Zurich",country:"Switzerland",emoji:"👨",certs:["LCB"]},"claire-dubois":{name:"Claire Dubois",title:"Global Trade Analyst",city:"Brussels",country:"Belgium",emoji:"👩",certs:["CGBP","CCS"]},"nikos-pappas":{name:"Nikos Pappas",title:"Customs Compliance Lead",city:"Athens",country:"Greece",emoji:"🧔",certs:["LCB","CUSECO"]},"katja-novak":{name:"Katja Novak",title:"Export Compliance Specialist",city:"Prague",country:"Czech Rep.",emoji:"👩",certs:["CES","CCS"]},"tobias-andersen":{name:"Tobias Andersen",title:"Trade Finance Specialist",city:"Copenhagen",country:"Denmark",emoji:"👨",certs:["CGBP","CCS"]},"maria-santos":{name:"Maria Santos",title:"Duty Drawback Expert",city:"Lisbon",country:"Portugal",emoji:"👩",certs:["LCB"]},"yuki-tanaka":{name:"Yuki Tanaka",title:"Trade Compliance Manager",city:"Tokyo",country:"Japan",emoji:"👩",certs:["CCS"]},"wei-zhang":{name:"Wei Zhang",title:"Customs Director",city:"Shanghai",country:"China",emoji:"👨",certs:["LCB","CCS","CUSECO"]},"amara-osei":{name:"Amara Osei",title:"Import Compliance Analyst",city:"Lagos",country:"Nigeria",emoji:"👩",certs:["LCB","CCS"]},"raj-patel":{name:"Raj Patel",title:"Export Controls Specialist",city:"Mumbai",country:"India",emoji:"👨",certs:["CES"]},"fatima-al-hassan":{name:"Fatima Al-Hassan",title:"Trade Compliance Officer",city:"Dubai",country:"UAE",emoji:"👩",certs:["CES"]},"min-ji-park":{name:"Min-Ji Park",title:"Global Customs Manager",city:"Seoul",country:"South Korea",emoji:"👩",certs:["CCS","CUSECO"]},"lucas-oliveira":{name:"Lucas Oliveira",title:"Trade Compliance Coordinator",city:"Sao Paulo",country:"Brazil",emoji:"👨",certs:["LCB"]},"aisha-nkosi":{name:"Aisha Nkosi",title:"Customs Broker",city:"Johannesburg",country:"South Africa",emoji:"👩",certs:["LCB","CCS"]},"mei-lin":{name:"Mei Lin",title:"FTZ Compliance Specialist",city:"Singapore",country:"Singapore",emoji:"👩",certs:["CTCS"]},"omar-khalil":{name:"Omar Khalil",title:"Sanctions & Export Compliance",city:"Cairo",country:"Egypt",emoji:"🧔",certs:["CES"]},"jean-pierre-bouchard":{name:"Jean-Pierre Bouchard",title:"Customs Compliance Manager",city:"Montreal",country:"Canada",emoji:"👨",certs:["LCB","CCS"]},"anika-sharma":{name:"Anika Sharma",title:"Trade Policy Specialist",city:"Toronto",country:"Canada",emoji:"👩",certs:["CGBP"]},"tyler-mackenzie":{name:"Tyler Mackenzie",title:"Import & Export Coordinator",city:"Vancouver",country:"Canada",emoji:"👨",certs:[]},"chloe-tremblay":{name:"Chloe Tremblay",title:"Global Logistics Analyst",city:"Calgary",country:"Canada",emoji:"👩",certs:["CCS","CUSECO"]},"marcus-okafor":{name:"Marcus Okafor",title:"Supply Chain Specialist",city:"Ottawa",country:"Canada",emoji:"🧑",certs:[]},"valentina-cruz":{name:"Valentina Cruz",title:"Customs Broker",city:"Mexico City",country:"Mexico",emoji:"👩",certs:["LCB"]},"rodrigo-herrera":{name:"Rodrigo Herrera",title:"Trade Compliance Analyst",city:"Guadalajara",country:"Mexico",emoji:"👨",certs:["CCS","CES"]},"sofia-mendoza":{name:"Sofia Mendoza",title:"Import Specialist",city:"Monterrey",country:"Mexico",emoji:"👩",certs:[]}};
-    
-    const prof = allProfs[slug];
-    if (prof) {
-      document.title = prof.name + ' — Global Trade Jobs';
-      const certsHTML = prof.certs && prof.certs.length ? `
-        <div style="margin-top:14px;">
-          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.55);margin-bottom:8px;">Licenses & Certifications</div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;">${prof.certs.map(c=>`<span style="font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.15);color:white;font-weight:500;">${c}</span>`).join('')}</div>
-        </div>` : '';
-
-      document.getElementById('profile-content').innerHTML = `
-        <div class="profile-header">
-          <div class="avatar">${prof.emoji}</div>
-          <div>
-            <div class="profile-name">${prof.name}</div>
-            <div class="profile-title">${prof.title}</div>
-            <div class="profile-location">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              ${prof.city}, ${prof.country}
-            </div>
-            ${certsHTML}
-          </div>
-        </div>
-        <div class="not-claimed">
-          <div class="not-claimed-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          </div>
-          <div class="not-claimed-text">This trade professional hasn't set up their full profile yet.</div>
-        </div>
-        <div class="cta-box">
-          <div class="cta-text">
-            <h2>Are you a customs &amp; trade compliance professional?</h2>
-            <p>Claim your spot and get found by top employers hiring now.</p>
-          </div>
-          <a href="https://globaltradejobs.com/candidate-pricing" class="cta-btn">Claim Your Featured Profile →</a>
-        </div>`;
-    } else {
-      window.location.href = 'https://resumes.globaltradejobs.com';
-    }
-  } else {
-    window.location.href = 'https://resumes.globaltradejobs.com';
-  }
+function project(lat,lng){
+  const lam=(lng+rotX)*D,phi=lat*D,p0=rotY*D;
+  const sp=Math.sin(phi),cp=Math.cos(phi),sp0=Math.sin(p0),cp0=Math.cos(p0),cl=Math.cos(lam);
+  if(sp*sp0+cp*cp0*cl<0.01)return null;
+  return[W/2+scale*(cp*Math.sin(lam)),H/2-scale*(sp*cp0-cp*sp0*cl)];
 }
+
+function drawSphere(){
+  ctx.beginPath();ctx.arc(W/2,H/2,scale,0,2*Math.PI);
+  ctx.fillStyle='#0b1929';ctx.fill();
+  ctx.strokeStyle='rgba(55,138,221,0.3)';ctx.lineWidth=1.5;ctx.stroke();
+}
+
+function drawGrat(){
+  ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=0.5;
+  for(let g=-180;g<=180;g+=30){ctx.beginPath();let f=true;for(let t=-90;t<=90;t+=4){const p=project(t,g);if(p){f?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;}else f=true;}ctx.stroke();}
+  for(let t=-60;t<=60;t+=30){ctx.beginPath();let f=true;for(let g=-180;g<=180;g+=4){const p=project(t,g);if(p){f?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;}else f=true;}ctx.stroke();}
+}
+
+function drawRings(rings,fill,stroke,lw){
+  rings.forEach(ring=>{
+    ctx.beginPath();let f=true,pn=false;
+    for(const c of ring){
+      const p=project(c[1],c[0]);
+      if(p){(f||pn)?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;pn=false;}
+      else pn=true;
+    }
+    ctx.closePath();
+    if(fill){ctx.fillStyle=fill;ctx.fill();}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke();}
+  });
+}
+
+const CLABELS=[
+  {n:'Russia',lat:61.5,lng:90,t:1},{n:'Canada',lat:60,lng:-96,t:1},{n:'United States',lat:38,lng:-97,t:1},
+  {n:'China',lat:35,lng:103,t:1},{n:'Brazil',lat:-10,lng:-53,t:1},{n:'Australia',lat:-25,lng:134,t:1},
+  {n:'India',lat:21,lng:79,t:1},{n:'Argentina',lat:-34,lng:-64,t:1},{n:'Mexico',lat:24,lng:-103,t:1},
+  {n:'Saudi Arabia',lat:24,lng:45,t:1},{n:'Indonesia',lat:-3,lng:118,t:1},{n:'Algeria',lat:28,lng:3,t:1},
+  {n:'Kazakhstan',lat:48,lng:68,t:1},{n:'Sudan',lat:15,lng:30,t:1},{n:'Libya',lat:25,lng:17,t:1},
+  {n:'Iran',lat:32,lng:53,t:1},{n:'Mongolia',lat:46,lng:105,t:1},{n:'Peru',lat:-10,lng:-76,t:1},
+  {n:'Chad',lat:15,lng:19,t:1},{n:'Niger',lat:17,lng:8,t:1},{n:'Angola',lat:-12,lng:18,t:1},
+  {n:'Mali',lat:17,lng:-2,t:1},{n:'South Africa',lat:-29,lng:25,t:1},{n:'Colombia',lat:4,lng:-72,t:1},
+  {n:'Ethiopia',lat:9,lng:40,t:1},{n:'Mauritania',lat:20,lng:-11,t:1},
+  {n:'France',lat:46,lng:2,t:2},{n:'Germany',lat:51,lng:11,t:2},{n:'Italy',lat:43,lng:13,t:2},
+  {n:'Japan',lat:36,lng:138,t:2},{n:'Nigeria',lat:9,lng:9,t:2},{n:'UK',lat:55,lng:-3,t:2},
+  {n:'Spain',lat:41,lng:-4,t:2},{n:'Poland',lat:52,lng:19,t:2},{n:'Turkey',lat:39,lng:35,t:2},
+  {n:'Ukraine',lat:49,lng:31,t:2},{n:'Pakistan',lat:30,lng:69,t:2},{n:'Egypt',lat:26,lng:30,t:2},
+  {n:'Venezuela',lat:8,lng:-66,t:2},{n:'Mozambique',lat:-18,lng:35,t:2},{n:'Zambia',lat:-14,lng:26,t:2},
+  {n:'Myanmar',lat:17,lng:96,t:2},{n:'Afghanistan',lat:33,lng:65,t:2},{n:'Somalia',lat:6,lng:46,t:2},
+  {n:'Congo',lat:-3,lng:23,t:2},{n:'Tanzania',lat:-6,lng:35,t:2},{n:'Kenya',lat:1,lng:38,t:2},
+  {n:'Morocco',lat:32,lng:-5,t:2},{n:'Uzbekistan',lat:41,lng:64,t:2},{n:'Iraq',lat:33,lng:44,t:2},
+  {n:'Norway',lat:65,lng:15,t:2},{n:'Sweden',lat:62,lng:16,t:2},{n:'Finland',lat:64,lng:26,t:2},
+  {n:'Chile',lat:-35,lng:-71,t:2},{n:'Ecuador',lat:-2,lng:-78,t:2},{n:'Paraguay',lat:-23,lng:-58,t:2},
+  {n:'S.Korea',lat:37,lng:128,t:2},{n:'Thailand',lat:15,lng:101,t:2},{n:'Vietnam',lat:16,lng:108,t:2},
+  {n:'Malaysia',lat:4,lng:109,t:2},{n:'Philippines',lat:13,lng:122,t:2},{n:'Zimbabwe',lat:-20,lng:30,t:2},
+  {n:'Netherlands',lat:52,lng:5,t:3},{n:'Belgium',lat:51,lng:4,t:3},{n:'Denmark',lat:56,lng:10,t:3},
+  {n:'Singapore',lat:1.4,lng:103.8,t:3},{n:'Switzerland',lat:47,lng:8,t:3},{n:'Austria',lat:47,lng:14,t:3},
+  {n:'Czech Rep.',lat:50,lng:15,t:3},{n:'Hungary',lat:47,lng:19,t:3},{n:'Romania',lat:46,lng:25,t:3},
+  {n:'Greece',lat:39,lng:22,t:3},{n:'Portugal',lat:39,lng:-8,t:3},{n:'Israel',lat:31,lng:35,t:3},
+  {n:'UAE',lat:24,lng:54,t:3},{n:'New Zealand',lat:-41,lng:174,t:3},{n:'Ireland',lat:53,lng:-8,t:3},
+  {n:'Taiwan',lat:23.5,lng:121,t:3},{n:'Bangladesh',lat:23,lng:90,t:3},{n:'Ghana',lat:8,lng:-1,t:3},
+  {n:'Tunisia',lat:34,lng:9,t:3},{n:'Uruguay',lat:-33,lng:-56,t:3},{n:'Cuba',lat:22,lng:-80,t:3},
+  {n:'Alabama',lat:32.8,lng:-86.8,t:4},{n:'Alaska',lat:64,lng:-153,t:4},{n:'Arizona',lat:34.3,lng:-111.1,t:4},
+  {n:'Arkansas',lat:34.8,lng:-92.4,t:4},{n:'California',lat:36.8,lng:-119.4,t:4},{n:'Colorado',lat:39.1,lng:-105.4,t:4},
+  {n:'Florida',lat:27.8,lng:-81.7,t:4},{n:'Georgia',lat:32.2,lng:-83.4,t:4},{n:'Idaho',lat:44.4,lng:-114.6,t:4},
+  {n:'Illinois',lat:40.3,lng:-89.0,t:4},{n:'Indiana',lat:40.0,lng:-86.1,t:4},{n:'Iowa',lat:42.1,lng:-93.5,t:4},
+  {n:'Kansas',lat:38.5,lng:-98.4,t:4},{n:'Kentucky',lat:37.7,lng:-85.3,t:4},{n:'Louisiana',lat:31.2,lng:-91.8,t:4},
+  {n:'Maine',lat:45.4,lng:-69.0,t:4},{n:'Maryland',lat:39.1,lng:-76.8,t:4},{n:'Massachusetts',lat:42.2,lng:-71.5,t:4},
+  {n:'Michigan',lat:44.3,lng:-85.4,t:4},{n:'Minnesota',lat:46.4,lng:-93.1,t:4},{n:'Mississippi',lat:32.7,lng:-89.7,t:4},
+  {n:'Missouri',lat:38.5,lng:-92.5,t:4},{n:'Montana',lat:46.9,lng:-110.5,t:4},{n:'Nebraska',lat:41.5,lng:-99.9,t:4},
+  {n:'Nevada',lat:39.5,lng:-116.9,t:4},{n:'New Mexico',lat:34.8,lng:-106.2,t:4},{n:'New York',lat:42.9,lng:-75.6,t:4},
+  {n:'N. Carolina',lat:35.5,lng:-79.4,t:4},{n:'N. Dakota',lat:47.5,lng:-100.5,t:4},{n:'Ohio',lat:40.4,lng:-82.8,t:4},
+  {n:'Oklahoma',lat:35.6,lng:-97.5,t:4},{n:'Oregon',lat:44.1,lng:-120.5,t:4},{n:'Pennsylvania',lat:40.6,lng:-77.2,t:4},
+  {n:'S. Carolina',lat:33.9,lng:-80.9,t:4},{n:'S. Dakota',lat:44.4,lng:-100.2,t:4},{n:'Tennessee',lat:35.9,lng:-86.7,t:4},
+  {n:'Texas',lat:31.5,lng:-99.3,t:4},{n:'Utah',lat:39.4,lng:-111.1,t:4},{n:'Virginia',lat:37.8,lng:-78.2,t:4},
+  {n:'Washington',lat:47.4,lng:-120.7,t:4},{n:'W. Virginia',lat:38.6,lng:-80.6,t:4},
+  {n:'Wisconsin',lat:44.3,lng:-89.8,t:4},{n:'Wyoming',lat:43.0,lng:-107.6,t:4},
+];
+
+function lbl(txt,x,y,sz,alpha,bold){
+  ctx.save();ctx.font=(bold?'500 ':'')+sz+'px -apple-system,Arial,sans-serif';
+  ctx.fillStyle='rgba(170,205,240,'+alpha+')';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.shadowColor='rgba(0,0,0,0.95)';ctx.shadowBlur=4;ctx.fillText(txt,x,y);ctx.restore();
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  drawSphere();drawGrat();
+  countries.forEach(c=>drawRings(c.rings,'#1a3048',null,0));
+  countries.forEach(c=>drawRings(c.rings,null,'rgba(90,155,215,0.45)',0.7));
+  stateBorders.forEach(r=>drawRings([r],null,'rgba(90,155,215,0.22)',0.4));
+  const z=scale/baseScale;
+  CLABELS.forEach(c=>{
+    const p=project(c.lat,c.lng);if(!p)return;
+    const t=c.t||2,minZ=t===1?0:t===2?0.65:t===3?1.2:1.8;
+    if(z<minZ)return;
+    const a=Math.min(0.75,(z-minZ)*1.5+(t===1?0.35:0));
+    if(a<0.06)return;
+    lbl(c.n.toUpperCase(),p[0],p[1],Math.max(8,Math.min(11,6.5+z*2)),a,true);
+  });
+  renderPins();
+}
+
+function renderPins(){
+  document.querySelectorAll('.pin').forEach(p=>p.remove());
+  profs.forEach(p=>{
+    const pt=project(p.lat,p.lng);if(!pt)return;
+    const pin=document.createElement('div');
+    pin.className='pin';
+    pin.style.cssText='position:absolute;transform:translate(-50%,-50%);cursor:pointer;z-index:6;left:'+pt[0]+'px;top:'+pt[1]+'px;';
+    const bub=document.createElement('div');
+    bub.style.cssText='width:38px;height:38px;border-radius:50%;background:rgba(8,18,32,0.88);border:2px solid rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 2px 14px rgba(0,0,0,0.75);transition:transform 0.15s;';
+    bub.textContent=p.emoji;
+    bub.onmouseover=()=>bub.style.transform='scale(1.18)';
+    bub.onmouseout=()=>bub.style.transform='scale(1)';
+    pin.appendChild(bub);
+    pin.onclick=(e)=>{e.stopPropagation();showCard(p,pt);};
+    pin.addEventListener('touchend',(e)=>{e.preventDefault();e.stopPropagation();showCard(p,pt);},{passive:false});
+    gc.appendChild(pin);
+  });
+}
+
+function showCard(p,pt){
+  activeProf=p;
+  document.getElementById('cav').textContent=p.emoji;
+  document.getElementById('cnm').textContent=p.name;
+  document.getElementById('ctl').textContent=p.title;
+  document.getElementById('cloc').textContent=p.city+', '+p.country;
+  document.getElementById('cexp').textContent=p.exp;
+  document.getElementById('cavl').textContent=p.avail;
+  const certsHtml=p.certs.map(c=>'<span class="cb">'+c+'</span>').join('');document.getElementById('ccerts').innerHTML=certsHtml;document.getElementById('ccerts').style.display=certsHtml?'flex':'none';
+  const card=document.getElementById('card');
+  const rect=canvas.getBoundingClientRect();
+  let lft=rect.left+pt[0]+22, top=rect.top+pt[1]-20;
+  const vw=window.innerWidth, vh=window.innerHeight;
+  if(lft+252>vw)lft=rect.left+pt[0]-264;
+  if(top+250>vh)top=vh-258;
+  if(top<8)top=8; if(lft<8)lft=8;
+  card.style.left=lft+'px';card.style.top=top+'px';card.classList.add('on');
+}
+function closeCard(){document.getElementById('card').classList.remove('on');activeProf=null;}
+function openProfile(){if(activeProf)window.open(BASE+activeProf.slug,'_blank');}
+function openLinkedIn(){if(activeProf&&activeProf.linkedin){window.open(activeProf.linkedin,'_blank');}else{window.open('https://www.linkedin.com/','_blank');}}
+
+function resize(){
+  W=window.innerWidth;H=window.innerHeight;
+  canvas.width=W;canvas.height=H;canvas.style.height=H+'px';
+  baseScale=Math.min(W,H)*0.43;if(!scale)scale=baseScale;
+  if(countries.length)draw();
+}
+
+canvas.addEventListener('wheel',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(e.deltaY<0?1.25:0.8)));draw();},{passive:false});
+canvas.addEventListener('dblclick',e=>{scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*1.5));draw();});
+canvas.addEventListener('contextmenu',e=>{e.preventDefault();scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*0.7));draw();});
+canvas.addEventListener('mousedown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;});
+window.addEventListener('mousemove',e=>{if(!dragging)return;rotX-=(e.clientX-lx)*0.35;rotY-=(e.clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.clientX;ly=e.clientY;draw();});
+window.addEventListener('mouseup',()=>dragging=false);
+canvas.addEventListener('touchstart',e=>{if(e.touches.length===1){dragging=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY;}},{passive:true});
+canvas.addEventListener('touchmove',e=>{if(!dragging||e.touches.length!==1)return;rotX-=(e.touches[0].clientX-lx)*0.35;rotY-=(e.touches[0].clientY-ly)*0.35;rotY=Math.max(-85,Math.min(85,rotY));lx=e.touches[0].clientX;ly=e.touches[0].clientY;draw();e.preventDefault();},{passive:false});
+canvas.addEventListener('touchend',()=>{dragging=false;lastPinchDist=null;});
+let lastPinchDist=null;
+canvas.addEventListener('touchstart',e=>{if(e.touches.length===2){dragging=false;lastPinchDist=null;}},{passive:true});
+canvas.addEventListener('touchmove',e=>{
+  if(e.touches.length===2){
+    e.preventDefault();
+    const dx=e.touches[0].clientX-e.touches[1].clientX;
+    const dy=e.touches[0].clientY-e.touches[1].clientY;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(lastPinchDist){scale=Math.max(baseScale*0.4,Math.min(baseScale*10,scale*(dist/lastPinchDist)));draw();}
+    lastPinchDist=dist;
+  }
+},{passive:false});
+gc.addEventListener('click',e=>{if(e.target===canvas)closeCard();});
+window.addEventListener('resize',resize);
+
+resize();
+(async()=>{
+  try{
+    const [r1,r2]=await Promise.all([
+      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'),
+      fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json')
+    ]);
+    const [w,us]=await Promise.all([r1.json(),r2.json()]);
+    function decode(topo,obj){
+      const arcs=topo.arcs;
+      const sc=topo.transform?topo.transform.scale:[1,1];
+      const tr=topo.transform?topo.transform.translate:[0,0];
+      const decoded=arcs.map(arc=>{let x=0,y=0;return arc.map(d=>{x+=d[0];y+=d[1];return[x*sc[0]+tr[0],y*sc[1]+tr[1]];});});
+      function ring(idxs){
+        const coords=[];
+        for(let i of idxs){const rev=i<0;const arc=decoded[rev?~i:i];const pts=rev?[...arc].reverse():arc;for(let j=rev?0:1;j<pts.length;j++)coords.push(pts[j]);}
+        return coords;
+      }
+      return obj.geometries.map(g=>{
+        const rings=[];
+        if(g.type==='Polygon')rings.push(ring(g.arcs[0]));
+        else if(g.type==='MultiPolygon')g.arcs.forEach(p=>rings.push(ring(p[0])));
+        return rings;
+      });
+    }
+    countries=decode(w,w.objects.countries).map(rings=>({rings}));
+    stateBorders=decode(us,us.objects.states).flat();
+    document.getElementById('loader').style.display='none';
+    draw();
+  }catch(e){
+    document.getElementById('loader-txt').textContent='Ready';
+    setTimeout(()=>document.getElementById('loader').style.display='none',500);
+    draw();
+  }
+})();
+setTimeout(()=>{const h=document.getElementById('map-hint');if(h)h.style.opacity='0';},6000);
+setTimeout(()=>{const h=document.getElementById('map-hint');if(h)h.style.display='none';},8000);
 </script>
 </body>
 </html>
