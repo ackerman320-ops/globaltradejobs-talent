@@ -53,7 +53,7 @@
   .course-card.featured .card-chevron { color: rgba(255,255,255,0.5); }
   .course-card.featured .featured-badge { background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.3); }
   .course-card.featured .approved-badge { background: rgba(126,200,227,0.2); color: #7ec8e3; }
-  .course-card.featured .course-icon { background: rgba(255,255,255,0.15); color: white; }
+  .course-card.featured .course-icon { background: #0b3a61; }
   .course-card.featured .tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.2); }
   .course-card.featured .tag.cert { background: rgba(126,200,227,0.25); color: #7ec8e3; border-color: rgba(126,200,227,0.4); }
 
@@ -62,12 +62,11 @@
   .card-header:hover { background: #f8f9fa; }
 
   .course-icon { width: 52px; height: 52px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; overflow: hidden; background: #e8f4fd; }
-  .course-icon img { width: 100%; height: 100%; object-fit: contain; }
+  .course-icon img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
   .icon-us  { background: #e8f4fd; }
   .icon-cn  { background: #fef3e2; }
   .icon-eu  { background: #eaf4ea; }
   .icon-in  { background: #fde8ea; }
-  .course-card.featured .course-icon { background: #0b3a61; }
 
   .card-info { flex: 1; }
   .card-name-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
@@ -105,13 +104,14 @@
   .btn-syllabus:hover { background: #eaf6fb; }
   .contact-link { font-size: 13px; color: #7ec8e3; text-decoration: none; display: flex; align-items: center; gap: 5px; }
   .contact-link:hover { color: #0b3a61; }
+  .discount-pill { font-size: 12px; color: #089a9a; font-weight: 600; background: #e6fafa; padding: 4px 12px; border-radius: 100px; border: 1px solid #b2e8e8; }
 
   /* FEATURE BANNER */
   .feature-banner { background: linear-gradient(135deg, #0b3a61, #1a5a8a); border-radius: 12px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; }
   .feature-banner h3 { font-size: 18px; font-weight: 700; color: white; margin-bottom: 4px; }
   .feature-banner p { font-size: 13px; color: rgba(255,255,255,0.7); }
-  .btn-feature { padding: 10px 24px; background: #7ec8e3; color: #0b3a61; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; text-decoration: none; white-space: nowrap; }
-  .btn-feature:hover { background: #5ab4d4; }
+  .btn-feature { padding: 10px 24px; background: white; color: #0b3a61; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; text-decoration: none; white-space: nowrap; }
+  .btn-feature:hover { background: #f0f0f0; }
 
   /* EMPTY / LOADING */
   .loading { text-align: center; padding: 60px 20px; color: #6c757d; }
@@ -159,7 +159,7 @@
       <option value="EU">EU</option>
       <option value="India">India</option>
     </select>
-    <span class="result-count" id="result-label">4 courses</span>
+    <span class="result-count" id="result-label">7 courses</span>
   </div>
 </div>
 
@@ -174,7 +174,8 @@ const LOGOS = {
   'eu-sanctions': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png",
   'india-sanctions': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png",
   'cble-selfpaced': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Customs%20Clearance%20and%20Trade%20Solutions.png",
-  'cble-live': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Customs%20Clearance%20and%20Trade%20Solutions.png"
+  'cble-live': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Customs%20Clearance%20and%20Trade%20Solutions.png",
+  'freightpath': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/FreightPath.png"
 };
 
 let openCard = null;
@@ -197,7 +198,8 @@ const COURSES = [
     email: "CSECP@internationalsanctionssociety.org",
     website: "www.csecp.org",
     enroll_url: "https://csecp.org/home",
-    syllabus_url: "https://csecp.org/u-s-certificate-course"
+    syllabus_url: "https://csecp.org/u-s-certificate-course",
+    discount_note: null
   },
   {
     id: 'china-sanctions',
@@ -216,7 +218,8 @@ const COURSES = [
     email: "CSECP@internationalsanctionssociety.org",
     website: "www.csecp.org",
     enroll_url: "https://csecp.org/home",
-    syllabus_url: "https://csecp.org/china-certificate-course"
+    syllabus_url: "https://csecp.org/china-certificate-course",
+    discount_note: null
   },
   {
     id: 'eu-sanctions',
@@ -235,7 +238,8 @@ const COURSES = [
     email: "CSECP@internationalsanctionssociety.org",
     website: "www.csecp.org",
     enroll_url: "https://csecp.org/home",
-    syllabus_url: "https://csecp.org/eu-certificate-course"
+    syllabus_url: "https://csecp.org/eu-certificate-course",
+    discount_note: null
   },
   {
     id: 'cble-selfpaced',
@@ -254,7 +258,8 @@ const COURSES = [
     email: null,
     website: "cbleprep.clearcts.com",
     enroll_url: "https://cbleprep.clearcts.com",
-    syllabus_url: null
+    syllabus_url: null,
+    discount_note: null
   },
   {
     id: 'cble-live',
@@ -273,7 +278,8 @@ const COURSES = [
     email: null,
     website: "cbleprep.clearcts.com",
     enroll_url: "https://cbleprep.clearcts.com",
-    syllabus_url: null
+    syllabus_url: null,
+    discount_note: null
   },
   {
     id: 'india-sanctions',
@@ -292,7 +298,28 @@ const COURSES = [
     email: "CSECP@internationalsanctionssociety.org",
     website: "www.csecp.org",
     enroll_url: "https://csecp.org/home",
-    syllabus_url: "https://csecp.org/india-certificate-course"
+    syllabus_url: "https://csecp.org/india-certificate-course",
+    discount_note: null
+  },
+  {
+    id: 'freightpath',
+    title: "Customs, Import & Export Training — FreightPath",
+    region: "U.S.",
+    iconClass: "icon-us",
+    certification: "Certificate of Completion",
+    hours: "Varies",
+    language: "English",
+    format: "Online · Self-Paced · Certificate of Completion",
+    accreditor: "CSCMP Approved & Endorsed",
+    is_featured: true,
+    topics: ["Customs Compliance", "Imports", "Exports", "Incoterms", "Documentation", "International Freight"],
+    short_desc: "CSCMP-approved training covering customs compliance & brokerage, imports, exports, Incoterms, documentation, and international freight forwarding — practical education for trade professionals at every level.",
+    full_desc: "FreightPath offers a comprehensive library of CSCMP-approved and endorsed courses designed for logistics and trade professionals. Their customs and trade-focused curriculum covers Customs Compliance & Brokerage, Imports, Exports, Incoterms, Documentation, and International Freight Forwarding. Every course completed earns a certificate of completion, and their platform combines modern educational technology with dynamic curriculum to deliver deep, practical learning. Trusted by individuals, businesses, and academic institutions, FreightPath is built for the people who keep freight moving.",
+    email: "info@gofreightpath.com",
+    website: "gofreightpath.com",
+    enroll_url: "https://gofreightpath.com/course-catalog/",
+    syllabus_url: "https://gofreightpath.com/course-catalog/",
+    discount_note: "10% off — use code GTJ10% at checkout"
   }
 ];
 
@@ -329,7 +356,7 @@ function renderCourses(courses) {
         <h3>Do you offer a global trade course?</h3>
         <p>Feature your training program in our directory and connect with compliance professionals actively seeking education.</p>
       </div>
-      <a href="https://globaltradejobs.com/contact" class="btn-feature" style="background:white;color:#0b3a61;">Feature Your Course →</a>
+      <a href="https://globaltradejobs.com/contact" class="btn-feature">Feature Your Course →</a>
     </div>`;
 
   const cards = courses.map(c => {
@@ -341,6 +368,7 @@ function renderCourses(courses) {
     const certExpandTag = `<span class="expand-tag cert">${c.certification} Certification</span>`;
     const emailLink = c.email ? `<a href="mailto:${c.email}" class="contact-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>${c.email}</a>` : '';
     const websiteLink = c.website ? `<a href="https://${c.website}" target="_blank" class="contact-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>${c.website}</a>` : '';
+    const discountPill = c.discount_note ? `<span class="discount-pill">🎟 ${c.discount_note}</span>` : '';
 
     return `
     <div class="course-card ${c.is_featured ? 'featured' : ''}" id="card-${c.id}">
@@ -356,6 +384,7 @@ function renderCourses(courses) {
           </div>
           <div class="card-meta">
             <span>📜 ${c.certification} Certification</span>
+            ${c.hours ? `<span>⏱ ${c.hours} Estimated Hours</span>` : ''}
             <span>🌐 ${c.language}</span>
             <span>💻 ${c.format}</span>
           </div>
@@ -378,6 +407,7 @@ function renderCourses(courses) {
             <div class="expand-tags">
               ${certExpandTag}
               <span class="expand-tag">${c.format}</span>
+              ${c.hours ? `<span class="expand-tag">${c.hours} Hours</span>` : ''}
               <span class="expand-tag">${c.language}</span>
               ${c.accreditor ? `<span class="expand-tag topic">${c.accreditor}</span>` : ''}
             </div>
@@ -388,9 +418,10 @@ function renderCourses(courses) {
           </div>
           <div class="contact-section">
             <a href="${c.enroll_url}" target="_blank" class="btn-enroll">Enroll in Course →</a>
-            ${c.syllabus_url ? `<a href="${c.syllabus_url}" target="_blank" class="btn-syllabus">View Full Syllabus</a>` : ""}
+            ${c.syllabus_url && c.syllabus_url !== c.enroll_url ? `<a href="${c.syllabus_url}" target="_blank" class="btn-syllabus">View Full Syllabus</a>` : ''}
             ${emailLink}
             ${websiteLink}
+            ${discountPill}
           </div>
         </div>
       </div>
