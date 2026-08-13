@@ -262,7 +262,9 @@ async function loadCandidates() {
   const location = document.getElementById('filter-location').value.trim();
   document.getElementById('grid').innerHTML = '<div class="loading"><div class="spinner"></div>Loading candidates...</div>';
 
-  let url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,location_country,years_experience,current_title,work_preference,customs_expertise,trade_specialties,certifications,summary_blurb,is_featured,full_name,contact_email,linkedin_url,resume_url,seniority_level&is_active=eq.true&order=is_featured.desc,created_at.desc&limit=1000`;
+  const COLS = 'id,is_featured,full_name,initials,current_title,location_city,location_state,location_region,location_country,years_experience,work_preference,seniority_level,certifications,customs_expertise,trade_specialties,summary_blurb,contact_email,linkedin_url,resume_url';
+
+  let url = `${SUPABASE_URL}/rest/v1/public_talent?select=${COLS}&order=is_featured.desc,created_at.desc&limit=1000`;
 
   if (location) {
     const stateMap = {'alabama':'AL','alaska':'AK','arizona':'AZ','arkansas':'AR','california':'CA','colorado':'CO','connecticut':'CT','delaware':'DE','florida':'FL','georgia':'GA','hawaii':'HI','idaho':'ID','illinois':'IL','indiana':'IN','iowa':'IA','kansas':'KS','kentucky':'KY','louisiana':'LA','maine':'ME','maryland':'MD','massachusetts':'MA','michigan':'MI','minnesota':'MN','mississippi':'MS','missouri':'MO','montana':'MT','nebraska':'NE','nevada':'NV','new hampshire':'NH','new jersey':'NJ','new mexico':'NM','new york':'NY','north carolina':'NC','north dakota':'ND','ohio':'OH','oklahoma':'OK','oregon':'OR','pennsylvania':'PA','rhode island':'RI','south carolina':'SC','south dakota':'SD','tennessee':'TN','texas':'TX','utah':'UT','vermont':'VT','virginia':'VA','washington':'WA','west virginia':'WV','wisconsin':'WI','wyoming':'WY'};
@@ -270,13 +272,13 @@ async function loadCandidates() {
     if (stateAbbr) {
       url += `&location_state=eq.${stateAbbr}`;
     } else {
-      url += `&or=(location_city.ilike.*${encodeURIComponent(location)}*,location_country.ilike.*${encodeURIComponent(location)}*)`;
+      url += `&or=(location_state.ilike.*${encodeURIComponent(location)}*,location_country.ilike.*${encodeURIComponent(location)}*)`;
     }
   }
 
   if (q) {
     const qEnc = encodeURIComponent(q);
-    url = `${SUPABASE_URL}/rest/v1/candidates?select=id,initials,location_city,location_state,location_region,location_country,years_experience,current_title,work_preference,customs_expertise,trade_specialties,certifications,summary_blurb,is_featured,full_name,contact_email,linkedin_url,resume_url,seniority_level&is_active=eq.true&order=is_featured.desc&limit=1000&or=(current_title.ilike.*${qEnc}*,certifications.cs.{${q}},customs_expertise.cs.{${q}},trade_specialties.cs.{${q}},summary_blurb.ilike.*${qEnc}*)`;
+    url = `${SUPABASE_URL}/rest/v1/public_talent?select=${COLS}&order=is_featured.desc&limit=1000&or=(current_title.ilike.*${qEnc}*,certifications.cs.{${q}},customs_expertise.cs.{${q}},trade_specialties.cs.{${q}},summary_blurb.ilike.*${qEnc}*)`;
   }
 
   try {
@@ -306,102 +308,77 @@ function renderCards(candidates) {
   const nonFeatured = candidates.filter(c => !c.is_featured);
   const ordered = [...featured, ...nonFeatured];
 
-  const shownIds = new Set();
-
   grid.innerHTML = ordered.map(c => {
-    const initials = c.initials || getInitials(c.full_name || '');
-    const av = avatarColor(c.id);
-    const loc = c.location_city && c.location_country && c.location_country !== 'United States'
-      ? `${c.location_city}, ${c.location_country}`
-      : c.location_city && c.location_state
-      ? `${c.location_city}, ${c.location_state}`
-      : (c.location_region || '');
-    const titleLine = [c.current_title, loc].filter(Boolean).join(' · ');
-    const allSkills = [...(c.customs_expertise||[]), ...(c.trade_specialties||[])];
-    const allCerts = (c.certifications||[]);
-    const certTags = allCerts.map(t => `<span class="tag cert">${t}</span>`).join('');
-    const skillTags = allSkills.map(t => `<span class="tag">${t}</span>`).join('');
-    const expStr = c.years_experience ? c.years_experience + ' yrs exp.' : '';
 
     if (c.is_featured) {
+      const initials = c.initials || getInitials(c.full_name || '');
+      const av = avatarColor(c.id);
+      const loc = c.location_city && c.location_country && c.location_country !== 'United States'
+        ? `${c.location_city}, ${c.location_country}`
+        : c.location_city && c.location_state
+        ? `${c.location_city}, ${c.location_state}`
+        : (c.location_region || '');
+      const titleLine = [c.current_title, loc].filter(Boolean).join(' · ');
+      const allSkills = [...(c.customs_expertise||[]), ...(c.trade_specialties||[])];
+      const allCerts = (c.certifications||[]);
       const bio = c.summary_blurb || '';
+
       return `
-      <div class="card featured-card" id="card-${c.id}">
-        <div class="card-head">
-          <div class="avatar ${av}">${initials}</div>
-          <div style="flex:1">
-            <span class="featured-pill">⭐ Featured Profile</span>
-            <div class="card-name">${c.full_name || initials}</div>
-            <div class="card-title">${titleLine}</div>
-          </div>
-        </div>
-        <div class="card-body">
-          ${bio ? `<p class="summary-text">${bio}</p>` : ''}
-          <div class="tags">${allCerts.slice(0,3).map(t => `<span class="tag cert">${t}</span>`).join("")}${allSkills.slice(0,3).map(t => `<span class="tag">${t}</span>`).join("")}</div>
-          <div class="card-meta" style="margin-top:10px;">
-            <span style="font-size:11px;color:var(--gray-400)">${c.work_preference||''}</span>
-            <span>${c.years_experience ? c.years_experience + '+ yrs exp.' : ''}</span>
-          </div>
-        </div>
-        <div style="padding:0 16px 16px;display:flex;flex-direction:column;gap:8px;">
-          <button class="view-profile-btn" onclick="openProfileModal('${c.id}')">View Full Profile</button>
-          <div style="display:flex;gap:8px;">
-            ${c.linkedin_url ? `<a href="${c.linkedin_url}" target="_blank" class="btn-sm btn-sm-outline" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;flex:1;">LinkedIn</a>` : ''}
-            ${c.contact_email ? `<a href="mailto:${c.contact_email}" class="btn-sm btn-sm-outline" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;flex:1;">Email</a>` : `<button class="btn-sm btn-sm-outline" onclick="openModal()" style="flex:1;">Contact</button>`}
-          </div>
-        </div>
-      </div>`;
+<div class="card featured-card" id="card-${c.id}">
+  <div class="card-head">
+    <div class="avatar ${av}">${initials}</div>
+    <div style="flex:1">
+      <span class="featured-pill">⭐ Featured Profile</span>
+      <div class="card-name">${c.full_name || initials}</div>
+      <div class="card-title">${titleLine}</div>
+    </div>
+  </div>
+  <div class="card-body">
+    ${bio ? `<p class="summary-text">${bio}</p>` : ''}
+    <div class="tags">${allCerts.slice(0,3).map(t => `<span class="tag cert">${t}</span>`).join("")}${allSkills.slice(0,3).map(t => `<span class="tag">${t}</span>`).join("")}</div>
+    <div class="card-meta" style="margin-top:10px;">
+      <span style="font-size:11px;color:var(--gray-400)">${c.work_preference||''}</span>
+      <span>${c.years_experience ? c.years_experience + '+ yrs exp.' : ''}</span>
+    </div>
+  </div>
+  <div style="padding:0 16px 16px;display:flex;flex-direction:column;gap:8px;">
+    <button class="view-profile-btn" onclick="openProfileModal('${c.id}')">View Full Profile</button>
+    <div style="display:flex;gap:8px;">
+      ${c.linkedin_url ? `<a href="${c.linkedin_url}" target="_blank" class="btn-sm btn-sm-outline" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;flex:1;">LinkedIn</a>` : ''}
+      ${c.contact_email ? `<a href="mailto:${c.contact_email}" class="btn-sm btn-sm-outline" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;flex:1;">Email</a>` : `<button class="btn-sm btn-sm-outline" onclick="openModal()" style="flex:1;">Contact</button>`}
+    </div>
+  </div>
+</div>`;
     }
 
-    if (shownIds.has(c.id)) {
-      return `
-      <div class="card" id="card-${c.id}">
-        <div class="card-head">
-          <div class="avatar ${av}">${initials}</div>
-          <div>
-            <div class="card-name" style="font-size:13px;">${c.current_title || 'Trade Professional'}</div>
-            <div class="card-title">${loc}</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="tags">${certTags}${skillTags}</div>
-          <div class="card-meta"><span></span><span>${expStr}</span></div>
-        </div>
-        <div class="card-footer">
-          <button class="btn-sm btn-sm-teal" style="width:100%;" onclick="openModal()">Request Access</button>
-        </div>
-      </div>`;
-    }
+    const st = (c.location_state && c.location_state !== 'NOT SPECIFIED') ? c.location_state : '';
+    const region = [st, c.location_country].filter(Boolean).join(', ') || 'Location on request';
+    const skills = [...(c.customs_expertise||[]), ...(c.trade_specialties||[])].slice(0,3);
+    const certs  = (c.certifications||[]).slice(0,3);
+    const expStr = c.years_experience ? c.years_experience + '+ yrs exp.' : '';
 
     return `
-    <div style="position:relative;border-radius:12px;overflow:hidden;">
-      <div class="card" style="filter:blur(4px);pointer-events:none;user-select:none;">
-        <div class="card-head">
-          <div class="avatar ${av}">${initials}</div>
-          <div>
-            <div class="card-name">████ ████</div>
-            <div class="card-title">██████████ · ██████</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="tags"><span class="tag">██████</span><span class="tag">██████</span><span class="tag cert">███</span></div>
-          <div class="card-meta"><span></span><span>██ yrs exp.</span></div>
-        </div>
-        <div class="card-footer">
-          <button class="btn-sm btn-sm-teal" style="width:100%;">Request Access</button>
-        </div>
-      </div>
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,0.15);backdrop-filter:blur(1px);">
-        <div style="width:36px;height:36px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);color:#0b3a61;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <button onclick="openModal()" style="padding:8px 20px;background:#7ec8e3;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.15);">Request Access</button>
-      </div>
-    </div>`;
+<div class="card" id="card-${c.id}">
+  <div class="card-head">
+    <div class="avatar" style="background:var(--gray-100);color:var(--gray-400);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <div style="flex:1;min-width:0;">
+      <div class="card-name" style="color:var(--gray-400);letter-spacing:0.08em;">████ ██████</div>
+      <div class="card-title" style="color:var(--gray-800);font-weight:500;">${c.current_title || 'Trade Professional'}</div>
+      <div class="card-title">${region}</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="tags">${certs.map(t => `<span class="tag cert">${t}</span>`).join('')}${skills.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    <div class="card-meta"><span></span><span>${expStr}</span></div>
+  </div>
+  <div class="card-footer">
+    <button class="btn-sm btn-sm-teal" style="width:100%;" onclick="openModal()">Request Access</button>
+  </div>
+</div>`;
   }).join('');
-}
-
-function openModal() { document.getElementById('modal-bg').classList.add('open'); }
+}function openModal() { document.getElementById('modal-bg').classList.add('open'); }
 function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
 
 async function submitEmployer() {
@@ -439,7 +416,7 @@ function showToast(msg) {
 
 function openProfileModal(id) {
   const c = candidatesCache.find(x => x.id === id);
-  if (!c) return;
+  if (!c || !c.is_featured) return;
   const initials = c.initials || getInitials(c.full_name || '');
   const av = avatarColor(c.id);
   const loc = c.location_city && c.location_country && c.location_country !== 'United States'
