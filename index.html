@@ -353,9 +353,7 @@ function renderCards(candidates) {
 
     const st = (c.location_state && c.location_state !== 'NOT SPECIFIED') ? c.location_state : '';
     const region = [st, c.location_country].filter(Boolean).join(', ') || 'Location on request';
-    const skills = [...(c.customs_expertise||[]), ...(c.trade_specialties||[])].slice(0,3);
-    const certs  = (c.certifications||[]).slice(0,3);
-    const expStr = c.years_experience ? c.years_experience + '+ yrs exp.' : '';
+    
 
     return `
 <div class="card" id="card-${c.id}">
@@ -369,10 +367,7 @@ function renderCards(candidates) {
       <div class="card-title">${region}</div>
     </div>
   </div>
-  <div class="card-body">
-    <div class="tags">${certs.map(t => `<span class="tag cert">${t}</span>`).join('')}${skills.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-    <div class="card-meta"><span></span><span>${expStr}</span></div>
-  </div>
+  
   <div class="card-footer">
     <button class="btn-sm btn-sm-teal" style="width:100%;" onclick="openModal()">Request Access</button>
   </div>
