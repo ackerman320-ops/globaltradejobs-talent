@@ -63,6 +63,7 @@
 
   .course-icon { width: 52px; height: 52px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; overflow: hidden; background: #e8f4fd; }
   .course-icon img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+  .course-icon .icon-text { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #0b3a61; color: white; font-size: 15px; font-weight: 800; letter-spacing: 0.06em; }
   .icon-us  { background: #e8f4fd; }
   .icon-cn  { background: #fef3e2; }
   .icon-eu  { background: #eaf4ea; }
@@ -159,7 +160,7 @@
       <option value="EU">EU</option>
       <option value="India">India</option>
     </select>
-    <span class="result-count" id="result-label">7 courses</span>
+    <span class="result-count" id="result-label">8 courses</span>
   </div>
 </div>
 
@@ -175,7 +176,8 @@ const LOGOS = {
   'india-sanctions': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/isecs-logo-transparent.png",
   'cble-selfpaced': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Customs%20Clearance%20and%20Trade%20Solutions.png",
   'cble-live': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/Customs%20Clearance%20and%20Trade%20Solutions.png",
-  'freightpath': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/FreightPath.png"
+  'freightpath': "https://iaboaiofsthntiglzpjs.supabase.co/storage/v1/object/public/assets/FreightPath.png",
+  'cble-masterclass-seal': { text: "ITG" }
 };
 
 let openCard = null;
@@ -282,6 +284,26 @@ const COURSES = [
     discount_note: null
   },
   {
+    id: 'cble-masterclass-seal',
+    title: "The CBP Licensed Broker Exam — 10-Week Masterclass",
+    region: "U.S.",
+    iconClass: "icon-us",
+    certification: "CBLE Prep",
+    hours: null,
+    language: "English",
+    format: "Online · Live Webinar",
+    accreditor: null,
+    is_featured: true,
+    topics: ["Customs Broker Exam", "CBP Regulations", "Live Instruction", "Exam Strategy", "Unlimited Replays"],
+    short_desc: "A 10-week live masterclass preparing candidates for the April 2027 Customs Broker License Exam, taught by licensed customshouse broker Jan Seal.",
+    full_desc: "This comprehensive 10-week intensive prepares candidates for the April 2027 CBP Licensed Broker Exam. Sessions begin Wednesday, February 3, 2027 and run as live two-hour interactive webinars, so students can ask questions and work through material in real time. Every session is recorded, with full viewing access to all replays right up until exam day — useful for catching up on a missed class or reviewing late in the study cycle. The course is led by Jan Seal, a licensed customshouse broker, published author, MBA, and accredited instructor for CBP Continuing Education, who brings practical industry experience and the strategies needed to navigate complex U.S. Customs and Border Protection regulations.",
+    email: "JanSeal@aol.com",
+    website: "importtraining.wixsite.com",
+    enroll_url: "https://importtraining.wixsite.com/mysite/tools-and-tips",
+    syllabus_url: null,
+    discount_note: "Early bird $595 through Jan 5, 2027 — $695 after"
+  },
+  {
     id: 'india-sanctions',
     title: "India Sanctions and Export Controls Certificate Course",
     region: "India",
@@ -370,11 +392,16 @@ function renderCourses(courses) {
     const websiteLink = c.website ? `<a href="https://${c.website}" target="_blank" class="contact-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>${c.website}</a>` : '';
     const discountPill = c.discount_note ? `<span class="discount-pill">🎟 ${c.discount_note}</span>` : '';
 
+    const logo = LOGOS[c.id];
+    const logoHtml = (logo && typeof logo === 'object' && logo.text)
+      ? `<span class="icon-text">${logo.text}</span>`
+      : `<img src="${logo}" alt="${c.title}" />`;
+
     return `
     <div class="course-card ${c.is_featured ? 'featured' : ''}" id="card-${c.id}">
       <div class="card-header" onclick="toggleCard('${c.id}')">
         <div class="course-icon ${c.iconClass}">
-          <img src="${LOGOS[c.id]}" alt="${c.title}" />
+          ${logoHtml}
         </div>
         <div class="card-info">
           <div class="card-name-row">
