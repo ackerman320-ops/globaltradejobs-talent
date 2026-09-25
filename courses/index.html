@@ -185,6 +185,7 @@ let openCard = null;
 const COURSES = [
   {
     id: 'us-sanctions',
+    active: true,
     title: "U.S. Sanctions and Export Controls Certificate Course",
     region: "U.S.",
     iconClass: "icon-us",
@@ -205,6 +206,7 @@ const COURSES = [
   },
   {
     id: 'china-sanctions',
+    active: true,
     title: "China's Sanctions and Export Controls Certificate Course",
     region: "China",
     iconClass: "icon-cn",
@@ -225,6 +227,7 @@ const COURSES = [
   },
   {
     id: 'eu-sanctions',
+    active: true,
     title: "EU Sanctions and Export Controls Certificate Course",
     region: "EU",
     iconClass: "icon-eu",
@@ -245,6 +248,7 @@ const COURSES = [
   },
   {
     id: 'cble-selfpaced',
+    active: false,   // PAUSED — set to true to show again
     title: "CBLE Self-Paced Prep Course",
     region: "U.S.",
     iconClass: "icon-us",
@@ -265,6 +269,7 @@ const COURSES = [
   },
   {
     id: 'cble-live',
+    active: false,   // PAUSED — set to true to show again
     title: "CBLE Live Prep Course",
     region: "U.S.",
     iconClass: "icon-us",
@@ -285,6 +290,7 @@ const COURSES = [
   },
   {
     id: 'cble-masterclass-seal',
+    active: true,
     title: "CBP Broker License Exam 10 Week Master Class",
     region: "U.S.",
     iconClass: "icon-us",
@@ -305,6 +311,7 @@ const COURSES = [
   },
   {
     id: 'india-sanctions',
+    active: true,
     title: "India Sanctions and Export Controls Certificate Course",
     region: "India",
     iconClass: "icon-in",
@@ -325,6 +332,7 @@ const COURSES = [
   },
   {
     id: 'freightpath',
+    active: true,
     title: "Customs, Import & Export Training — FreightPath",
     region: "U.S.",
     iconClass: "icon-us",
@@ -350,6 +358,7 @@ function filterCourses() {
   const region = document.getElementById('filter-region').value;
 
   let filtered = COURSES.filter(c => {
+    if (c.active === false) return false;
     const matchRegion = !region || c.region === region;
     const matchQ = !q ||
       c.title.toLowerCase().includes(q) ||
