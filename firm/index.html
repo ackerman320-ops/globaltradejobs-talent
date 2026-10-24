@@ -69,6 +69,31 @@
     .profile-header { flex-direction: column; text-align: center; }
   }
 </style>
+<!-- Google Analytics (GA4) + consultant website click tracking -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QND1VH835H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QND1VH835H');
+
+  // Count every click on a link to a consultant's own website (any domain outside globaltradejobs.com)
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var url;
+    try { url = new URL(a.href, location.href); } catch (err) { return; }
+    if (!/^https?:$/.test(url.protocol) || /(^|\.)globaltradejobs\.com$/i.test(url.hostname)) return;
+    var text = (a.textContent || '').trim();
+    gtag('event', 'consultant_website_click', {
+      consultant_site: url.hostname.replace(/^www\./, ''),
+      link_url: url.href,
+      link_type: /visit website/i.test(text) ? 'visit_website_button' : (a.closest('h3') ? 'firm_name' : 'website_link'),
+      page_type: location.pathname.indexOf('/firm/') === 0 ? 'firm_profile' : 'directory',
+      transport_type: 'beacon'
+    });
+  }, true);
+</script>
 </head>
 <body>
 
